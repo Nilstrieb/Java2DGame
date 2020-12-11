@@ -11,6 +11,8 @@ import java.awt.*;
  */
 public class Turret extends GameObject {
 
+    private static final double ROTATION_SPEED = 2;
+
     BattleShip battleShip;
 
     private int barrelAmount = 3;
