@@ -67,7 +67,15 @@ class Vector2DTest {
         assertEquals(round(expected), round(rotated));
     }
 
+
     public static Vector2D round(Vector2D a){
         return new Vector2D(Math.round(a.x*10000d)/10000d, Math.round(a.y*10000d)/10000d);
+    }
+
+    @Test
+    void getUnitVectorSimple() {
+        double dir = Math.PI;
+        Vector2D expected = new Vector2D(0, -1);
+        assertEquals(round(expected), round(Vector2D.getUnitVector(dir)));
     }
 }

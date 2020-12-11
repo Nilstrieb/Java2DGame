@@ -1,5 +1,6 @@
 package objects.ships;
 
+import core.ExMath;
 import core.Master;
 import core.Vector2D;
 import objects.GameObject;
@@ -11,18 +12,21 @@ import java.awt.*;
  */
 public class Turret extends GameObject {
 
-    private static final double ROTATION_SPEED = 2;
+    private static final double ROTATION_SPEED = 0.05;
+    private static final int SHOT_EFFECT_TIME = 300;
+    private static final int SHELL_SPEED = 10;
 
     BattleShip battleShip;
 
     private int barrelAmount = 3;
 
+    private double rotation;
+
     private Color mainColor;
 
     private long lastShot = 0;
-    private static int SHOT_EFFECT_TIME = 300;
-    private static int SHELL_SPEED = 10;
-    private double rotation;
+
+    //private double rotation;
 
     public Turret(BattleShip battleShip, double x, double y, double size, int barrelAmount) {
         super(x, y, size, size);
@@ -58,6 +62,7 @@ public class Turret extends GameObject {
         g2d.setPaint(Color.BLACK);
         int barrelSpacing = sizeAbs / (barrelAmount + 1);
         g2d.rotate(rotation, xCenterAbs, yCenterAbs);
+
         for (int i = 0; i < barrelAmount; i++) {
             int barrelX = xAbs + (i + 1) * barrelSpacing;
             int frontPosY = yAbs - sizeAbs / 2;
@@ -82,7 +87,10 @@ public class Turret extends GameObject {
         int yCenterAbs = yAbs + sizeAbs / 2;
 
         Point msLoc = master.getMouseLocation();
-        rotation = -Math.atan2(xCenterAbs - msLoc.x, yCenterAbs - msLoc.y);
+        double targetRotation = -Math.atan2(xCenterAbs - msLoc.x, yCenterAbs - msLoc.y);
+
+
+        rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
 
         int barrelSpacing = sizeAbs / (barrelAmount + 1);
 
@@ -93,7 +101,7 @@ public class Turret extends GameObject {
             if (master.isMousePressed()) {
                 lastShot = System.currentTimeMillis();
 
-                Vector2D shellVel = new Vector2D(xCenterAbs - msLoc.x, yCenterAbs - msLoc.y).normalized().negative().multiply(SHELL_SPEED);
+                Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
                 Vector2D pos = Vector2D.rotateAround(new Vector2D(xCenterAbs, yCenterAbs), new Vector2D(barrelX, frontPosY), rotation, Vector2D.COUNTERCLOCKWISE);
 
                 master.create(new Shell(pos, new Vector2D(10, 10), shellVel));

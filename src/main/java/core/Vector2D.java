@@ -134,6 +134,30 @@ public class Vector2D {
     }
 
     /**
+     * Rotate a point around another point
+     *
+     * This method can now be trusted
+     *
+     * @param center The center of the rotation
+     * @param value The point to be rotated, absolut to the center
+     * @param rotation The rotation angle in radians
+     * @return The rotated point
+     */
+    public static Vector2D rotateAround(Vector2D center, Vector2D value, double rotation){
+        return rotateAround(center, value, rotation, COUNTERCLOCKWISE);
+    }
+
+
+    /**
+     * Get a unit vector with magnitude 1 and the direction
+     * @param direction The direction of the vector
+     * @return The unit vector
+     */
+    public static Vector2D getUnitVector(double direction){
+        return rotateAround(new Vector2D(), new Vector2D(0, 1), direction);
+    }
+
+    /**
      * Copy this object
      * @return A copy of this object
      */
@@ -164,5 +188,9 @@ public class Vector2D {
 
         if (Double.compare(vector2D.x, x) != 0) return false;
         return Double.compare(vector2D.y, y) == 0;
+    }
+
+    public double getRotation() {
+        return Math.atan2(y, x);
     }
 }
