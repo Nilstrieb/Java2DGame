@@ -3,6 +3,7 @@ package core;
 import objects.DebugPos;
 import objects.ships.BattleShip;
 import objects.GameObject;
+import objects.ships.Turret;
 import objects.world.Grid;
 
 import javax.swing.*;
@@ -38,9 +39,9 @@ public class Master extends JPanel {
 
         BattleShip battleShip = new BattleShip(Color.DARK_GRAY);
         BattleShip bs = new BattleShip(70, 10, 5, 80, Color.GREEN);
-        /*for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             bs.addTurret(new Turret(bs, 25, 10 * i + 1, 50, i % 5));
-        }*/
+        }
         objects.add(bs);
         objects.add(battleShip);
     }

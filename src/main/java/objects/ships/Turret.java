@@ -92,9 +92,7 @@ public class Turret extends GameObject {
                 lastShot = System.currentTimeMillis();
 
                 Vector2D shellVel = new Vector2D(xCenterAbs - msLoc.x, yCenterAbs - msLoc.y).normalized().negative().multiply(SHELL_SPEED);
-                Vector2D pos = Vector2D.rotateAround(new Vector2D(xCenterAbs, yCenterAbs), new Vector2D(barrelX, frontPosY), rotation, Vector2D.CLOCKWISE);
-
-                master.debugPos(pos);
+                Vector2D pos = Vector2D.rotateAround(new Vector2D(xCenterAbs, yCenterAbs), new Vector2D(barrelX, frontPosY), rotation, Vector2D.COUNTERCLOCKWISE);
 
                 master.create(new Shell(pos, new Vector2D(10, 10), shellVel));
             }

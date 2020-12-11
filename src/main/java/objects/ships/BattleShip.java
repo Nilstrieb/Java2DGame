@@ -17,9 +17,9 @@ public class BattleShip extends GameObject {
     public BattleShip(Color mainColor) {
         super(20, 20, 5, 40);
         turrets = new ArrayList<>();
-        turrets.add(new Turret(this, 25, 25, 50, 1));
-        //turrets.add(new Turret(this, 25, 10, 50, 2));
-        //turrets.add(new Turret(this, 25, 70, 50, 2));
+        turrets.add(new Turret(this, 25, 25, 50, 3));
+        turrets.add(new Turret(this, 25, 10, 50, 2));
+        turrets.add(new Turret(this, 25, 70, 50, 2));
         this.mainColor = mainColor;
     }
 

@@ -17,7 +17,7 @@ public class DebugPos extends GameObject {
     @Override
     public void draw(Graphics2D g2d, int w, Master master) {
         g2d.setPaint(Color.green);
-        g2d.drawOval((int) (position.x + size.x / 2), (int) (position.y + size.y / 2), (int) size.x, (int) size.y);
+        g2d.drawOval((int) (position.x - size.x / 2), (int) (position.y - size.y / 2), (int) size.x, (int) size.y);
     }
 
     @Override

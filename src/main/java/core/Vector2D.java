@@ -1,5 +1,6 @@
 package core;
 
+
 /**
  * A 2-dimensional Vector that can be used to store position or velocity
  */
@@ -45,7 +46,7 @@ public class Vector2D {
     }
 
     /**
-     * Mulitply this vector with a simple scalar, modifies this object
+     * Multiply this vector with a simple scalar, modifies this object
      *
      * @param a The scalar
      * @return this after the multiplication
@@ -111,6 +112,9 @@ public class Vector2D {
 
     /**
      * Rotate a point around another point
+     *
+     * This method can now be trusted
+     *
      * @param center The center of the rotation
      * @param value The point to be rotated, absolut to the center
      * @param rotation The rotation angle in radians
@@ -121,12 +125,18 @@ public class Vector2D {
 
         Vector2D dif = Vector2D.subtract(value, center);
 
-        double rotatedX = Math.cos(rotation * rotationDirection) * dif.x;
-        double rotatedY = Math.sin(rotation * rotationDirection) * dif.x;
+        rotation = rotationDirection * rotation;
+
+        double rotatedX = dif.x * Math.cos(rotation) - dif.y * Math.sin(rotation);
+        double rotatedY = dif.x * Math.sin(rotation) + dif.y * Math.cos(rotation);
 
         return new Vector2D(rotatedX + center.x, rotatedY + center.y);
     }
 
+    /**
+     * Copy this object
+     * @return A copy of this object
+     */
     public Vector2D copy(){
         return new Vector2D(x, y);
     }
