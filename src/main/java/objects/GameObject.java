@@ -32,6 +32,10 @@ public abstract class GameObject {
     public abstract void draw(Graphics2D g2d, int w, Master master);
     public abstract void update(Master master);
 
+    public void moveTo(Vector2D target){
+        this.position = target;
+    }
+
 
     public double getMapCoords(double value, boolean isX){
         if (isX){

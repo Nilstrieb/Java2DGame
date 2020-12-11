@@ -3,8 +3,10 @@ package core;
 import objects.DebugPos;
 import objects.ships.BattleShip;
 import objects.GameObject;
+import objects.ships.Submarine;
 import objects.ships.Turret;
 import objects.world.Grid;
+import objects.world.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +46,9 @@ public class Master extends JPanel {
         }
         objects.add(bs);
         objects.add(battleShip);
+
+        objects.add(new Submarine(new Vector2D(), new Vector2D(20, 20)));
+        objects.add(new Wall(20, 80, 50, 2));
     }
 
     /**
