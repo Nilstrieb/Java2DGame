@@ -13,13 +13,7 @@ public class Wall extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d, int w, Master master) {
-        int xAbs = (int) getWorldCoords(position.x, true);
-        int yAbs = (int) getWorldCoords(position.y, false);
-        int sizeXAbs = (int) getWorldCoords(size.x, true);
-        int sizeYAbs = (int) getWorldCoords(size.y, false);
-
-        g2d.setPaint(Color.BLACK);
-        g2d.fillRect(xAbs, yAbs, sizeXAbs, sizeYAbs);
+        drawRect(g2d, w);
     }
 
     @Override

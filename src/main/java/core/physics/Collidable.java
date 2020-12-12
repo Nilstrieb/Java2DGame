@@ -1,4 +1,4 @@
-package core;
+package core.physics;
 
 public interface Collidable {
 

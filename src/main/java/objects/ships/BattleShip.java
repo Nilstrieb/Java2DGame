@@ -11,16 +11,14 @@ import java.util.ArrayList;
  */
 public class BattleShip extends GameObject {
 
-    private Color mainColor;
     private ArrayList<Turret> turrets;
 
     public BattleShip(Color mainColor) {
-        super(20, 20, 5, 40);
-        turrets = new ArrayList<>();
-        turrets.add(new Turret(this, 25, 25, 50, 3));
+        this(20, 20, 5, 40, mainColor);
+        //TODO child x coords 100 not 100*16/9
+        turrets.add(new Turret(this, 100*16/9d/4, 25, 50, 3));
         //turrets.add(new Turret(this, 25, 10, 50, 2));
         //turrets.add(new Turret(this, 25, 70, 50, 2));
-        this.mainColor = mainColor;
     }
 
     public BattleShip(double x, double y, double xSize, double ySize, Color mainColor) {
@@ -31,15 +29,8 @@ public class BattleShip extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d, int w, Master master) {
-        this.w = w;
-        h = w/16*9;
-        g2d.setPaint(mainColor);
-        int xAbs = (int) getWorldCoords(position.x, true);
-        int yAbs = (int) getWorldCoords(position.y, false);
-        int sizeXAbs = (int) getWorldCoords(size.x, true);
-        int sizeYAbs = (int) getWorldCoords(size.y, false);
-        g2d.fillRoundRect(xAbs, yAbs, sizeXAbs, sizeYAbs, w/10, w/10);
 
+        drawRoundRect(g2d, w, w/10, w/10);
         turrets.forEach((turret -> turret.draw(g2d, w, master)));
     }
 

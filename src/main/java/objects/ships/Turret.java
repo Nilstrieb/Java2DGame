@@ -43,7 +43,6 @@ public class Turret extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d, int w, Master master) {
-        //TODO draw should be draw only for better everything
         h = w / 16 * 9;
         g2d.setPaint(mainColor);
         int xAbs = battleShip.getWorldCoordsFromLocal(position.x, true);
@@ -75,6 +74,8 @@ public class Turret extends GameObject {
             }
         }
         g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
+
+        g2d.setStroke(new BasicStroke());
     }
 
     @Override

@@ -18,6 +18,19 @@ import java.util.ArrayList;
 public class Master extends JPanel {
 
     /**
+     * The ratio of height to width.
+     */
+    public static double SCREEN_RATIO = 16f / 9f;
+
+    /**
+     * The height of the relative coordinates shown on the screen.
+     */
+    public static final double SCREEN_Y_COORDINATES = 100d;
+
+    @Deprecated
+    public static final double SCREEN_X_COORDINATES = 100d * SCREEN_RATIO;
+
+    /**
      * All GameObjects that exist
      */
     private final ArrayList<GameObject> objects;
@@ -41,9 +54,9 @@ public class Master extends JPanel {
 
         BattleShip battleShip = new BattleShip(Color.DARK_GRAY);
         BattleShip bs = new BattleShip(70, 10, 5, 80, Color.GREEN);
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             bs.addTurret(new Turret(bs, 25, 10 * i + 1, 50, i % 5));
-        }
+        }*/
         objects.add(bs);
         objects.add(battleShip);
 
@@ -57,7 +70,6 @@ public class Master extends JPanel {
      */
     private void doDrawing(Graphics g) {
 
-        //TODO w/h fields
         int w, h;
         if (getWidth() * 9 > getHeight() * 16) {
             h = getHeight();
@@ -85,6 +97,7 @@ public class Master extends JPanel {
      */
     public void debugPos(Vector2D pos){
         create(new DebugPos(pos, new Vector2D(10, 10)));
+        System.out.println(pos);
     }
 
     /**
