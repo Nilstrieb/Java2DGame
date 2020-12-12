@@ -1,11 +1,9 @@
 package objects;
 
 import core.Master;
-import core.Vector2D;
+import core.math.Vector2D;
 
 import java.awt.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * The GameObject class is the superclass of every GameObject that can be displayed on screen. It has the 2

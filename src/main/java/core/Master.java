@@ -1,10 +1,10 @@
 package core;
 
+import core.math.Vector2D;
 import objects.DebugPos;
 import objects.ships.BattleShip;
 import objects.GameObject;
 import objects.ships.Submarine;
-import objects.ships.Turret;
 import objects.world.Grid;
 import objects.world.Wall;
 

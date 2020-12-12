@@ -1,8 +1,8 @@
 package objects.ships;
 
-import core.ExMath;
+import core.math.ExMath;
 import core.Master;
-import core.Vector2D;
+import core.math.Vector2D;
 import objects.GameObject;
 
 import java.awt.*;

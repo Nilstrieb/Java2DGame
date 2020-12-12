@@ -1,7 +1,7 @@
 package objects;
 
 import core.Master;
-import core.Vector2D;
+import core.math.Vector2D;
 
 import java.awt.*;
 

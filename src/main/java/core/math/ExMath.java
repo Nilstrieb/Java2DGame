@@ -1,4 +1,4 @@
-package core;
+package core.math;
 
 /**
  * Extended Math functions for the game engine

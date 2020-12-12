@@ -1,5 +1,6 @@
 package core;
 
+import core.math.Vector2D;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
