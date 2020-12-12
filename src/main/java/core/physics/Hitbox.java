@@ -1,5 +1,8 @@
 package core.physics;
 
-public abstract class Hitbox {
+import core.Drawable;
+import objects.GameObject;
+
+public abstract class Hitbox implements Drawable {
 
 }

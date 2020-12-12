@@ -1,4 +1,4 @@
-package core;
+package core.math;
 
 import core.math.Vector2D;
 import org.junit.jupiter.api.Test;

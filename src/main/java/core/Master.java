@@ -1,6 +1,7 @@
 package core;
 
 import core.math.Vector2D;
+import core.physics.Collidable;
 import objects.DebugPos;
 import objects.ships.BattleShip;
 import objects.GameObject;
@@ -11,6 +12,9 @@ import objects.world.Wall;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+//TODO master better accessible or something
 
 /**
  * The main object that controls everything
@@ -36,6 +40,16 @@ public class Master extends JPanel {
     private final ArrayList<GameObject> objects;
 
     /**
+     * All GameObjects that can be drawn
+     */
+    private final ArrayList<Drawable> drawables;
+
+    /**
+     * All physics objects that exist
+     */
+    private final ArrayList<Collidable> collidables;
+
+    /**
      * Stores all GameObjects that were created during a frame
      */
     private final ArrayList<GameObject> objectBuffer;
@@ -48,8 +62,10 @@ public class Master extends JPanel {
     public Master() {
         objects = new ArrayList<>();
         objectBuffer = new ArrayList<>();
+        collidables = new ArrayList<>();
+        drawables = new ArrayList<>();
 
-        objects.add(new Grid());
+        create(new Grid());
 
 
         BattleShip battleShip = new BattleShip(Color.DARK_GRAY);
@@ -57,15 +73,16 @@ public class Master extends JPanel {
         /*for (int i = 0; i < 10; i++) {
             bs.addTurret(new Turret(bs, 25, 10 * i + 1, 50, i % 5));
         }*/
-        objects.add(bs);
-        objects.add(battleShip);
+        create(bs);
+        create(battleShip);
 
-        objects.add(new Submarine(new Vector2D(), new Vector2D(20, 20)));
-        objects.add(new Wall(20, 80, 50, 2));
+        create(new Submarine(new Vector2D(), new Vector2D(20, 20)));
+        create(new Wall(20, 80, 50, 2));
     }
 
     /**
      * The mein drawing method, handles everything about drawing
+     *
      * @param g
      */
     private void doDrawing(Graphics g) {
@@ -81,7 +98,7 @@ public class Master extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g.create();
 
-        objects.forEach(o -> o.draw(g2d, w, this));
+        drawables.forEach(o -> o.draw(g2d, w, this));
     }
 
 
@@ -93,11 +110,11 @@ public class Master extends JPanel {
 
     /**
      * Debug a position, creates a green dot at the position
+     *
      * @param pos
      */
-    public void debugPos(Vector2D pos){
+    public void debugPos(Vector2D pos) {
         create(new DebugPos(pos, new Vector2D(10, 10)));
-        System.out.println(pos);
     }
 
     /**
@@ -120,6 +137,7 @@ public class Master extends JPanel {
 
     /**
      * Get the current location of the mouse relative to the frame
+     *
      * @return The location of the mouse, already normalized
      */
     public Point getMouseLocation() {
@@ -134,9 +152,33 @@ public class Master extends JPanel {
 
     /**
      * This method has to be called for every newly created GameObject
-     * @param obj
+     *
+     * @param obj The new object
      */
     public void create(GameObject obj) {
         objectBuffer.add(obj);
+        if (obj instanceof Collidable) {
+            collidables.add((Collidable) obj);
+        }
+        drawables.add(obj);
+
+    }
+
+    public void addDrawable(Drawable d){
+        drawables.add(d);
+    }
+
+    public boolean doesCollide(Collidable col) {
+        boolean collides = false;
+
+        for (Collidable c : collidables) {
+            double distance = Vector2D.distance(c.getCenterPos(), col.getCenterPos());
+            if (!(distance > c.getSize().magnitude() && distance > col.getSize().magnitude())) {
+                if (c.collidesWith(col)) {
+                    collides = true;
+                }
+            }
+        }
+        return collides;
     }
 }

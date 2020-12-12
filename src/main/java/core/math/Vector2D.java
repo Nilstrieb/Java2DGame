@@ -157,6 +157,12 @@ public class Vector2D {
         return rotateAround(new Vector2D(), new Vector2D(0, 1), direction);
     }
 
+    public static double distance(Vector2D a, Vector2D b){
+        Vector2D dif = subtract(a, b);
+        return Math.sqrt(dif.x * dif.x + dif.y + dif.y);
+    }
+
+
     /**
      * Copy this object
      * @return A copy of this object
