@@ -80,6 +80,24 @@ public abstract class GameObject implements Drawable {
     }
 
     /**
+     * This method draws a rectangle at the current position and size
+     *
+     * @param g2d The Graphics2D object provided by the master
+     * @param w   The width of the screen
+     */
+    public void drawOval(Graphics2D g2d, int w) {
+        this.w = w;
+        h = (int) (this.w / Master.SCREEN_RATIO);
+        int xAbs = (int) getWorldCoords(position.x, true);
+        int yAbs = (int) getWorldCoords(position.y, false);
+        int sizeXAbs = (int) getWorldCoordsSize(size.x, true);
+        int sizeYAbs = (int) getWorldCoordsSize(size.y, false);
+
+        g2d.setPaint(mainColor);
+        g2d.fillOval(xAbs, yAbs, sizeXAbs, sizeYAbs);
+    }
+
+    /**
      * This method draws a rounded rectangle at the current position and size
      *
      * @param g2d  The Graphics2D object provided by the master
@@ -105,6 +123,12 @@ public abstract class GameObject implements Drawable {
         } else {
             return (value / Master.SCREEN_Y_COORDINATES * h);
         }
+    }
+
+    public Vector2D getMapCoordsFromWorld(Vector2D value){
+        double x = (value.x / w) * Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO;
+        double y = (value.y / h) * Master.SCREEN_Y_COORDINATES;
+        return new Vector2D(x, y);
     }
 
     public double getWorldCoordsSize(double value, boolean isX) {
@@ -141,6 +165,6 @@ public abstract class GameObject implements Drawable {
     }
 
     public Vector2D getCenterPosition(){
-        return new Vector2D(position.x + size.x, position.y + size.y);
+        return new Vector2D(position.x - size.x/2, position.y - size.y/2);
     }
 }

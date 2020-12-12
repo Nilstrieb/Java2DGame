@@ -16,18 +16,21 @@ public class Submarine extends GameObject implements Collidable {
     public Submarine(Vector2D position, Vector2D size) {
         super(position, size);
         this.hitbox = new RectHitBox(position, size);
+        this.mainColor = Color.BLUE;
     }
 
     @Override
     public void draw(Graphics2D g2d, int w, Master master) {
         g2d.setPaint(Color.BLUE);
-        g2d.fillOval((int) (position.x - size.x / 2), (int) (position.y - size.y / 2), (int) size.x, (int) size.y);
+        drawOval(g2d, w);
     }
 
     @Override
     public void update(Master master) {
         Point mouse = master.getMouseLocation();
-        moveTo(new Vector2D(mouse.x, mouse.y), master);
+        Vector2D relPos = getMapCoordsFromWorld(new Vector2D(mouse.x, mouse.y));
+        Vector2D centerRelPos = new Vector2D(relPos.x - size.x/2, relPos.y - size.y/2);
+        moveTo(centerRelPos, master);
     }
 
     @Override

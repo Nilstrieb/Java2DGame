@@ -76,7 +76,7 @@ public class Master extends JPanel {
         create(bs);
         create(battleShip);
 
-        create(new Submarine(new Vector2D(), new Vector2D(20, 20)));
+        create(new Submarine(new Vector2D(), new Vector2D(5, 5)));
         create(new Wall(20, 80, 50, 2));
     }
 
@@ -173,8 +173,14 @@ public class Master extends JPanel {
 
         for (Collidable c : collidables) {
             double distance = Vector2D.distance(c.getCenterPos(), col.getCenterPos());
-            if (!(distance > c.getSize().magnitude() && distance > col.getSize().magnitude())) {
+
+            if (c != col /*&& !(distance > c.getSize().magnitude() && distance > col.getSize().magnitude())*/) {
+
+                System.out.println("\n\nCOLL POSSIBLE");
+                System.out.println("This: " + c.getHitbox() + "\n\nother: " + col.getHitbox());
+
                 if (c.collidesWith(col)) {
+                    System.err.println("COLL");
                     collides = true;
                 }
             }
