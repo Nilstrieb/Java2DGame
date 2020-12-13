@@ -21,7 +21,7 @@ public class Shell extends GameObject {
     }
 
     @Override
-    public void update(Master master) {
+    public void update() {
         position.add(velocity);
     }
 }

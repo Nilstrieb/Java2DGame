@@ -14,8 +14,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-//TODO master better accessible or something
-
 /**
  * The main object that controls everything
  */
@@ -31,8 +29,10 @@ public class Master extends JPanel {
      */
     public static final double SCREEN_Y_COORDINATES = 100d;
 
-    @Deprecated
-    public static final double SCREEN_X_COORDINATES = 100d * SCREEN_RATIO;
+    /**
+     * The master object
+     */
+    private static Master master;
 
     /**
      * All GameObjects that exist
@@ -54,12 +54,22 @@ public class Master extends JPanel {
      */
     private final ArrayList<GameObject> objectBuffer;
 
+    /**
+     * Whether the left mouse button has been pressed since the last frame
+     */
     private boolean mousePressed = false;
+
+    /**
+     * The current width and height of the game area
+     */
+    private int w,h;
 
     /**
      * Create a new master object
      */
     public Master() {
+        master = this;
+
         objects = new ArrayList<>();
         objectBuffer = new ArrayList<>();
         collidables = new ArrayList<>();
@@ -80,6 +90,10 @@ public class Master extends JPanel {
         create(new Wall(20, 80, 50, 2));
     }
 
+    public static Master getMaster() {
+        return master;
+    }
+
     /**
      * The mein drawing method, handles everything about drawing
      *
@@ -87,7 +101,6 @@ public class Master extends JPanel {
      */
     private void doDrawing(Graphics g) {
 
-        int w, h;
         if (getWidth() * 9 > getHeight() * 16) {
             h = getHeight();
             w = h / 9 * 16;
@@ -111,7 +124,7 @@ public class Master extends JPanel {
     /**
      * Debug a position, creates a green dot at the position
      *
-     * @param pos
+     * @param pos The position
      */
     public void debugPos(Vector2D pos) {
         create(new DebugPos(pos, new Vector2D(10, 10)));
@@ -130,7 +143,7 @@ public class Master extends JPanel {
     public void refresh() {
         objects.addAll(objectBuffer);
         objectBuffer.clear();
-        objects.forEach(t -> t.update(this));
+        objects.forEach(GameObject::update);
         mousePressed = false;
         repaint();
     }
@@ -164,10 +177,19 @@ public class Master extends JPanel {
 
     }
 
-    public void addDrawable(Drawable d){
+    public void addDrawable(Drawable d) {
         drawables.add(d);
     }
 
+
+    /**
+     * Check whether a collidables collide with another one
+     *
+     * @param col The collidable to be checked
+     * @return True if it collides with something, false if it doesn't - Should return a Collision
+     */
+    @Deprecated
+    //TODO make it return a Collision
     public boolean doesCollide(Collidable col) {
         boolean collides = false;
 
@@ -186,5 +208,21 @@ public class Master extends JPanel {
             }
         }
         return collides;
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void destroy(GameObject gameObject) {
+        objects.remove(gameObject);
+        drawables.remove(gameObject);
+        if(gameObject instanceof Collidable){
+            collidables.remove(gameObject);
+        }
     }
 }

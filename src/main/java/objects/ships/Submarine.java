@@ -1,5 +1,6 @@
 package objects.ships;
 
+import core.Coords;
 import core.Master;
 import core.math.Vector2D;
 import core.physics.Collidable;
@@ -26,11 +27,11 @@ public class Submarine extends GameObject implements Collidable {
     }
 
     @Override
-    public void update(Master master) {
+    public void update() {
         Point mouse = master.getMouseLocation();
-        Vector2D relPos = getMapCoordsFromWorld(new Vector2D(mouse.x, mouse.y));
+        Vector2D relPos = Coords.getMapCoordsFromWorld(new Vector2D(mouse.x, mouse.y));
         Vector2D centerRelPos = new Vector2D(relPos.x - size.x/2, relPos.y - size.y/2);
-        moveTo(centerRelPos, master);
+        moveTo(centerRelPos);
     }
 
     @Override

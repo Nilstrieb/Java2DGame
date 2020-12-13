@@ -3,6 +3,7 @@ package core;
 import java.awt.*;
 
 public interface Drawable {
+
     /**
      * <p>The draw method is called every frame after the update by the master object on each object. Everything
      * about drawing should be handled here in this method.</p>

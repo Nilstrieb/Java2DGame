@@ -1,5 +1,6 @@
 package objects;
 
+import core.Coords;
 import core.Drawable;
 import core.Master;
 import core.math.Vector2D;
@@ -9,7 +10,7 @@ import java.awt.*;
 
 /**
  * The GameObject class is the superclass of every GameObject that can be displayed on screen. It has the 2
- * {@link #update(Master)} and {@link #draw(Graphics2D, int, Master)} methods that have to be
+ * {@link #update()} and {@link #draw(Graphics2D, int, Master)} methods that have to be
  */
 public abstract class GameObject implements Drawable {
 
@@ -23,6 +24,8 @@ public abstract class GameObject implements Drawable {
 
     protected Color mainColor;
 
+    protected Master master;
+
     public GameObject(double x, double y, double xSize, double ySize) {
         this(new Vector2D(x, y), new Vector2D(xSize, ySize));
     }
@@ -32,6 +35,7 @@ public abstract class GameObject implements Drawable {
         this.size = size;
         this.velocity = new Vector2D();
         mainColor = Color.BLACK;
+        this.master = Master.getMaster();
     }
 
 
@@ -40,17 +44,15 @@ public abstract class GameObject implements Drawable {
      * that is needed for the game to work should be here in this method.</p>
      * <p>No drawing should be made in this method. The {@code debug} method can be called on the master.</p>
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
-     *
-     * @param master The master object itself
      */
-    public abstract void update(Master master);
+    public abstract void update();
 
     /**
      * A simple method to move the object to a Vector2D. This method should be called instead of doing it manually.
      *
      * @param target The target position
      */
-    public void moveTo(Vector2D target, Master master) {
+    public void moveTo(Vector2D target) {
         Vector2D oldPos = position;
         this.position = target;
 
@@ -70,13 +72,11 @@ public abstract class GameObject implements Drawable {
     public void drawRect(Graphics2D g2d, int w) {
         this.w = w;
         h = (int) (this.w / Master.SCREEN_RATIO);
-        int xAbs = (int) getWorldCoords(position.x, true);
-        int yAbs = (int) getWorldCoords(position.y, false);
-        int sizeXAbs = (int) getWorldCoordsSize(size.x, true);
-        int sizeYAbs = (int) getWorldCoordsSize(size.y, false);
+        Vector2D abs = Coords.getWorldCoords(position);
+        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 
         g2d.setPaint(mainColor);
-        g2d.fillRect(xAbs, yAbs, sizeXAbs, sizeYAbs);
+        g2d.fillRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
     }
 
     /**
@@ -88,13 +88,11 @@ public abstract class GameObject implements Drawable {
     public void drawOval(Graphics2D g2d, int w) {
         this.w = w;
         h = (int) (this.w / Master.SCREEN_RATIO);
-        int xAbs = (int) getWorldCoords(position.x, true);
-        int yAbs = (int) getWorldCoords(position.y, false);
-        int sizeXAbs = (int) getWorldCoordsSize(size.x, true);
-        int sizeYAbs = (int) getWorldCoordsSize(size.y, false);
+        Vector2D abs = Coords.getWorldCoords(position);
+        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 
         g2d.setPaint(mainColor);
-        g2d.fillOval(xAbs, yAbs, sizeXAbs, sizeYAbs);
+        g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
     }
 
     /**
@@ -108,63 +106,41 @@ public abstract class GameObject implements Drawable {
     public void drawRoundRect(Graphics2D g2d, int w, int arcW, int arcH) {
         this.w = w;
         h = (int) (w / Master.SCREEN_RATIO);
-        int xAbs = (int) getWorldCoords(position.x, true);
-        int yAbs = (int) getWorldCoords(position.y, false);
-        int sizeXAbs = (int) getWorldCoordsSize(size.x, true);
-        int sizeYAbs = (int) getWorldCoordsSize(size.y, false);
+        Vector2D abs = Coords.getWorldCoords(position);
+        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 
         g2d.setPaint(mainColor);
-        g2d.fillRoundRect(xAbs, yAbs, sizeXAbs, sizeYAbs, arcW, arcH);
+        g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, arcW, arcH);
     }
 
-    public double getWorldCoords(double value, boolean isX) {
-        if (isX) {
-            return (value / (Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO) * w);
-        } else {
-            return (value / Master.SCREEN_Y_COORDINATES * h);
-        }
+    public void destroy() {
+        master.destroy(this);
     }
 
-    public Vector2D getMapCoordsFromWorld(Vector2D value){
-        double x = (value.x / w) * Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO;
-        double y = (value.y / h) * Master.SCREEN_Y_COORDINATES;
+
+    public Vector2D getMapCoords(Vector2D value) {
+        double x = (position.x + value.x / 100d * size.x);
+        double y = (position.y + value.y / 100d * size.y);
         return new Vector2D(x, y);
+
     }
 
-    public double getWorldCoordsSize(double value, boolean isX) {
-        if (isX) {
-            return (value / Master.SCREEN_Y_COORDINATES * w);
-        } else {
-            return (value / Master.SCREEN_Y_COORDINATES * h);
-        }
+    public Vector2D getMapCoordsSize(Vector2D value) {
+        double x = (value.x / 100d * size.x);
+        double y = (value.y / 100d * size.y);
+        return new Vector2D(x, y);
+
     }
 
-
-    public double getMapCoords(double value, boolean isX) {
-        if (isX) {
-            return (position.x + value / 100d * size.x);
-        } else {
-            return (position.y + value / 100d * size.y);
-        }
+    public Vector2D getWorldCoordsFromLocal(Vector2D value) {
+        return Coords.getWorldCoords(getMapCoords(value));
     }
 
-    public double getMapCoordsSize(double value, boolean useX) {
-        if (useX) {
-            return (value / 100d * size.x);
-        } else {
-            return (value / 100d * size.y);
-        }
+    public Vector2D getWorldCoordsFromLocalSize(Vector2D value) {
+        return Coords.getWorldCoordsSize(getMapCoordsSize(value));
     }
 
-    public int getWorldCoordsFromLocal(double value, boolean isX) {
-        return (int) getWorldCoords(getMapCoords(value, isX), isX);
-    }
-
-    public int getWorldCoordsFromLocalSize(double value, boolean useX) {
-        return (int) getWorldCoordsSize(getMapCoordsSize(value, useX), useX);
-    }
-
-    public Vector2D getCenterPosition(){
-        return new Vector2D(position.x - size.x/2, position.y - size.y/2);
+    public Vector2D getCenterPosition() {
+        return new Vector2D(position.x - size.x / 2, position.y - size.y / 2);
     }
 }

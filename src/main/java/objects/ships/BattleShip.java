@@ -35,8 +35,8 @@ public class BattleShip extends GameObject {
     }
 
     @Override
-    public void update(Master master) {
-        turrets.forEach((turret -> turret.update(master)));
+    public void update() {
+        turrets.forEach(Turret::update);
     }
 
     public void addTurret(Turret turret){

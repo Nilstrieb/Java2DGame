@@ -41,7 +41,7 @@ public class Grid extends GameObject {
     }
 
     @Override
-    public void update(Master master) {
+    public void update() {
 
     }
 }

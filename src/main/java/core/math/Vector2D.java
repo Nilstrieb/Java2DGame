@@ -92,6 +92,7 @@ public class Vector2D {
 
     /**
      * Add two Vectors
+     *
      * @param a Vector a
      * @param b Vector b
      * @return The result
@@ -102,6 +103,7 @@ public class Vector2D {
 
     /**
      * Subtract two Vectors
+     *
      * @param a Vector a
      * @param b Vector b
      * @return The result
@@ -112,16 +114,16 @@ public class Vector2D {
 
     /**
      * Rotate a point around another point
-     *
+     * <p>
      * This method can now be trusted
      *
-     * @param center The center of the rotation
-     * @param value The point to be rotated, absolut to the center
-     * @param rotation The rotation angle in radians
+     * @param center            The center of the rotation
+     * @param value             The point to be rotated, absolut to the center
+     * @param rotation          The rotation angle in radians
      * @param rotationDirection The direction, -1 for clockwise, 1 for counterclockwise
      * @return The rotated point
      */
-    public static Vector2D rotateAround(Vector2D center, Vector2D value, double rotation, int rotationDirection){
+    public static Vector2D rotateAround(Vector2D center, Vector2D value, double rotation, int rotationDirection) {
 
         Vector2D dif = Vector2D.subtract(value, center);
 
@@ -135,29 +137,30 @@ public class Vector2D {
 
     /**
      * Rotate a point around another point
-     *
+     * <p>
      * This method can now be trusted
      *
-     * @param center The center of the rotation
-     * @param value The point to be rotated, absolut to the center
+     * @param center   The center of the rotation
+     * @param value    The point to be rotated, absolut to the center
      * @param rotation The rotation angle in radians
      * @return The rotated point
      */
-    public static Vector2D rotateAround(Vector2D center, Vector2D value, double rotation){
+    public static Vector2D rotateAround(Vector2D center, Vector2D value, double rotation) {
         return rotateAround(center, value, rotation, COUNTERCLOCKWISE);
     }
 
 
     /**
      * Get a unit vector with magnitude 1 and the direction
+     *
      * @param direction The direction of the vector
      * @return The unit vector
      */
-    public static Vector2D getUnitVector(double direction){
+    public static Vector2D getUnitVector(double direction) {
         return rotateAround(new Vector2D(), new Vector2D(0, 1), direction);
     }
 
-    public static double distance(Vector2D a, Vector2D b){
+    public static double distance(Vector2D a, Vector2D b) {
         Vector2D dif = subtract(a, b);
         return Math.sqrt(dif.x * dif.x + dif.y + dif.y);
     }
@@ -165,9 +168,10 @@ public class Vector2D {
 
     /**
      * Copy this object
+     *
      * @return A copy of this object
      */
-    public Vector2D copy(){
+    public Vector2D copy() {
         return new Vector2D(x, y);
     }
 

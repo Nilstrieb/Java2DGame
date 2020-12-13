@@ -21,6 +21,6 @@ public class DebugPos extends GameObject {
     }
 
     @Override
-    public void update(Master master) {
+    public void update() {
     }
 }

@@ -24,7 +24,7 @@ public class Wall extends GameObject implements Collidable {
     }
 
     @Override
-    public void update(Master master) {
+    public void update() {
     }
 
     @Override

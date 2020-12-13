@@ -10,6 +10,8 @@ import java.awt.*;
  */
 public class RectHitBox extends Hitbox {
 
+    int w,h;
+
     /**
      * The corners of the rectangle like this:
      * <p>x1    x2</p>
@@ -148,7 +150,32 @@ public class RectHitBox extends Hitbox {
 
     @Override
     public void draw(Graphics2D g2d, int w, Master master) {
-        g2d.setPaint(Color.BLUE);
-        g2d.fillRect((int) x1.y, (int) x1.y, (int) (x2.x - x1.x), (int) (y1.y - x1.y));
+
+        this.w = w;
+        int h = (int) (w / Master.SCREEN_RATIO);
+        int xAbs = (int) getWorldCoords(x1.x, true);
+        int yAbs = (int) getWorldCoords(x1.y, false);
+        int sizeXAbs = (int) getWorldCoordsSize(x2.x - x1.x, true);
+        int sizeYAbs = (int) getWorldCoordsSize(y1.y - x1.y, false);
+
+        g2d.fillRect(xAbs, yAbs, sizeXAbs, sizeYAbs);
+        g2d.setPaint(Color.MAGENTA);
+    }
+
+
+    public double getWorldCoords(double value, boolean isX) {
+        if (isX) {
+            return (value / (Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO) * w);
+        } else {
+            return (value / Master.SCREEN_Y_COORDINATES * h);
+        }
+    }
+
+    public double getWorldCoordsSize(double value, boolean isX) {
+        if (isX) {
+            return (value / Master.SCREEN_Y_COORDINATES * w);
+        } else {
+            return (value / Master.SCREEN_Y_COORDINATES * h);
+        }
     }
 }

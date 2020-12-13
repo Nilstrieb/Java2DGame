@@ -45,26 +45,25 @@ public class Turret extends GameObject {
     public void draw(Graphics2D g2d, int w, Master master) {
         h = w / 16 * 9;
         g2d.setPaint(mainColor);
-        int xAbs = battleShip.getWorldCoordsFromLocal(position.x, true);
-        int yAbs = battleShip.getWorldCoordsFromLocal(position.y, false);
-        int sizeAbs = battleShip.getWorldCoordsFromLocalSize(size.x, true);
-        int xCenterAbs = xAbs + sizeAbs / 2;
-        int yCenterAbs = yAbs + sizeAbs / 2;
+        Vector2D abs = battleShip.getWorldCoordsFromLocal(position);
+        int sizeAbs = (int) battleShip.getWorldCoordsFromLocalSize(size).x;
+        int xCenterAbs = (int) (abs.x + sizeAbs / 2);
+        int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
-        g2d.fillOval(xAbs, yAbs, sizeAbs, sizeAbs);
+        g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs, (int) sizeAbs);
 
-        g2d.setStroke(new BasicStroke(battleShip.getWorldCoordsFromLocalSize(10, true), BasicStroke.CAP_BUTT,
+        g2d.setStroke(new BasicStroke((int) battleShip.getWorldCoordsFromLocalSize(new Vector2D(10, 0)).x, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_BEVEL));
 
         //BARRELS---------------------------------------
 
         g2d.setPaint(Color.BLACK);
-        int barrelSpacing = sizeAbs / (barrelAmount + 1);
+        int barrelSpacing = (int) (sizeAbs / (barrelAmount + 1));
         g2d.rotate(rotation, xCenterAbs, yCenterAbs);
 
         for (int i = 0; i < barrelAmount; i++) {
-            int barrelX = xAbs + (i + 1) * barrelSpacing;
-            int frontPosY = yAbs - sizeAbs / 2;
+            int barrelX = (int) (abs.x + (i + 1) * barrelSpacing);
+            int frontPosY = (int) (abs.y - sizeAbs / 2);
             g2d.drawLine(barrelX, yCenterAbs, barrelX, frontPosY);
 
             if (lastShot + SHOT_EFFECT_TIME > System.currentTimeMillis()) {
@@ -79,13 +78,12 @@ public class Turret extends GameObject {
     }
 
     @Override
-    public void update(Master master) {
+    public void update() {
 
-        int xAbs = battleShip.getWorldCoordsFromLocal(position.x, true);
-        int yAbs = battleShip.getWorldCoordsFromLocal(position.y, false);
-        int sizeAbs = battleShip.getWorldCoordsFromLocalSize(size.x, true);
-        int xCenterAbs = xAbs + sizeAbs / 2;
-        int yCenterAbs = yAbs + sizeAbs / 2;
+        Vector2D abs = battleShip.getWorldCoordsFromLocal(position);
+        int sizeAbs = (int) battleShip.getWorldCoordsFromLocalSize(size).x;
+        int xCenterAbs = (int) (abs.x + sizeAbs / 2);
+        int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
         Point msLoc = master.getMouseLocation();
         double targetRotation = -Math.atan2(xCenterAbs - msLoc.x, yCenterAbs - msLoc.y);
@@ -93,11 +91,11 @@ public class Turret extends GameObject {
 
         rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
 
-        int barrelSpacing = sizeAbs / (barrelAmount + 1);
+        int barrelSpacing = (int) (sizeAbs / (barrelAmount + 1));
 
         for (int i = 0; i < barrelAmount; i++) {
-            int barrelX = xAbs + (i + 1) * barrelSpacing;
-            int frontPosY = yAbs - sizeAbs / 2;
+            int barrelX = (int) (abs.x + (i + 1) * barrelSpacing);
+            int frontPosY = (int) (abs.y - sizeAbs / 2);
 
             if (master.isMousePressed()) {
                 lastShot = System.currentTimeMillis();
