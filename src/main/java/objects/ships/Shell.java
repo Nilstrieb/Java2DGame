@@ -1,15 +1,20 @@
 package objects.ships;
 
 import core.math.Vector2D;
-import objects.GameObject;
+import core.physics.hitboxes.RectHitBox;
+import objects.core.CollGameObject;
 
 import java.awt.*;
 
-public class Shell extends GameObject {
+/**
+ * A shell fired by a cannon
+ */
+//TODO why tf do shells not use map coords...
+public class Shell extends CollGameObject {
 
 
     public Shell(Vector2D position, Vector2D size, Vector2D velocity) {
-        super(position, size);
+        super(position, size, new RectHitBox(position, size));
         this.velocity = velocity;
     }
 
@@ -21,6 +26,6 @@ public class Shell extends GameObject {
 
     @Override
     public void update() {
-        position.add(velocity);
+        moveTo(Vector2D.add(position, velocity));
     }
 }

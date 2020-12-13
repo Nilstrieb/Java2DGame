@@ -1,7 +1,6 @@
 package objects.world;
 
-import core.Master;
-import objects.GameObject;
+import objects.core.GameObject;
 
 import java.awt.*;
 

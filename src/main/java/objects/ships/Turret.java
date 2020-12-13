@@ -2,7 +2,7 @@ package objects.ships;
 
 import core.math.ExMath;
 import core.math.Vector2D;
-import objects.GameObject;
+import objects.core.GameObject;
 
 import java.awt.*;
 

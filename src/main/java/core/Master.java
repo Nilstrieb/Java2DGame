@@ -5,7 +5,7 @@ import core.physics.Collidable;
 import core.physics.Collision;
 import objects.DebugPos;
 import objects.ships.BattleShip;
-import objects.GameObject;
+import objects.core.GameObject;
 import objects.ships.Submarine;
 import objects.world.Grid;
 import objects.world.Wall;
@@ -13,7 +13,6 @@ import objects.world.Wall;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The main object that controls everything

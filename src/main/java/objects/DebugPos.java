@@ -1,6 +1,7 @@
 package objects;
 
 import core.math.Vector2D;
+import objects.core.GameObject;
 
 import java.awt.*;
 

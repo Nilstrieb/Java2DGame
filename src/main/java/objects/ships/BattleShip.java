@@ -1,6 +1,6 @@
 package objects.ships;
 
-import objects.GameObject;
+import objects.core.GameObject;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package objects;
+package objects.core;
 
 import core.math.Coords;
 import core.Drawable;
@@ -53,16 +53,7 @@ public abstract class GameObject implements Drawable {
      * @param target The target position
      */
     public void moveTo(Vector2D target) {
-        Vector2D oldPos = position.copy();
         this.position = target;
-
-        if (this instanceof Collidable) {
-            ((Collidable) this).getHitbox().moveTo(position, size);
-            if (master.doesCollide((Collidable) this) != null) {
-                this.position = oldPos;
-                ((Collidable) this).getHitbox().moveTo(oldPos, size);
-            }
-        }
     }
 
     /**
