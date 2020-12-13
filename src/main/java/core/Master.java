@@ -41,8 +41,9 @@ public class Master extends JPanel {
 
     /**
      * All GameObjects that can be drawn
+     * Has different render layers, 0 is on the bottom
      */
-    private final ArrayList<Drawable> drawables;
+    private final ArrayList<ArrayList<Drawable>> drawables;
 
     /**
      * All physics objects that exist
@@ -74,6 +75,7 @@ public class Master extends JPanel {
         objectBuffer = new ArrayList<>();
         collidables = new ArrayList<>();
         drawables = new ArrayList<>();
+        drawables.add(new ArrayList<>());
 
         create(new Grid());
 
@@ -111,7 +113,7 @@ public class Master extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g.create();
 
-        drawables.forEach(o -> o.draw(g2d));
+        drawables.forEach(l -> l.forEach(o -> o.draw(g2d)));
     }
 
 
@@ -169,16 +171,45 @@ public class Master extends JPanel {
      * @param obj The new object
      */
     public void create(GameObject obj) {
+        create(obj, 0);
+    }
+
+    /**
+     * This method has to be called for every newly created GameObject
+     *
+     * @param obj The new object
+     * @param renderLayer The render layer the object will be put on, 0 is below everything
+     */
+    public void create(GameObject obj, int renderLayer) {
         objectBuffer.add(obj);
         if (obj instanceof Collidable) {
             collidables.add((Collidable) obj);
         }
-        drawables.add(obj);
+        addDrawable(obj, renderLayer);
 
     }
 
-    public void addDrawable(Drawable d) {
-        drawables.add(d);
+    /**
+     * Add a new Drawable to the render list
+     * @param d The drawable
+     * @param layer The layer it should be put on (>=0)
+     */
+    public void addDrawable(Drawable d, int layer) {
+
+        if (layer < 0) {
+
+            throw new IllegalArgumentException("Layer must be at least 9");
+        }
+
+        //layer exists check
+        int layerDif = layer - (drawables.size()-1);
+        if (layerDif > 0) {
+            for (int i = 0; i < layerDif; i++) {
+                drawables.add(new ArrayList<>());
+            }
+        }
+
+        drawables.get(layer).add(d);
     }
 
 

@@ -1,5 +1,6 @@
 package core.physics;
 
+import core.Coords;
 import core.Master;
 import core.math.Vector2D;
 
@@ -9,8 +10,6 @@ import java.awt.*;
  * A rectangular hitbox
  */
 public class RectHitBox extends Hitbox {
-
-    int w,h;
 
     /**
      * The corners of the rectangle like this:
@@ -30,14 +29,16 @@ public class RectHitBox extends Hitbox {
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
         this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
+        Master.getMaster().addDrawable(this, 1);
     }
 
     /**
      * Move the hitbox to a new position
      *
-     * @param x1
-     * @param size
+     * @param x1 The new position
+     * @param size The new size
      */
+    @Override
     public void moveTo(Vector2D x1, Vector2D size) {
         this.x1 = x1.copy();
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
@@ -105,8 +106,7 @@ public class RectHitBox extends Hitbox {
             }
         }
 
-        boolean coll = !(allAbove || allBelow || allLeft || allRight);
-        return coll;
+        return !(allAbove || allBelow || allLeft || allRight);
     }
 
     /**
@@ -151,31 +151,10 @@ public class RectHitBox extends Hitbox {
     @Override
     public void draw(Graphics2D g2d) {
 
-        this.w = w;
-        int h = (int) (w / Master.SCREEN_RATIO);
-        int xAbs = (int) getWorldCoords(x1.x, true);
-        int yAbs = (int) getWorldCoords(x1.y, false);
-        int sizeXAbs = (int) getWorldCoordsSize(x2.x - x1.x, true);
-        int sizeYAbs = (int) getWorldCoordsSize(y1.y - x1.y, false);
+        Vector2D abs = Coords.getWorldCoords(x1);
+        Vector2D sizeAbs = Coords.getWorldCoordsSize(Vector2D.subtract(y2, x1));
 
-        g2d.fillRect(xAbs, yAbs, sizeXAbs, sizeYAbs);
+        g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.y, (int)sizeAbs.y);
         g2d.setPaint(Color.MAGENTA);
-    }
-
-
-    public double getWorldCoords(double value, boolean isX) {
-        if (isX) {
-            return (value / (Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO) * w);
-        } else {
-            return (value / Master.SCREEN_Y_COORDINATES * h);
-        }
-    }
-
-    public double getWorldCoordsSize(double value, boolean isX) {
-        if (isX) {
-            return (value / Master.SCREEN_Y_COORDINATES * w);
-        } else {
-            return (value / Master.SCREEN_Y_COORDINATES * h);
-        }
     }
 }

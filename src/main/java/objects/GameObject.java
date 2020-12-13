@@ -37,7 +37,7 @@ public abstract class GameObject implements Drawable {
 
 
     /**
-     * <p>The update method is called every frame before the {@link #draw(Graphics2D, int, Master)} method by the master object on each object. Everything
+     * <p>The update method is called every frame before the {@link #draw(Graphics2D)} method by the master object on each object. Everything
      * that is needed for the game to work should be here in this method.</p>
      * <p>No drawing should be made in this method. The {@code debug} method can be called on the master.</p>
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
@@ -50,12 +50,14 @@ public abstract class GameObject implements Drawable {
      * @param target The target position
      */
     public void moveTo(Vector2D target) {
-        Vector2D oldPos = position;
+        Vector2D oldPos = position.copy();
         this.position = target;
 
         if (this instanceof Collidable) {
+            ((Collidable) this).getHitbox().moveTo(position, size);
             if (master.doesCollide((Collidable) this)) {
                 this.position = oldPos;
+                ((Collidable) this).getHitbox().moveTo(oldPos, size);
             }
         }
     }
