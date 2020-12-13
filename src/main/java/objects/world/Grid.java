@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class Grid extends GameObject {
 
-    private int gridSpacing = 50;
+    private final int gridSpacing = 50;
 
     public Grid() {
         super(0, 0, 0, 0);

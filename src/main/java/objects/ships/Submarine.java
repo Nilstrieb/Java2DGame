@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class Submarine extends GameObject implements Collidable {
 
-    private RectHitBox hitbox;
+    private final RectHitBox hitbox;
 
     public Submarine(Vector2D position, Vector2D size) {
         super(position, size);

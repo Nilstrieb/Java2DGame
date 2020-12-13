@@ -42,7 +42,7 @@ public class Coords {
 
     public static Vector2D getWorldCoordsSize(Vector2D value) {
         //TODO h not w
-        double x = (value.x / Master.SCREEN_Y_COORDINATES * master.getW());
+        double x = (value.x / Master.SCREEN_Y_COORDINATES * master.getH());
         double y = (value.y / Master.SCREEN_Y_COORDINATES * master.getH());
         return new Vector2D(x, y);
     }

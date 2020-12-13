@@ -22,7 +22,7 @@ public class Turret extends GameObject {
 
     private double rotation;
 
-    private Color mainColor;
+    private final Color mainColor;
 
     private long lastShot = 0;
 
@@ -50,7 +50,7 @@ public class Turret extends GameObject {
         int xCenterAbs = (int) (abs.x + sizeAbs / 2);
         int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
-        g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs, (int) sizeAbs);
+        g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
 
         g2d.setStroke(new BasicStroke((int) battleShip.getWorldCoordsFromLocalSize(new Vector2D(10, 0)).x, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_BEVEL));
@@ -58,7 +58,7 @@ public class Turret extends GameObject {
         //BARRELS---------------------------------------
 
         g2d.setPaint(Color.BLACK);
-        int barrelSpacing = (int) (sizeAbs / (barrelAmount + 1));
+        int barrelSpacing = sizeAbs / (barrelAmount + 1);
         g2d.rotate(rotation, xCenterAbs, yCenterAbs);
 
         for (int i = 0; i < barrelAmount; i++) {
@@ -91,7 +91,7 @@ public class Turret extends GameObject {
 
         rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
 
-        int barrelSpacing = (int) (sizeAbs / (barrelAmount + 1));
+        int barrelSpacing = sizeAbs / (barrelAmount + 1);
 
         for (int i = 0; i < barrelAmount; i++) {
             int barrelX = (int) (abs.x + (i + 1) * barrelSpacing);

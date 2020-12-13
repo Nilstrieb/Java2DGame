@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class Wall extends GameObject implements Collidable {
 
-    private RectHitBox hitbox;
+    private final RectHitBox hitbox;
 
     public Wall(double x, double y, double xSize, double ySize) {
         super(x, y, xSize, ySize);

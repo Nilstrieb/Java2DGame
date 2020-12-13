@@ -11,12 +11,11 @@ import java.util.ArrayList;
  */
 public class BattleShip extends GameObject {
 
-    private ArrayList<Turret> turrets;
+    private final ArrayList<Turret> turrets;
 
     public BattleShip(Color mainColor) {
-        this(20, 20, 5, 40, mainColor);
-        //TODO child x coords 100 not 100*16/9
-        turrets.add(new Turret(this, 100*16/9d/4, 25, 50, 3));
+        this(20, 20, 10, 40, mainColor);
+        turrets.add(new Turret(this, 25, 25, 50, 3));
         //turrets.add(new Turret(this, 25, 10, 50, 2));
         //turrets.add(new Turret(this, 25, 70, 50, 2));
     }
