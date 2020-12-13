@@ -1,6 +1,7 @@
 package core.physics;
 
 import core.math.Vector2D;
+import core.physics.hitboxes.Hitbox;
 
 public interface Collidable {
 

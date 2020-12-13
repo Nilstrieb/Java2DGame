@@ -1,10 +1,10 @@
 package objects.ships;
 
-import core.Coords;
+import core.math.Coords;
 import core.math.Vector2D;
 import core.physics.Collidable;
-import core.physics.Hitbox;
-import core.physics.RectHitBox;
+import core.physics.hitboxes.Hitbox;
+import core.physics.hitboxes.RectHitBox;
 import objects.GameObject;
 
 import java.awt.*;

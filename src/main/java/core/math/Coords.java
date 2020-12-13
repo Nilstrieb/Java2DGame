@@ -1,5 +1,6 @@
-package core;
+package core.math;
 
+import core.Master;
 import core.math.Vector2D;
 
 /**
@@ -7,7 +8,6 @@ import core.math.Vector2D;
  * <p>In this system, the screen is always 100 high and 100 * the screen ration wide.
  * This class is the used to convert these coordinates into the true Java 2D coordinates for the drawing</p>
  */
-//TODO make this return a vector2d instead of the isX
 public class Coords {
 
     /**

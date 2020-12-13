@@ -1,6 +1,7 @@
 package core.physics;
 
 import core.math.Vector2D;
+import core.physics.hitboxes.RectHitBox;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

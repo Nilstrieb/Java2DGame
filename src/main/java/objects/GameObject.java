@@ -1,6 +1,6 @@
 package objects;
 
-import core.Coords;
+import core.math.Coords;
 import core.Drawable;
 import core.Master;
 import core.math.Vector2D;
@@ -23,6 +23,8 @@ public abstract class GameObject implements Drawable {
 
     protected Master master;
 
+    protected int layer;
+
     public GameObject(double x, double y, double xSize, double ySize) {
         this(new Vector2D(x, y), new Vector2D(xSize, ySize));
     }
@@ -33,6 +35,7 @@ public abstract class GameObject implements Drawable {
         this.velocity = new Vector2D();
         mainColor = Color.BLACK;
         this.master = Master.getMaster();
+        this.layer = 0;
     }
 
 
@@ -132,5 +135,9 @@ public abstract class GameObject implements Drawable {
 
     public Vector2D getCenterPosition() {
         return new Vector2D(position.x - size.x / 2, position.y - size.y / 2);
+    }
+
+    public int getLayer() {
+        return layer;
     }
 }

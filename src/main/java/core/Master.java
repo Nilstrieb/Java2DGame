@@ -63,7 +63,7 @@ public class Master extends JPanel {
     /**
      * The current width and height of the game area
      */
-    private int w,h;
+    private int w, h;
 
     /**
      * Create a new master object
@@ -171,13 +171,13 @@ public class Master extends JPanel {
      * @param obj The new object
      */
     public void create(GameObject obj) {
-        create(obj, 0);
+        create(obj, obj.getLayer());
     }
 
     /**
      * This method has to be called for every newly created GameObject
      *
-     * @param obj The new object
+     * @param obj         The new object
      * @param renderLayer The render layer the object will be put on, 0 is below everything
      */
     public void create(GameObject obj, int renderLayer) {
@@ -191,7 +191,8 @@ public class Master extends JPanel {
 
     /**
      * Add a new Drawable to the render list
-     * @param d The drawable
+     *
+     * @param d     The drawable
      * @param layer The layer it should be put on (>=0)
      */
     public void addDrawable(Drawable d, int layer) {
@@ -202,7 +203,7 @@ public class Master extends JPanel {
         }
 
         //layer exists check
-        int layerDif = layer - (drawables.size()-1);
+        int layerDif = layer - (drawables.size() - 1);
         if (layerDif > 0) {
             for (int i = 0; i < layerDif; i++) {
                 drawables.add(new ArrayList<>());
@@ -227,13 +228,9 @@ public class Master extends JPanel {
         for (Collidable c : collidables) {
             double distance = Vector2D.distance(c.getCenterPos(), col.getCenterPos());
 
-            if (c != col /*&& !(distance > c.getSize().magnitude() && distance > col.getSize().magnitude())*/) {
-
-                System.out.println("\n\nCOLL POSSIBLE");
-                System.out.println("This: " + c.getHitbox() + "\n\nother: " + col.getHitbox());
+            if (c != col && (distance < c.getHitbox().getSize() + col.getHitbox().getSize())) {
 
                 if (c.collidesWith(col)) {
-                    System.err.println("COLL");
                     collides = true;
                 }
             }
@@ -251,8 +248,8 @@ public class Master extends JPanel {
 
     public void destroy(GameObject gameObject) {
         objects.remove(gameObject);
-        drawables.remove(gameObject);
-        if(gameObject instanceof Collidable){
+        drawables.get(gameObject.getLayer()).remove(gameObject);
+        if (gameObject instanceof Collidable) {
             collidables.remove(gameObject);
         }
     }

@@ -1,6 +1,6 @@
-package core.physics;
+package core.physics.hitboxes;
 
-import core.Coords;
+import core.math.Coords;
 import core.Master;
 import core.math.Vector2D;
 
@@ -23,8 +23,25 @@ public class RectHitBox extends Hitbox {
      *
      * @param x1   The top left point
      * @param size the size
+     * @param isTrigger Whether the hitbox is a trigger (only collision detection, not restricting movement
+     */
+    public RectHitBox(Vector2D x1, Vector2D size, boolean isTrigger) {
+        super(isTrigger);
+        this.x1 = x1;
+        this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
+        this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
+        this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
+        Master.getMaster().addDrawable(this, 1);
+    }
+
+    /**
+     * Create a new RectHitbox with the position of the top left point {@code x1} and the size
+     *
+     * @param x1   The top left point
+     * @param size the size
      */
     public RectHitBox(Vector2D x1, Vector2D size) {
+        this(x1, size, false);
         this.x1 = x1;
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
@@ -44,6 +61,12 @@ public class RectHitBox extends Hitbox {
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
         this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
+    }
+
+    @Override
+    public double getSize() {
+        Vector2D size = Vector2D.subtract(y2, x1);
+        return size.magnitude();
     }
 
     /**
@@ -154,7 +177,7 @@ public class RectHitBox extends Hitbox {
         Vector2D abs = Coords.getWorldCoords(x1);
         Vector2D sizeAbs = Coords.getWorldCoordsSize(Vector2D.subtract(y2, x1));
 
-        g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.y, (int)sizeAbs.y);
+        g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.x, (int)sizeAbs.y);
         g2d.setPaint(Color.MAGENTA);
     }
 }
