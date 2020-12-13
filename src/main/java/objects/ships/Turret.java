@@ -1,7 +1,6 @@
 package objects.ships;
 
 import core.math.ExMath;
-import core.Master;
 import core.math.Vector2D;
 import objects.GameObject;
 
@@ -42,8 +41,7 @@ public class Turret extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
-        h = w / 16 * 9;
+    public void draw(Graphics2D g2d) {
         g2d.setPaint(mainColor);
         Vector2D abs = battleShip.getWorldCoordsFromLocal(position);
         int sizeAbs = (int) battleShip.getWorldCoordsFromLocalSize(size).x;

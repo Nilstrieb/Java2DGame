@@ -1,7 +1,10 @@
 package core;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 
+/**
+ * This interface has to be implemented by every
+ */
 public interface Drawable {
 
     /**
@@ -12,8 +15,6 @@ public interface Drawable {
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
      *
      * @param g2d    The {@code Graphics2D} object given by the master
-     * @param w      The width of the screen
-     * @param master The master object itself
      */
-    void draw(Graphics2D g2d, int w, Master master);
+    void draw(Graphics2D g2d);
 }

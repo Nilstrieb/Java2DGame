@@ -1,6 +1,5 @@
 package objects.ships;
 
-import core.Master;
 import objects.GameObject;
 
 import java.awt.*;
@@ -27,10 +26,10 @@ public class BattleShip extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
+    public void draw(Graphics2D g2d) {
 
-        drawRoundRect(g2d, w, w/10, w/10);
-        turrets.forEach((turret -> turret.draw(g2d, w, master)));
+        drawRoundRect(g2d, master.getW()/10, master.getW()/10);
+        turrets.forEach((turret -> turret.draw(g2d)));
     }
 
     @Override

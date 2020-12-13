@@ -10,12 +10,9 @@ import java.awt.*;
 
 /**
  * The GameObject class is the superclass of every GameObject that can be displayed on screen. It has the 2
- * {@link #update()} and {@link #draw(Graphics2D, int, Master)} methods that have to be
+ * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be
  */
 public abstract class GameObject implements Drawable {
-
-    protected int w;
-    protected int h;
 
     protected Vector2D position;
     protected Vector2D size;
@@ -67,11 +64,8 @@ public abstract class GameObject implements Drawable {
      * This method draws a rectangle at the current position and size
      *
      * @param g2d The Graphics2D object provided by the master
-     * @param w   The width of the screen
      */
-    public void drawRect(Graphics2D g2d, int w) {
-        this.w = w;
-        h = (int) (this.w / Master.SCREEN_RATIO);
+    public void drawRect(Graphics2D g2d) {
         Vector2D abs = Coords.getWorldCoords(position);
         Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 
@@ -83,11 +77,8 @@ public abstract class GameObject implements Drawable {
      * This method draws a rectangle at the current position and size
      *
      * @param g2d The Graphics2D object provided by the master
-     * @param w   The width of the screen
      */
-    public void drawOval(Graphics2D g2d, int w) {
-        this.w = w;
-        h = (int) (this.w / Master.SCREEN_RATIO);
+    public void drawOval(Graphics2D g2d) {
         Vector2D abs = Coords.getWorldCoords(position);
         Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 
@@ -99,13 +90,10 @@ public abstract class GameObject implements Drawable {
      * This method draws a rounded rectangle at the current position and size
      *
      * @param g2d  The Graphics2D object provided by the master
-     * @param w    The width of the screen
      * @param arcW The arc width of the rectangle
      * @param arcH The arc height of the rectangle
      */
-    public void drawRoundRect(Graphics2D g2d, int w, int arcW, int arcH) {
-        this.w = w;
-        h = (int) (w / Master.SCREEN_RATIO);
+    public void drawRoundRect(Graphics2D g2d, int arcW, int arcH) {
         Vector2D abs = Coords.getWorldCoords(position);
         Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 

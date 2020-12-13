@@ -111,7 +111,7 @@ public class Master extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g.create();
 
-        drawables.forEach(o -> o.draw(g2d, w, this));
+        drawables.forEach(o -> o.draw(g2d));
     }
 
 

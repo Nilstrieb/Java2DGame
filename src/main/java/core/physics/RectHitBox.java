@@ -149,7 +149,7 @@ public class RectHitBox extends Hitbox {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
+    public void draw(Graphics2D g2d) {
 
         this.w = w;
         int h = (int) (w / Master.SCREEN_RATIO);

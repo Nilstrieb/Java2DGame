@@ -1,6 +1,5 @@
 package objects.ships;
 
-import core.Master;
 import core.math.Vector2D;
 import objects.GameObject;
 
@@ -15,7 +14,7 @@ public class Shell extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
+    public void draw(Graphics2D g2d) {
         g2d.setPaint(Color.orange);
         g2d.fillOval((int) position.x, (int) position.y, (int) size.x, (int) size.y);
     }

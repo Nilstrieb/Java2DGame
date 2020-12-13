@@ -1,7 +1,6 @@
 package objects.ships;
 
 import core.Coords;
-import core.Master;
 import core.math.Vector2D;
 import core.physics.Collidable;
 import core.physics.Hitbox;
@@ -21,9 +20,9 @@ public class Submarine extends GameObject implements Collidable {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
+    public void draw(Graphics2D g2d) {
         g2d.setPaint(Color.BLUE);
-        drawOval(g2d, w);
+        drawOval(g2d);
     }
 
     @Override

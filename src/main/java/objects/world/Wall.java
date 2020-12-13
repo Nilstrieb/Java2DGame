@@ -1,6 +1,5 @@
 package objects.world;
 
-import core.Master;
 import core.math.Vector2D;
 import core.physics.Collidable;
 import core.physics.Hitbox;
@@ -19,8 +18,8 @@ public class Wall extends GameObject implements Collidable {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
-        drawRect(g2d, w);
+    public void draw(Graphics2D g2d) {
+        drawRect(g2d);
     }
 
     @Override

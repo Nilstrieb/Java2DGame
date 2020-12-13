@@ -1,6 +1,5 @@
 package objects;
 
-import core.Master;
 import core.math.Vector2D;
 
 import java.awt.*;
@@ -15,7 +14,7 @@ public class DebugPos extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int w, Master master) {
+    public void draw(Graphics2D g2d) {
         g2d.setPaint(Color.green);
         g2d.drawOval((int) (position.x - size.x / 2), (int) (position.y - size.y / 2), (int) size.x, (int) size.y);
     }
