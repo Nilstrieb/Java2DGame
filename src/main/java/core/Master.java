@@ -129,7 +129,7 @@ public class Master extends JPanel {
      * @param pos The position
      */
     public void debugPos(Vector2D pos) {
-        create(new DebugPos(pos, new Vector2D(10, 10)));
+        create(new DebugPos(pos, new Vector2D(2, 2)), 3);
     }
 
     /**
@@ -246,6 +246,7 @@ public class Master extends JPanel {
 
     public void destroy(GameObject gameObject) {
         objects.remove(gameObject);
+        objectBuffer.remove(gameObject);
         drawables.get(gameObject.getLayer()).remove(gameObject);
         if (gameObject instanceof Collidable) {
             collidables.remove(gameObject);

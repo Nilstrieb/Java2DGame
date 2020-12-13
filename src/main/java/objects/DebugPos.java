@@ -12,12 +12,12 @@ public class DebugPos extends GameObject {
     public DebugPos(Vector2D position, Vector2D size) {
         super(position.copy(), size);
         this.velocity = new Vector2D();
+        this.mainColor = Color.GREEN;
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setPaint(Color.green);
-        g2d.drawOval((int) (position.x - size.x / 2), (int) (position.y - size.y / 2), (int) size.x, (int) size.y);
+        drawOval(g2d);
     }
 
     @Override

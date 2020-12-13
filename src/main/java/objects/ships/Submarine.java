@@ -17,7 +17,7 @@ public class Submarine extends CollGameObject {
     @Override
     public void draw(Graphics2D g2d) {
         g2d.setPaint(Color.BLUE);
-        drawOval(g2d);
+        fillOval(g2d);
     }
 
     @Override

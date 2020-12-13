@@ -4,7 +4,6 @@ import core.math.Coords;
 import core.Drawable;
 import core.Master;
 import core.math.Vector2D;
-import core.physics.Collidable;
 
 import java.awt.*;
 
@@ -74,12 +73,25 @@ public abstract class GameObject implements Drawable {
      *
      * @param g2d The Graphics2D object provided by the master
      */
-    public void drawOval(Graphics2D g2d) {
+    public void fillOval(Graphics2D g2d) {
         Vector2D abs = Coords.getWorldCoords(position);
         Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
 
         g2d.setPaint(mainColor);
         g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
+    }
+
+    /**
+     * This method draws a rectangle at the current position and size
+     *
+     * @param g2d The Graphics2D object provided by the master
+     */
+    public void drawOval(Graphics2D g2d) {
+        Vector2D abs = Coords.getWorldCoords(position);
+        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
+
+        g2d.setPaint(mainColor);
+        g2d.drawOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
     }
 
     /**
@@ -97,6 +109,7 @@ public abstract class GameObject implements Drawable {
         g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, arcW, arcH);
     }
 
+    @Deprecated
     public void destroy() {
         master.destroy(this);
     }
@@ -124,8 +137,12 @@ public abstract class GameObject implements Drawable {
         return Coords.getWorldCoordsSize(getMapCoordsSize(value));
     }
 
+    public Vector2D getCenterPosition(Vector2D position){
+        return new Vector2D(position.x + size.x / 2, position.y + size.y / 2);
+    }
+
     public Vector2D getCenterPosition() {
-        return new Vector2D(position.x - size.x / 2, position.y - size.y / 2);
+        return getCenterPosition(position);
     }
 
     public int getLayer() {

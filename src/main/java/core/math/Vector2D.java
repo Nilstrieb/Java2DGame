@@ -1,6 +1,8 @@
 package core.math;
 
 
+import java.awt.*;
+
 /**
  * A 2-dimensional Vector that can be used to store position or velocity
  */
@@ -31,6 +33,15 @@ public class Vector2D {
     public Vector2D() {
         x = 0;
         y = 0;
+    }
+
+    /**
+     * Get a new Vector2D from a Point
+     * @param point The point
+     * @return The Vector2D
+     */
+    public static Vector2D fromPoint(Point point) {
+        return new Vector2D(point.x, point.y);
     }
 
     /**
