@@ -34,11 +34,6 @@ public class Submarine extends GameObject implements Collidable {
     }
 
     @Override
-    public boolean collidesWith(Collidable o) {
-        return hitbox.collidesWith(o.getHitbox());
-    }
-
-    @Override
     public Hitbox getHitbox() {
         return hitbox;
     }

@@ -58,7 +58,7 @@ public abstract class GameObject implements Drawable {
 
         if (this instanceof Collidable) {
             ((Collidable) this).getHitbox().moveTo(position, size);
-            if (master.doesCollide((Collidable) this)) {
+            if (master.doesCollide((Collidable) this) != null) {
                 this.position = oldPos;
                 ((Collidable) this).getHitbox().moveTo(oldPos, size);
             }

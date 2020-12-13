@@ -27,11 +27,6 @@ public class Wall extends GameObject implements Collidable {
     }
 
     @Override
-    public boolean collidesWith(Collidable o) {
-        return this.hitbox.collidesWith(o.getHitbox());
-    }
-
-    @Override
     public Hitbox getHitbox() {
         return hitbox;
     }

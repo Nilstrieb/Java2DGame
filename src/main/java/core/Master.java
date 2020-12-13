@@ -2,6 +2,7 @@ package core;
 
 import core.math.Vector2D;
 import core.physics.Collidable;
+import core.physics.Collision;
 import objects.DebugPos;
 import objects.ships.BattleShip;
 import objects.GameObject;
@@ -217,21 +218,19 @@ public class Master extends JPanel {
     /**
      * Check whether a collidables collide with another one
      *
-     * @param col The collidable to be checked
+     * @param collidable The collidable to be checked
      * @return True if it collides with something, false if it doesn't - Should return a Collision
      */
-    @Deprecated
-    //TODO make it return a Collision
-    public boolean doesCollide(Collidable col) {
-        boolean collides = false;
+    public Collision doesCollide(Collidable collidable) {
+        Collision collides = null;
 
-        for (Collidable c : collidables) {
-            double distance = Vector2D.distance(c.getCenterPos(), col.getCenterPos());
+        for (Collidable other : collidables) {
+            double distance = Vector2D.distance(other.getCenterPos(), collidable.getCenterPos());
 
-            if (c != col && (distance < c.getHitbox().getSize() + col.getHitbox().getSize())) {
+            if (other != collidable && (distance < other.getHitbox().getSize() + collidable.getHitbox().getSize())) {
 
-                if (c.collidesWith(col)) {
-                    collides = true;
+                if (other.getHitbox().collidesWith(collidable.getHitbox())) {
+                    collides = new Collision(collidable, other);
                 }
             }
         }

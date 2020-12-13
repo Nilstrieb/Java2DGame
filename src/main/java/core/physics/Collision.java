@@ -5,15 +5,12 @@ package core.physics;
  */
 public class Collision {
 
-    Collidable a;
-    Collidable b;
+    private final Collidable a;
+    private final Collidable b;
 
-    boolean haveCollided;
-
-    public Collision(Collidable a, Collidable b, boolean haveCollided) {
+    public Collision(Collidable a, Collidable b) {
         this.a = a;
         this.b = b;
-        this.haveCollided = haveCollided;
     }
 
     /**
@@ -30,9 +27,5 @@ public class Collision {
      */
     public Collidable getB() {
         return b;
-    }
-
-    public boolean isHaveCollided() {
-        return haveCollided;
     }
 }
