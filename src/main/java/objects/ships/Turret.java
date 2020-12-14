@@ -16,6 +16,7 @@ public class Turret extends GameObject {
     private static final int SHOT_EFFECT_TIME = 300;
     private static final int SHELL_SPEED = 1;
     public static final double SHELL_SIZE = 2;
+    private static final double BARREL_THICKNESS = 1.7;
 
     BattleShip battleShip;
 
@@ -35,7 +36,7 @@ public class Turret extends GameObject {
     }
 
     public Turret(BattleShip battleShip) {
-        super(25, 50, 50, 50);
+        super(25, 50, 1.25, 0.5);
         this.battleShip = battleShip;
         mainColor = Color.GRAY;
     }
@@ -44,13 +45,13 @@ public class Turret extends GameObject {
     public void draw(Graphics2D g2d) {
         g2d.setPaint(mainColor);
         Vector2D abs = battleShip.getWorldCoordsFromLocal(position);
-        int sizeAbs = (int) battleShip.getWorldCoordsFromLocalSize(size).x;
+        int sizeAbs = (int) Coords.getWorldCoords(size).x;
         int xCenterAbs = (int) (abs.x + sizeAbs / 2);
         int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
         g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
 
-        g2d.setStroke(new BasicStroke((int) battleShip.getWorldCoordsFromLocalSize(new Vector2D(10, 0)).x, BasicStroke.CAP_BUTT,
+        g2d.setStroke(new BasicStroke((int) Coords.getWorldCoords(new Vector2D(size.x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_BEVEL));
 
         //BARRELS---------------------------------------
@@ -80,21 +81,8 @@ public class Turret extends GameObject {
 
         Point msLoc = master.getMouseLocation();
         Vector2D mouseRel = Coords.getMapCoordsFromWorld(Vector2D.fromPoint(msLoc)); //100 correct
-
-        //TODO getCenter uses the wrong size
-        Vector2D center = battleShip.getMapCoords(getCenterPosition(position));
-        master.debugPos(battleShip.getMapCoords(position));
-        master.debugPos(center);
+        Vector2D center = battleShip.getMapCoords(getCenterPosition());
         double targetRotation = -Math.atan2(center.x - mouseRel.x, center.y - mouseRel.y);
-
-        //---------------OLD IMPLEMENTATION
-        Vector2D abs = battleShip.getWorldCoordsFromLocal(position);
-        int sizeAbs = (int) battleShip.getWorldCoordsFromLocalSize(size).x;
-        int xCenterAbs = (int) (abs.x + sizeAbs / 2);
-        int yCenterAbs = (int) (abs.y + sizeAbs / 2);
-        double targetRotationOld = -Math.atan2(xCenterAbs - msLoc.x, yCenterAbs - msLoc.y);
-        //----------------
-
 
         rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
 
@@ -104,11 +92,18 @@ public class Turret extends GameObject {
             int barrelX = (int) (position.x + (i + 1) * barrelSpacing);
             int frontPosY = (int) (position.y - size.x / 2);
 
+            Vector2D spawnPosNR = battleShip.getMapCoords(new Vector2D(barrelX, frontPosY));
+
             if (master.isMousePressed()) {
                 lastShot = System.currentTimeMillis();
 
                 Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
-                Vector2D pos = Vector2D.rotateAround(new Vector2D(center.x, center.y), new Vector2D(barrelX, frontPosY), rotation, Vector2D.COUNTERCLOCKWISE);
+                master.debugPos(battleShip.getMapCoords(center));
+                master.debugPos(center);
+                Vector2D pos = Vector2D.rotateAround(
+                        battleShip.getMapCoords(center),
+                        spawnPosNR,
+                        rotation);
 
                 master.debugPos(pos);
                 master.create(new Shell(pos, new Vector2D(SHELL_SIZE, SHELL_SIZE), shellVel));

@@ -134,20 +134,10 @@ public abstract class GameObject implements Drawable {
 
     }
 
-    public Vector2D getMapCoordsSize(Vector2D value) {
-        double x = (value.x / 100d * size.x);
-        double y = (value.y / 100d * size.y);
-        return new Vector2D(x, y);
-
-    }
-
     public Vector2D getWorldCoordsFromLocal(Vector2D value) {
         return Coords.getWorldCoords(getMapCoords(value));
     }
 
-    public Vector2D getWorldCoordsFromLocalSize(Vector2D value) {
-        return Coords.getWorldCoords(getMapCoordsSize(value));
-    }
 
     public Vector2D getCenterPosition(Vector2D position){
         return new Vector2D(position.x + size.x / 2, position.y + size.y / 2);

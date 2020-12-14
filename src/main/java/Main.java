@@ -24,7 +24,7 @@ class Main extends JFrame {
         add(master);
 
         setTitle("Points");
-        setSize(1600, 900);
+        setSize(1000, (int) (1000 / Master.SCREEN_RATIO));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
