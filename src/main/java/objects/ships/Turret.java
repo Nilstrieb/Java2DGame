@@ -3,7 +3,7 @@ package objects.ships;
 import core.math.Coords;
 import core.math.ExMath;
 import core.math.Vector2D;
-import objects.core.GameObject;
+import core.objects.core.GameObject;
 
 import java.awt.*;
 
@@ -83,7 +83,6 @@ public class Turret extends GameObject {
 
         //TODO getCenter uses the wrong size
         Vector2D center = battleShip.getMapCoords(getCenterPosition(position));
-        System.out.println(getCenterPosition(position));
         master.debugPos(battleShip.getMapCoords(position));
         master.debugPos(center);
         double targetRotation = -Math.atan2(center.x - mouseRel.x, center.y - mouseRel.y);

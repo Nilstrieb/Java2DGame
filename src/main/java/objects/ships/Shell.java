@@ -1,9 +1,7 @@
 package objects.ships;
 
 import core.math.Vector2D;
-import core.physics.hitboxes.RectHitBox;
-import objects.core.CollGameObject;
-import objects.core.GameObject;
+import core.objects.core.GameObject;
 
 import java.awt.*;
 

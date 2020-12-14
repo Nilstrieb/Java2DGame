@@ -1,6 +1,7 @@
-package objects.core;
+package core.objects.core;
 
 import core.math.Vector2D;
+import core.objects.core.GameObject;
 import core.physics.Collidable;
 import core.physics.hitboxes.Hitbox;
 

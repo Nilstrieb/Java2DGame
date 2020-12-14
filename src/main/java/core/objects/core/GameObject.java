@@ -1,4 +1,4 @@
-package objects.core;
+package core.objects.core;
 
 import core.math.Coords;
 import core.Drawable;

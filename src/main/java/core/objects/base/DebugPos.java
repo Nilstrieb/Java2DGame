@@ -1,7 +1,7 @@
-package objects;
+package core.objects.base;
 
 import core.math.Vector2D;
-import objects.core.GameObject;
+import core.objects.core.GameObject;
 
 import java.awt.*;
 

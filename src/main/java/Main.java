@@ -5,12 +5,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-class BasicEx extends JFrame {
+class Main extends JFrame {
 
     Master master;
     Timer timer;
 
-    public BasicEx() {
+    public Main() {
         initUI();
         timer = new Timer(1000/60, e -> {
             master.refresh();
@@ -40,7 +40,7 @@ class BasicEx extends JFrame {
 
         EventQueue.invokeLater(() -> {
 
-            BasicEx ex = new BasicEx();
+            Main ex = new Main();
             ex.setVisible(true);
         });
     }

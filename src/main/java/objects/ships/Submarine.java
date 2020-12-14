@@ -3,7 +3,7 @@ package objects.ships;
 import core.math.Coords;
 import core.math.Vector2D;
 import core.physics.hitboxes.RectHitBox;
-import objects.core.CollGameObject;
+import core.objects.core.CollGameObject;
 
 import java.awt.*;
 
