@@ -17,7 +17,7 @@ public class DebugPos extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d) {
-        drawOval(g2d);
+        drawOval(g2d, "center");
     }
 
     @Override

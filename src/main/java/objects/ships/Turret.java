@@ -1,13 +1,10 @@
 package objects.ships;
 
-import core.Master;
 import core.math.Coords;
 import core.math.ExMath;
 import core.math.Vector2D;
-import jdk.swing.interop.SwingInterOpUtils;
 import objects.core.GameObject;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -17,7 +14,8 @@ public class Turret extends GameObject {
 
     private static final double ROTATION_SPEED = 0.05;
     private static final int SHOT_EFFECT_TIME = 300;
-    private static final int SHELL_SPEED = 10;
+    private static final int SHELL_SPEED = 1;
+    public static final double SHELL_SIZE = 2;
 
     BattleShip battleShip;
 
@@ -113,7 +111,8 @@ public class Turret extends GameObject {
                 Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
                 Vector2D pos = Vector2D.rotateAround(new Vector2D(center.x, center.y), new Vector2D(barrelX, frontPosY), rotation, Vector2D.COUNTERCLOCKWISE);
 
-                master.create(new Shell(pos, new Vector2D(10, 10), shellVel));
+                master.debugPos(pos);
+                master.create(new Shell(pos, new Vector2D(SHELL_SIZE, SHELL_SIZE), shellVel));
             }
         }
     }

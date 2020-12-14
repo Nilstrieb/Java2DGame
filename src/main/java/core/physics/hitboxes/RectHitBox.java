@@ -175,7 +175,7 @@ public class RectHitBox extends Hitbox {
     public void draw(Graphics2D g2d) {
 
         Vector2D abs = Coords.getWorldCoords(x1);
-        Vector2D sizeAbs = Coords.getWorldCoordsSize(Vector2D.subtract(y2, x1));
+        Vector2D sizeAbs = Coords.getWorldCoords(Vector2D.subtract(y2, x1));
 
         g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.x, (int)sizeAbs.y);
         g2d.setPaint(Color.MAGENTA);

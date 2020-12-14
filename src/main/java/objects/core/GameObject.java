@@ -62,7 +62,7 @@ public abstract class GameObject implements Drawable {
      */
     public void drawRect(Graphics2D g2d) {
         Vector2D abs = Coords.getWorldCoords(position);
-        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
+        Vector2D sizeAbs = Coords.getWorldCoords(size);
 
         g2d.setPaint(mainColor);
         g2d.fillRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
@@ -75,20 +75,32 @@ public abstract class GameObject implements Drawable {
      */
     public void fillOval(Graphics2D g2d) {
         Vector2D abs = Coords.getWorldCoords(position);
-        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
+        Vector2D sizeAbs = Coords.getWorldCoords(size);
 
         g2d.setPaint(mainColor);
         g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
     }
 
     /**
-     * This method draws a rectangle at the current position and size
+     * This method draws an oval at the current position and size
      *
      * @param g2d The Graphics2D object provided by the master
      */
     public void drawOval(Graphics2D g2d) {
-        Vector2D abs = Coords.getWorldCoords(position);
-        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
+        drawOval(g2d, "");
+    }
+
+    /**
+     * This method draws an oval at the current position and size with arguments
+     *
+     * @param g2d The Graphics2D object provided by the master
+     */
+    public void drawOval(Graphics2D g2d, String arg) {
+
+        Vector2D abs;
+
+        abs = (arg.contains("center")) ? Coords.getWorldCoords(getCenterPosition()) : Coords.getWorldCoords(position);
+        Vector2D sizeAbs = Coords.getWorldCoords(size);
 
         g2d.setPaint(mainColor);
         g2d.drawOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
@@ -103,7 +115,7 @@ public abstract class GameObject implements Drawable {
      */
     public void drawRoundRect(Graphics2D g2d, int arcW, int arcH) {
         Vector2D abs = Coords.getWorldCoords(position);
-        Vector2D sizeAbs = Coords.getWorldCoordsSize(size);
+        Vector2D sizeAbs = Coords.getWorldCoords(size);
 
         g2d.setPaint(mainColor);
         g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, arcW, arcH);
@@ -116,8 +128,8 @@ public abstract class GameObject implements Drawable {
 
 
     public Vector2D getMapCoords(Vector2D value) {
-        double x = (position.x + value.x / 100d * size.x);
-        double y = (position.y + value.y / 100d * size.y);
+        double x = position.x + value.x;
+        double y = position.y + value.y;
         return new Vector2D(x, y);
 
     }
@@ -134,7 +146,7 @@ public abstract class GameObject implements Drawable {
     }
 
     public Vector2D getWorldCoordsFromLocalSize(Vector2D value) {
-        return Coords.getWorldCoordsSize(getMapCoordsSize(value));
+        return Coords.getWorldCoords(getMapCoordsSize(value));
     }
 
     public Vector2D getCenterPosition(Vector2D position){

@@ -22,8 +22,13 @@ public class Coords {
     public static Master master = Master.getMaster();
 
 
+    /**
+     * Get the world coordinates of a point in map coordinates
+     * @param value A point in map coordinates
+     * @return The point in world coordinates
+     */
     public static Vector2D getWorldCoords(Vector2D value) {
-        double x = (value.x / (Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO) * master.getW());
+        double x = (value.x / Master.SCREEN_Y_COORDINATES / Master.SCREEN_RATIO * master.getW());
         double y = (value.y / Master.SCREEN_Y_COORDINATES * master.getH());
         return new Vector2D(x, y);
     }
@@ -39,11 +44,4 @@ public class Coords {
         double y = (value.y / master.getH()) * Master.SCREEN_Y_COORDINATES;
         return new Vector2D(x, y);
     }
-
-    public static Vector2D getWorldCoordsSize(Vector2D value) {
-        double x = (value.x / Master.SCREEN_Y_COORDINATES * master.getH());
-        double y = (value.y / Master.SCREEN_Y_COORDINATES * master.getH());
-        return new Vector2D(x, y);
-    }
-
 }

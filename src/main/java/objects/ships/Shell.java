@@ -10,19 +10,18 @@ import java.awt.*;
 /**
  * A shell fired by a cannon
  */
-//TODO why tf do shells not use map coords...
 public class Shell extends GameObject {
 
 
     public Shell(Vector2D position, Vector2D size, Vector2D velocity) {
         super(position, size/*, new RectHitBox(position, size)*/);
         this.velocity = velocity;
+        this.mainColor = Color.ORANGE;
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setPaint(Color.orange);
-        g2d.fillOval((int) position.x, (int) position.y, (int) size.x, (int) size.y);
+        fillOval(g2d);
     }
 
     @Override
