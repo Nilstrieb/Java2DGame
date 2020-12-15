@@ -4,7 +4,7 @@ package core.math;
 import java.awt.*;
 
 /**
- * A 2-dimensional Vector that can be used to store position or velocity
+ * A 2-dimensional Vector that can be used to store position or velocity or size or whatever
  */
 public class Vector2D {
 

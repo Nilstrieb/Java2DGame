@@ -9,7 +9,7 @@ import java.awt.*;
 
 /**
  * The GameObject class is the superclass of every GameObject that can be displayed on screen. It has the 2
- * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be
+ * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be overridden
  */
 public abstract class GameObject implements Drawable {
 
@@ -99,7 +99,12 @@ public abstract class GameObject implements Drawable {
 
         Vector2D abs;
 
-        abs = (arg.contains("center")) ? Coords.getWorldCoords(getCenterPosition()) : Coords.getWorldCoords(position);
+        if(arg.contains("center")){
+            abs = Coords.getWorldCoords(new Vector2D(position.x - size.x / 2, position.y - size.y / 2));
+        } else {
+            abs = Coords.getWorldCoords(position);
+        }
+
         Vector2D sizeAbs = Coords.getWorldCoords(size);
 
         g2d.setPaint(mainColor);
