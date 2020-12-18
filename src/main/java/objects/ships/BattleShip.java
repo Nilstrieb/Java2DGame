@@ -14,10 +14,9 @@ public class BattleShip extends GameObject {
 
     public BattleShip(Color mainColor) {
         this(20, 20, 10, 40, mainColor);
-        //TODO turret size should use w and h but correct just like with world coords
-        turrets.add(new Turret(this, 2.5, 10, 5, 3));
-        //turrets.add(new Turret(this, 25, 10, 50, 2));
-        //turrets.add(new Turret(this, 25, 70, 50, 2));
+        turrets.add(new Turret(this, 2.5, 7, 5, 3));
+        turrets.add(new Turret(this, 2.5, 15, 5, 3));
+        turrets.add(new Turret(this, 2.5, 25, 5, 3));
     }
 
     public BattleShip(double x, double y, double xSize, double ySize, Color mainColor) {

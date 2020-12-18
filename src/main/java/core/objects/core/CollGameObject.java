@@ -5,12 +5,16 @@ import core.objects.core.GameObject;
 import core.physics.Collidable;
 import core.physics.hitboxes.Hitbox;
 
+import java.util.ArrayList;
+
 /**
  * A specialization of GameObject with Collidable properties
  */
 public abstract class CollGameObject extends GameObject implements Collidable {
 
     protected Hitbox hitbox;
+    protected ArrayList<Class<?>> ignores = new ArrayList<>();
+    protected boolean isTrigger = false;
 
     public CollGameObject(Vector2D position, Vector2D size, Hitbox hitbox) {
         super(position, size);
@@ -53,5 +57,19 @@ public abstract class CollGameObject extends GameObject implements Collidable {
     @Override
     public Vector2D getSize() {
         return size;
+    }
+
+    @Override
+    public void onCollision() {
+    }
+
+    @Override
+    public ArrayList<Class<?>> getIgnores() {
+        return ignores;
+    }
+
+    @Override
+    public boolean isTrigger() {
+        return isTrigger;
     }
 }

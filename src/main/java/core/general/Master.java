@@ -1,12 +1,15 @@
-package core;
+package core.general;
 
 import core.math.Vector2D;
+import core.objects.core.CollGameObject;
 import core.physics.Collidable;
 import core.physics.Collision;
 import core.objects.base.DebugPos;
+import core.physics.hitboxes.Hitbox;
 import objects.ships.BattleShip;
 import core.objects.core.GameObject;
 import objects.ships.Submarine;
+import objects.ships.Turret;
 import objects.world.Grid;
 import objects.world.Wall;
 
@@ -45,6 +48,7 @@ public class Master extends JPanel {
      */
     private final ArrayList<ArrayList<Drawable>> drawables;
 
+
     /**
      * All physics objects that exist
      */
@@ -54,6 +58,11 @@ public class Master extends JPanel {
      * Stores all GameObjects that were created during a frame
      */
     private final ArrayList<GameObject> objectBuffer;
+
+    /**
+     * All physics objects that exist
+     */
+    private final ArrayList<Collidable> collidablesBuffer;
 
     /**
      * Whether the left mouse button has been pressed since the last frame
@@ -74,6 +83,7 @@ public class Master extends JPanel {
         objects = new ArrayList<>();
         objectBuffer = new ArrayList<>();
         collidables = new ArrayList<>();
+        collidablesBuffer = new ArrayList<>();
         drawables = new ArrayList<>();
         drawables.add(new ArrayList<>());
 
@@ -82,9 +92,11 @@ public class Master extends JPanel {
 
         BattleShip battleShip = new BattleShip(Color.DARK_GRAY);
         BattleShip bs = new BattleShip(140, 10, 10, 80, Color.GREEN);
-        /*for (int i = 0; i < 10; i++) {
-            bs.addTurret(new Turret(bs, 25, 10 * i + 1, 50, i % 5));
-        }*/
+
+        for (int i = 0; i < 8; i++) {
+            bs.addTurret(new Turret(bs, 2.5, 10 * i + 1, 5, (i % 5 )+ 1));
+
+        }
         create(bs);
         create(battleShip);
 
@@ -143,11 +155,16 @@ public class Master extends JPanel {
      * This method is the entry method for each frame. It handles everything about the frame
      */
     public void refresh() {
+        long time = System.currentTimeMillis();
+        objects.clear();
         objects.addAll(objectBuffer);
-        objectBuffer.clear();
-        objects.forEach(GameObject::update);
+        collidables.clear();
+        collidables.addAll(collidablesBuffer);
+        objects.forEach(GameObject::startUpdate);
+        long time2 = System.currentTimeMillis();
         mousePressed = false;
         repaint();
+        System.out.println("Frame took " + (System.currentTimeMillis() - time) + "ms, " + (time2 - time) + "ms for update, " + (System.currentTimeMillis() - time2) + "ms for draw");
     }
 
     /**
@@ -182,8 +199,8 @@ public class Master extends JPanel {
      */
     public void create(GameObject obj, int renderLayer) {
         objectBuffer.add(obj);
-        if (obj instanceof Collidable) {
-            collidables.add((Collidable) obj);
+        if (obj instanceof CollGameObject) {
+            collidablesBuffer.add((Collidable) obj);
         }
         addDrawable(obj, renderLayer);
 
@@ -221,15 +238,20 @@ public class Master extends JPanel {
      * @return True if it collides with something, false if it doesn't - Should return a Collision
      */
     public Collision doesCollide(Collidable collidable) {
+        long time = System.nanoTime();
         Collision collides = null;
 
         for (Collidable other : collidables) {
-            double distance = Vector2D.distance(other.getCenterPos(), collidable.getCenterPos());
 
-            if (other != collidable && (distance < other.getHitbox().getSize() + collidable.getHitbox().getSize())) {
+            if (!collidable.getIgnores().contains(other.getClass()) && !other.isTrigger()) {  //ONLY calculate when it's not ignored
 
-                if (other.getHitbox().collidesWith(collidable.getHitbox())) {
-                    collides = new Collision(collidable, other);
+                double distance = Vector2D.distance(other.getCenterPos(), collidable.getCenterPos());
+                if (other != collidable && (distance < other.getHitbox().getSize() + collidable.getHitbox().getSize())) {
+
+                    if (other.getHitbox().collidesWith(collidable.getHitbox())) {
+                        collides = new Collision(collidable, other);
+                        collidable.onCollision();
+                    }
                 }
             }
         }
@@ -245,11 +267,11 @@ public class Master extends JPanel {
     }
 
     public void destroy(GameObject gameObject) {
-        objects.remove(gameObject);
         objectBuffer.remove(gameObject);
         drawables.get(gameObject.getLayer()).remove(gameObject);
         if (gameObject instanceof Collidable) {
-            collidables.remove(gameObject);
+            collidablesBuffer.remove(gameObject);
+            drawables.get(Hitbox.HITBOX_RENDER_LAYER).remove(((CollGameObject) gameObject).getHitbox());
         }
     }
 }

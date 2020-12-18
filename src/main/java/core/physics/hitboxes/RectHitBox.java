@@ -1,7 +1,7 @@
 package core.physics.hitboxes;
 
 import core.math.Coords;
-import core.Master;
+import core.general.Master;
 import core.math.Vector2D;
 
 import java.awt.*;
@@ -31,7 +31,7 @@ public class RectHitBox extends Hitbox {
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
         this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
-        Master.getMaster().addDrawable(this, 1);
+        Master.getMaster().addDrawable(this, HITBOX_RENDER_LAYER);
     }
 
     /**
@@ -46,7 +46,6 @@ public class RectHitBox extends Hitbox {
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
         this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
-        Master.getMaster().addDrawable(this, 1);
     }
 
     /**
@@ -166,10 +165,10 @@ public class RectHitBox extends Hitbox {
         return y2;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "RectHitBox{" + x1 + " " + x2 + "\n" + y1 + " " + y2 + "}";
-    }
+    }*/
 
     @Override
     public void draw(Graphics2D g2d) {
@@ -177,7 +176,7 @@ public class RectHitBox extends Hitbox {
         Vector2D abs = Coords.getWorldCoords(x1);
         Vector2D sizeAbs = Coords.getWorldCoords(Vector2D.subtract(y2, x1));
 
-        g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.x, (int)sizeAbs.y);
         g2d.setPaint(Color.MAGENTA);
+        g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.x, (int)sizeAbs.y);
     }
 }

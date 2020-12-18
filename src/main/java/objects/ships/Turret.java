@@ -81,8 +81,8 @@ public class Turret extends GameObject {
 
         Point msLoc = master.getMouseLocation();
         Vector2D mouseRel = Coords.getMapCoordsFromWorld(Vector2D.fromPoint(msLoc)); //100 correct
-        Vector2D center = battleShip.getMapCoords(getCenterPosition());
-        double targetRotation = -Math.atan2(center.x - mouseRel.x, center.y - mouseRel.y);
+        Vector2D centerMap = battleShip.getMapCoords(getCenterPosition());
+        double targetRotation = -Math.atan2(centerMap.x - mouseRel.x, centerMap.y - mouseRel.y);
 
         rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
 
@@ -98,14 +98,13 @@ public class Turret extends GameObject {
                 lastShot = System.currentTimeMillis();
 
                 Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
-                master.debugPos(battleShip.getMapCoords(center));
-                master.debugPos(center);
+                //master.debugPos(centerMap);
                 Vector2D pos = Vector2D.rotateAround(
-                        battleShip.getMapCoords(center),
+                        centerMap,
                         spawnPosNR,
                         rotation);
 
-                master.debugPos(pos);
+                //master.debugPos(pos);
                 master.create(new Shell(pos, new Vector2D(SHELL_SIZE, SHELL_SIZE), shellVel));
             }
         }

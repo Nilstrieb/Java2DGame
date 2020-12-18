@@ -1,11 +1,12 @@
 package core.physics.hitboxes;
 
-import core.Drawable;
+import core.general.Drawable;
 import core.math.Vector2D;
-import core.physics.Collision;
 
 public abstract class Hitbox implements Drawable {
 
+
+    public static final int HITBOX_RENDER_LAYER = 1;
     private final boolean isTrigger;
 
     protected Hitbox(boolean isTrigger) {

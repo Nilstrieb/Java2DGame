@@ -1,17 +1,19 @@
 package core.objects.core;
 
 import core.math.Coords;
-import core.Drawable;
-import core.Master;
+import core.general.Drawable;
+import core.general.Master;
 import core.math.Vector2D;
 
 import java.awt.*;
 
 /**
  * The GameObject class is the superclass of every GameObject that can be displayed on screen. It has the 2
- * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be
+ * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be overridden
  */
 public abstract class GameObject implements Drawable {
+
+    protected boolean doesDespawn = true;
 
     protected Vector2D position;
     protected Vector2D size;
@@ -37,6 +39,12 @@ public abstract class GameObject implements Drawable {
         this.layer = 0;
     }
 
+    public void startUpdate(){
+        if(Coords.outOfBounds(position, size)){
+            destroy();
+        }
+        update();
+    }
 
     /**
      * <p>The update method is called every frame before the {@link #draw(Graphics2D)} method by the master object on each object. Everything
@@ -99,7 +107,12 @@ public abstract class GameObject implements Drawable {
 
         Vector2D abs;
 
-        abs = (arg.contains("center")) ? Coords.getWorldCoords(getCenterPosition()) : Coords.getWorldCoords(position);
+        if(arg.contains("center")){
+            abs = Coords.getWorldCoords(new Vector2D(position.x - size.x / 2, position.y - size.y / 2));
+        } else {
+            abs = Coords.getWorldCoords(position);
+        }
+
         Vector2D sizeAbs = Coords.getWorldCoords(size);
 
         g2d.setPaint(mainColor);
@@ -121,7 +134,6 @@ public abstract class GameObject implements Drawable {
         g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, arcW, arcH);
     }
 
-    @Deprecated
     public void destroy() {
         master.destroy(this);
     }

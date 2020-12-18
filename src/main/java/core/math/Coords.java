@@ -1,7 +1,6 @@
 package core.math;
 
-import core.Master;
-import core.math.Vector2D;
+import core.general.Master;
 
 /**
  * This class provides everything about the local coordinate system the game uses
@@ -24,6 +23,7 @@ public class Coords {
 
     /**
      * Get the world coordinates of a point in map coordinates
+     *
      * @param value A point in map coordinates
      * @return The point in world coordinates
      */
@@ -43,5 +43,11 @@ public class Coords {
         double x = (value.x / master.getW()) * Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO;
         double y = (value.y / master.getH()) * Master.SCREEN_Y_COORDINATES;
         return new Vector2D(x, y);
+    }
+
+    public static boolean outOfBounds(Vector2D position, Vector2D size) {
+
+        return  (position.x + size.magnitude() < 0 || position.x - size.magnitude() > Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO ||
+                position.y + size.magnitude() < 0 || position.y - position.magnitude() > Master.SCREEN_Y_COORDINATES);
     }
 }

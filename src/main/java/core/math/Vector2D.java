@@ -4,7 +4,7 @@ package core.math;
 import java.awt.*;
 
 /**
- * A 2-dimensional Vector that can be used to store position or velocity
+ * A 2-dimensional Vector that can be used to store position or velocity or size or whatever
  */
 public class Vector2D {
 
@@ -43,6 +43,7 @@ public class Vector2D {
     public static Vector2D fromPoint(Point point) {
         return new Vector2D(point.x, point.y);
     }
+
 
     /**
      * Add another Vector to this vector, modifies this object
@@ -121,6 +122,17 @@ public class Vector2D {
      */
     public static Vector2D subtract(Vector2D a, Vector2D b) {
         return new Vector2D(a.x - b.x, a.y - b.y);
+    }
+
+    /**
+     * Divide a Vector by a scalar
+     *
+     * @param a Vector a
+     * @param b Scalar b
+     * @return The result
+     */
+    public static Vector2D divideS(Vector2D a, double b) {
+        return new Vector2D(a.x / b, a.y / b);
     }
 
     /**

@@ -27,5 +27,4 @@ public class Submarine extends CollGameObject {
         Vector2D centerRelPos = new Vector2D(relPos.x - size.x/2, relPos.y - size.y/2);
         moveTo(centerRelPos);
     }
-
 }

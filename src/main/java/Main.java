@@ -1,4 +1,4 @@
-import core.Master;
+import core.general.Master;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +24,8 @@ class Main extends JFrame {
         add(master);
 
         setTitle("Points");
-        setSize(1000, (int) (1000 / Master.SCREEN_RATIO));
+        int w = 1500;
+        setSize(w, (int) (w / Master.SCREEN_RATIO));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
