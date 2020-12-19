@@ -6,12 +6,7 @@ import core.physics.Collidable;
 import core.physics.Collision;
 import core.objects.base.DebugPos;
 import core.physics.hitboxes.Hitbox;
-import objects.ships.BattleShip;
 import core.objects.core.GameObject;
-import objects.ships.Submarine;
-import objects.ships.Turret;
-import objects.world.Grid;
-import objects.world.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,10 +59,6 @@ public class Master extends JPanel {
      */
     private final ArrayList<Collidable> collidablesBuffer;
 
-    /**
-     * Whether the left mouse button has been pressed since the last frame
-     */
-    private boolean mousePressed = false;
 
     /**
      * The current width and height of the game area
@@ -86,22 +77,6 @@ public class Master extends JPanel {
         collidablesBuffer = new ArrayList<>();
         drawables = new ArrayList<>();
         drawables.add(new ArrayList<>());
-
-        create(new Grid());
-
-
-        BattleShip battleShip = new BattleShip(Color.DARK_GRAY);
-        BattleShip bs = new BattleShip(140, 10, 10, 80, Color.GREEN);
-
-        for (int i = 0; i < 8; i++) {
-            bs.addTurret(new Turret(bs, 2.5, 10 * i + 1, 5, (i % 5 )+ 1));
-
-        }
-        create(bs);
-        create(battleShip);
-
-        create(new Submarine(new Vector2D(), new Vector2D(5, 5)));
-        create(new Wall(20, 80, 50, 2));
     }
 
     public static Master getMaster() {
@@ -113,6 +88,7 @@ public class Master extends JPanel {
      *
      * @param g
      */
+    @Deprecated
     private void doDrawing(Graphics g) {
 
         if (getWidth() * 9 > getHeight() * 16) {
@@ -144,12 +120,7 @@ public class Master extends JPanel {
         create(new DebugPos(pos, new Vector2D(2, 2)), 3);
     }
 
-    /**
-     * Call this method when the user pressed the left mouse button
-     */
-    public void mousePressed() {
-        mousePressed = true;
-    }
+
 
     /**
      * This method is the entry method for each frame. It handles everything about the frame
@@ -162,7 +133,7 @@ public class Master extends JPanel {
         collidables.addAll(collidablesBuffer);
         objects.forEach(GameObject::startUpdate);
         long time2 = System.currentTimeMillis();
-        mousePressed = false;
+        Input.frameReset();
         repaint();
         System.out.println("Frame took " + (System.currentTimeMillis() - time) + "ms, " + (time2 - time) + "ms for update, " + (System.currentTimeMillis() - time2) + "ms for draw");
     }
@@ -178,9 +149,6 @@ public class Master extends JPanel {
         return p;
     }
 
-    public boolean isMousePressed() {
-        return mousePressed;
-    }
 
     /**
      * This method has to be called for every newly created GameObject
@@ -203,7 +171,6 @@ public class Master extends JPanel {
             collidablesBuffer.add((Collidable) obj);
         }
         addDrawable(obj, renderLayer);
-
     }
 
     /**

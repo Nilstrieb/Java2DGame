@@ -1,4 +1,6 @@
-import core.general.Master;
+package core.general;
+
+import objects.Init;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,8 @@ class Main extends JFrame {
         master = new Master();
         add(master);
 
+        Init.init();
+
         setTitle("Points");
         int w = 1500;
         setSize(w, (int) (w / Master.SCREEN_RATIO));
@@ -32,7 +36,7 @@ class Main extends JFrame {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                master.mousePressed();
+                Input.mousePressed();
             }
         });
     }

@@ -39,8 +39,11 @@ public abstract class GameObject implements Drawable {
         this.layer = 0;
     }
 
+    /**
+     * Gets called at the start of the update method
+     */
     public void startUpdate(){
-        if(Coords.outOfBounds(position, size)){
+        if(doesDespawn && Coords.outOfBounds(position, size)){
             destroy();
         }
         update();

@@ -12,6 +12,7 @@ public class Submarine extends CollGameObject {
     public Submarine(Vector2D position, Vector2D size) {
         super(position, size, new RectHitBox(position, size));
         this.mainColor = Color.BLUE;
+        doesDespawn = false;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package objects.ships;
 
+import core.general.Input;
 import core.math.Coords;
 import core.math.ExMath;
 import core.math.Vector2D;
@@ -94,7 +95,7 @@ public class Turret extends GameObject {
 
             Vector2D spawnPosNR = battleShip.getMapCoords(new Vector2D(barrelX, frontPosY));
 
-            if (master.isMousePressed()) {
+            if (Input.isMousePressed()) {
                 lastShot = System.currentTimeMillis();
 
                 Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
