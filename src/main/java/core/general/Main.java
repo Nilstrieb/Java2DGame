@@ -4,6 +4,8 @@ import objects.Init;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -39,9 +41,23 @@ class Main extends JFrame {
                 Input.mousePressed();
             }
         });
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                Input.addPressedKey(e.getKeyCode());
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                System.err.println("released");
+                Input.removePressKey(e.getKeyCode());
+            }
+        });
     }
 
     public static void main(String[] args) {
+
 
         EventQueue.invokeLater(() -> {
 

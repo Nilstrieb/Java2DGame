@@ -16,6 +16,8 @@ import java.awt.*;
  */
 public class Init {
 
+    public static final boolean DEBUG_MODE = false;
+
     /**
      * Create a new GameObject
      * @param o The GameObject

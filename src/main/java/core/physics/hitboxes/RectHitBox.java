@@ -3,6 +3,7 @@ package core.physics.hitboxes;
 import core.math.Coords;
 import core.general.Master;
 import core.math.Vector2D;
+import objects.Init;
 
 import java.awt.*;
 
@@ -21,8 +22,8 @@ public class RectHitBox extends Hitbox {
     /**
      * Create a new RectHitbox with the position of the top left point {@code x1} and the size
      *
-     * @param x1   The top left point
-     * @param size the size
+     * @param x1        The top left point
+     * @param size      the size
      * @param isTrigger Whether the hitbox is a trigger (only collision detection, not restricting movement
      */
     public RectHitBox(Vector2D x1, Vector2D size, boolean isTrigger) {
@@ -31,7 +32,9 @@ public class RectHitBox extends Hitbox {
         this.x2 = Vector2D.add(x1, new Vector2D(size.x, 0));
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
         this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
-        Master.getMaster().addDrawable(this, HITBOX_RENDER_LAYER);
+        if (Init.DEBUG_MODE) {
+            Master.getMaster().addDrawable(this, HITBOX_RENDER_LAYER);
+        }
     }
 
     /**
@@ -51,7 +54,7 @@ public class RectHitBox extends Hitbox {
     /**
      * Move the hitbox to a new position
      *
-     * @param x1 The new position
+     * @param x1   The new position
      * @param size The new size
      */
     @Override
@@ -177,6 +180,6 @@ public class RectHitBox extends Hitbox {
         Vector2D sizeAbs = Coords.getWorldCoords(Vector2D.subtract(y2, x1));
 
         g2d.setPaint(Color.MAGENTA);
-        g2d.drawRect((int)abs.x, (int)abs.y, (int)sizeAbs.x, (int)sizeAbs.y);
+        g2d.drawRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
     }
 }

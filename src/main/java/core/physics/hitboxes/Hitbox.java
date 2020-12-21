@@ -7,7 +7,8 @@ public abstract class Hitbox implements Drawable {
 
 
     public static final int HITBOX_RENDER_LAYER = 1;
-    private final boolean isTrigger;
+
+    private final boolean isTrigger; //TODO trigger
 
     protected Hitbox(boolean isTrigger) {
         this.isTrigger = isTrigger;

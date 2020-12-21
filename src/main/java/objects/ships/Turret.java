@@ -23,8 +23,6 @@ public class Turret extends GameObject {
 
     private int barrelAmount = 3;
 
-    private double rotation;
-
     private final Color mainColor;
 
     private long lastShot = 0;

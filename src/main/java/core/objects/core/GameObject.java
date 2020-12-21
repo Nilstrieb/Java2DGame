@@ -16,8 +16,8 @@ public abstract class GameObject implements Drawable {
     protected boolean doesDespawn = true;
 
     protected Vector2D position;
+    protected double rotation;
     protected Vector2D size;
-
     protected Vector2D velocity;
 
     protected Color mainColor;
@@ -34,7 +34,7 @@ public abstract class GameObject implements Drawable {
         this.position = position;
         this.size = size;
         this.velocity = new Vector2D();
-        mainColor = Color.BLACK;
+        this.mainColor = Color.BLACK;
         this.master = Master.getMaster();
         this.layer = 0;
     }
@@ -130,11 +130,19 @@ public abstract class GameObject implements Drawable {
      * @param arcH The arc height of the rectangle
      */
     public void drawRoundRect(Graphics2D g2d, int arcW, int arcH) {
+
         Vector2D abs = Coords.getWorldCoords(position);
         Vector2D sizeAbs = Coords.getWorldCoords(size);
 
+        int xCenterAbs = (int) (abs.x + sizeAbs.x / 2);
+        int yCenterAbs = (int) (abs.y + sizeAbs.y / 2);
+
         g2d.setPaint(mainColor);
+
+        g2d.rotate(rotation, xCenterAbs, yCenterAbs);
         g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, arcW, arcH);
+
+        g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
     }
 
     public void destroy() {
@@ -164,5 +172,9 @@ public abstract class GameObject implements Drawable {
 
     public int getLayer() {
         return layer;
+    }
+
+    protected Vector2D getV2DRotation(){
+        return Vector2D.getUnitVector(rotation);
     }
 }

@@ -7,6 +7,7 @@ import core.physics.Collision;
 import core.objects.base.DebugPos;
 import core.physics.hitboxes.Hitbox;
 import core.objects.core.GameObject;
+import objects.Init;
 
 import javax.swing.*;
 import java.awt.*;
@@ -121,12 +122,12 @@ public class Master extends JPanel {
     }
 
 
-
     /**
      * This method is the entry method for each frame. It handles everything about the frame
      */
     public void refresh() {
         long time = System.currentTimeMillis();
+        Input.calculate();
         objects.clear();
         objects.addAll(objectBuffer);
         collidables.clear();
@@ -238,7 +239,9 @@ public class Master extends JPanel {
         drawables.get(gameObject.getLayer()).remove(gameObject);
         if (gameObject instanceof Collidable) {
             collidablesBuffer.remove(gameObject);
-            drawables.get(Hitbox.HITBOX_RENDER_LAYER).remove(((CollGameObject) gameObject).getHitbox());
+            if (Init.DEBUG_MODE) {
+                drawables.get(Hitbox.HITBOX_RENDER_LAYER).remove(((CollGameObject) gameObject).getHitbox());
+            }
         }
     }
 }
