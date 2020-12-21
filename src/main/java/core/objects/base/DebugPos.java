@@ -1,6 +1,5 @@
 package core.objects.base;
 
-import core.math.Coords;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
 

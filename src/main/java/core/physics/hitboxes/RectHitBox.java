@@ -1,6 +1,6 @@
 package core.physics.hitboxes;
 
-import core.math.Coords;
+import core.math.Coordinates;
 import core.general.Master;
 import core.math.Vector2D;
 import objects.Init;
@@ -10,6 +10,7 @@ import java.awt.*;
 /**
  * A rectangular hitbox
  */
+//TODO hitbox position not calculated correctlyA
 public class RectHitBox extends Hitbox {
 
     /**
@@ -176,8 +177,8 @@ public class RectHitBox extends Hitbox {
     @Override
     public void draw(Graphics2D g2d) {
 
-        Vector2D abs = Coords.getWorldCoords(x1);
-        Vector2D sizeAbs = Coords.getWorldCoords(Vector2D.subtract(y2, x1));
+        Vector2D abs = Coordinates.getWorldCoordinates(x1);
+        Vector2D sizeAbs = Coordinates.getWorldCoordinates(Vector2D.subtract(y2, x1));
 
         g2d.setPaint(Color.MAGENTA);
         g2d.drawRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);

@@ -1,6 +1,6 @@
 package objects.ships;
 
-import core.math.Coords;
+import core.math.Coordinates;
 import core.math.Vector2D;
 import core.physics.hitboxes.RectHitBox;
 import core.objects.core.CollGameObject;
@@ -24,7 +24,7 @@ public class Submarine extends CollGameObject {
     @Override
     public void update() {
         Point mouse = master.getMouseLocation();
-        Vector2D relPos = Coords.getMapCoordsFromWorld(new Vector2D(mouse.x, mouse.y));
+        Vector2D relPos = Coordinates.getMapCoordinatesFromWorld(new Vector2D(mouse.x, mouse.y));
         Vector2D centerRelPos = new Vector2D(relPos.x - size.x/2, relPos.y - size.y/2);
         moveTo(centerRelPos);
     }

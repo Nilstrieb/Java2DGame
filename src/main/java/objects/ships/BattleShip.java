@@ -2,7 +2,9 @@ package objects.ships;
 
 import core.general.Input;
 import core.math.Vector2D;
+import core.objects.core.CollGameObject;
 import core.objects.core.GameObject;
+import core.physics.hitboxes.RectHitBox;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 /**
  * A Battleship that can have several turrets
  */
-public class BattleShip extends GameObject {
+public class BattleShip extends CollGameObject {
 
     public static final double SPPED = 1;
     private static final double TURN_RATE = 0.05;
@@ -29,7 +31,7 @@ public class BattleShip extends GameObject {
     }
 
     public BattleShip(double x, double y, double xSize, double ySize, Color mainColor) {
-        super(x, y, xSize, ySize);
+        super(x, y, xSize, ySize, new RectHitBox(new Vector2D(x, y), new Vector2D(xSize, ySize)));
         turrets = new ArrayList<>();
         this.mainColor = mainColor;
         this.doesDespawn = false;
@@ -46,7 +48,8 @@ public class BattleShip extends GameObject {
     public void update() {
 
         if (playerControlled) {
-            position.add(getV2DRotation().multiply(Input.getVerticalAxis() * SPPED));
+
+            moveTo(Vector2D.add(position, getV2DRotation().multiply(Input.getVerticalAxis() * SPPED)));
 
             rotation += Input.getHorizontalAxis() * TURN_RATE;
         }

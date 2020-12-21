@@ -7,12 +7,12 @@ import core.general.Master;
  * <p>In this system, the screen is always 100 high and 100 * the screen ration wide.
  * This class is the used to convert these coordinates into the true Java 2D coordinates for the drawing</p>
  */
-public class Coords {
+public class Coordinates {
 
     /**
      * This utility class should not be instantiated
      */
-    private Coords() {
+    private Coordinates() {
     }
 
     /**
@@ -27,7 +27,7 @@ public class Coords {
      * @param value A point in map coordinates
      * @return The point in world coordinates
      */
-    public static Vector2D getWorldCoords(Vector2D value) {
+    public static Vector2D getWorldCoordinates(Vector2D value) {
         double x = (value.x / Master.SCREEN_Y_COORDINATES / Master.SCREEN_RATIO * master.getW());
         double y = (value.y / Master.SCREEN_Y_COORDINATES * master.getH());
         return new Vector2D(x, y);
@@ -39,7 +39,7 @@ public class Coords {
      * @param value The Vector2D position in Java 2D coordinates
      * @return The Vector2D position in map coordinates
      */
-    public static Vector2D getMapCoordsFromWorld(Vector2D value) {
+    public static Vector2D getMapCoordinatesFromWorld(Vector2D value) {
         double x = (value.x / master.getW()) * Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO;
         double y = (value.y / master.getH()) * Master.SCREEN_Y_COORDINATES;
         return new Vector2D(x, y);
