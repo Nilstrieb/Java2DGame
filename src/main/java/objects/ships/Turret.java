@@ -18,9 +18,6 @@ public class Turret extends GameObject {
     private static final int SHELL_SPEED = 1;
     public static final double SHELL_SIZE = 2;
     private static final double BARREL_THICKNESS = 1.7;
-
-    BattleShip battleShip;
-
     private int barrelAmount = 3;
 
     private final Color mainColor;
@@ -29,21 +26,21 @@ public class Turret extends GameObject {
 
     public Turret(BattleShip battleShip, double x, double y, double size, int barrelAmount) {
         super(x, y, size, size);
-        this.battleShip = battleShip;
+        this.parent = battleShip;
         this.barrelAmount = barrelAmount;
         mainColor = Color.GRAY;
     }
 
     public Turret(BattleShip battleShip) {
         super(25, 50, 1.25, 0.5);
-        this.battleShip = battleShip;
+        this.parent = battleShip;
         mainColor = Color.GRAY;
     }
 
     @Override
     public void draw(Graphics2D g2d) {
         g2d.setPaint(mainColor);
-        Vector2D abs = battleShip.getWorldCoordsFromLocal(position);
+        Vector2D abs = parent.getWorldCoordsFromLocal(position);
         int sizeAbs = (int) Coordinates.getWorldCoordinates(size).x;
         int xCenterAbs = (int) (abs.x + sizeAbs / 2);
         int yCenterAbs = (int) (abs.y + sizeAbs / 2);
@@ -80,7 +77,7 @@ public class Turret extends GameObject {
 
         Point msLoc = master.getMouseLocation();
         Vector2D mouseRel = Coordinates.getMapCoordinatesFromWorld(Vector2D.fromPoint(msLoc)); //100 correct
-        Vector2D centerMap = battleShip.getMapCoords(getCenterPosition());
+        Vector2D centerMap = parent.getMapCoords(getCenterPosition());
         double targetRotation = -Math.atan2(centerMap.x - mouseRel.x, centerMap.y - mouseRel.y);
 
         rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
@@ -91,7 +88,7 @@ public class Turret extends GameObject {
             int barrelX = (int) (position.x + (i + 1) * barrelSpacing);
             int frontPosY = (int) (position.y - size.x / 2);
 
-            Vector2D spawnPosNR = battleShip.getMapCoords(new Vector2D(barrelX, frontPosY));
+            Vector2D spawnPosNR = parent.getMapCoords(new Vector2D(barrelX, frontPosY));
 
             if (Input.isMousePressed()) {
                 lastShot = System.currentTimeMillis();

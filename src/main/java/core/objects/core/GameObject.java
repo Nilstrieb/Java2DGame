@@ -26,6 +26,8 @@ public abstract class GameObject implements Drawable {
 
     protected int layer;
 
+    protected GameObject parent;
+
     public GameObject(double x, double y, double xSize, double ySize) {
         this(new Vector2D(x, y), new Vector2D(xSize, ySize));
     }
@@ -150,15 +152,33 @@ public abstract class GameObject implements Drawable {
     }
 
 
+    /**
+     * Returns the value as map coords (only called on a parent)
+     * @param value
+     * @return
+     */
     public Vector2D getMapCoords(Vector2D value) {
         double x = position.x + value.x;
         double y = position.y + value.y;
         return new Vector2D(x, y);
-
     }
 
+    /**
+     * Returns the value as world coordinates (only called on a parent)
+     * @param value
+     * @return
+     */
     public Vector2D getWorldCoordsFromLocal(Vector2D value) {
         return Coordinates.getWorldCoordinates(getMapCoords(value));
+    }
+
+    /**
+     * Get world coords of a value (called on itself)
+     * @param value
+     * @return
+     */
+    public Vector2D getWorldCoords(Vector2D value){
+        return parent.getWorldCoordsFromLocal(value);
     }
 
 
