@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * A Battleship that can have several turrets
  */
-public class BattleShip extends CollGameObject {
+public class BattleShip extends GameObject {
 
     public static final double SPPED = 1;
     private static final double TURN_RATE = 0.05;
@@ -31,7 +31,7 @@ public class BattleShip extends CollGameObject {
     }
 
     public BattleShip(double x, double y, double xSize, double ySize, Color mainColor) {
-        super(x, y, xSize, ySize, new RectHitBox(new Vector2D(x, y), new Vector2D(xSize, ySize)));
+        super(x, y, xSize, ySize);
         turrets = new ArrayList<>();
         this.mainColor = mainColor;
         this.doesDespawn = false;
