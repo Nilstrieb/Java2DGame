@@ -8,9 +8,21 @@ public class Collision {
     private final Collidable a;
     private final Collidable b;
 
+    private final boolean isTrigger;
+
     public Collision(Collidable a, Collidable b) {
         this.a = a;
         this.b = b;
+
+        this.isTrigger = a.isTrigger() || b.isTrigger();
+    }
+
+    /**
+     * Whether the collision is a trigger and shouldn't impact movement
+     * @return True if it's a trigger, false when it isn't
+     */
+    public boolean isTrigger() {
+        return isTrigger;
     }
 
     /**

@@ -11,6 +11,7 @@ public interface Collidable {
     Vector2D getCenterPos();
     Vector2D getSize();
     void onCollision();
+    void onTrigger();
     ArrayList<Class<?>> getIgnores();
     boolean isTrigger();
 }

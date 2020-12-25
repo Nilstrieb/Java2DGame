@@ -3,6 +3,7 @@ package core.objects.core;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
 import core.physics.Collidable;
+import core.physics.Collision;
 import core.physics.hitboxes.Hitbox;
 
 import java.util.ArrayList;
@@ -38,7 +39,8 @@ public abstract class CollGameObject extends GameObject implements Collidable {
         this.position = target;
 
         ((Collidable) this).getHitbox().moveTo(position, size);
-        if (master.doesCollide(this) != null) {
+        Collision coll = master.doesCollide(this);
+        if (coll != null && !coll.isTrigger()) {
             this.position = oldPos;
             ((Collidable) this).getHitbox().moveTo(oldPos, size);
         }
@@ -61,6 +63,10 @@ public abstract class CollGameObject extends GameObject implements Collidable {
 
     @Override
     public void onCollision() {
+    }
+
+    @Override
+    public void onTrigger() {
     }
 
     @Override

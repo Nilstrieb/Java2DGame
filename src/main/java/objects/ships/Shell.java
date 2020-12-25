@@ -32,8 +32,7 @@ public class Shell extends CollGameObject {
     }
 
     @Override
-    public void onCollision() {
+    public void onTrigger() {
         destroy();
-        //master.debugPos(position);
     }
 }

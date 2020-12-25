@@ -206,8 +206,7 @@ public class Master extends JPanel {
      * @return True if it collides with something, false if it doesn't - Should return a Collision
      */
     public Collision doesCollide(Collidable collidable) {
-        long time = System.nanoTime();
-        Collision collides = null;
+        Collision collision = null;
 
         for (Collidable other : collidables) {
 
@@ -217,13 +216,17 @@ public class Master extends JPanel {
                 if (other != collidable && (distance < other.getHitbox().getSize() + collidable.getHitbox().getSize())) {
 
                     if (other.getHitbox().collidesWith(collidable.getHitbox())) {
-                        collides = new Collision(collidable, other);
-                        collidable.onCollision();
+                        collision = new Collision(collidable, other);
+                        if(collision.isTrigger()){
+                            collidable.onTrigger();
+                        } else {
+                            collidable.onCollision();
+                        }
                     }
                 }
             }
         }
-        return collides;
+        return collision;
     }
 
     public int getW() {
