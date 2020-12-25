@@ -1,6 +1,8 @@
 package core.math;
 
 import core.general.Master;
+import core.objects.core.MapAnchor;
+import core.objects.core.GameObject;
 
 /**
  * This class provides everything about the local coordinate system the game uses
@@ -8,6 +10,8 @@ import core.general.Master;
  * This class is the used to convert these coordinates into the true Java 2D coordinates for the drawing</p>
  */
 public class Coordinates {
+
+    public static final GameObject MAP_ANCHOR = new MapAnchor();
 
     /**
      * This utility class should not be instantiated

@@ -8,7 +8,7 @@ import core.math.Vector2D;
 import java.awt.*;
 
 /**
- * The GameObject class is the superclass of every GameObject that can be displayed on screen. It has the 2
+ * The GameObject class is the superclass of every {@code GameObject} that can be displayed on screen. It has the 2
  * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be overridden
  */
 public abstract class GameObject implements Drawable {
@@ -39,6 +39,7 @@ public abstract class GameObject implements Drawable {
         this.mainColor = Color.BLACK;
         this.master = Master.getMaster();
         this.layer = 0;
+        this.parent = Coordinates.MAP_ANCHOR;
     }
 
     /**
@@ -107,13 +108,14 @@ public abstract class GameObject implements Drawable {
      * This method draws an oval at the current position and size with arguments
      *
      * @param g2d The Graphics2D object provided by the master
+     * @param arg Arguments like "center" for the object being drawn in the center
      */
     public void drawOval(Graphics2D g2d, String arg) {
 
         Vector2D abs;
 
         if(arg.contains("center")){
-            abs = Coordinates.getWorldCoordinates(new Vector2D(position.x - size.x / 2, position.y - size.y / 2));
+            abs = Coordinates.getWorldCoordinates(getCenterPosition());
         } else {
             abs = Coordinates.getWorldCoordinates(position);
         }
@@ -147,53 +149,55 @@ public abstract class GameObject implements Drawable {
         g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
     }
 
+    /**
+     * Destroy this {@code GameObject}
+     */
     public void destroy() {
         master.destroy(this);
     }
 
 
     /**
-     * Returns the value as map coords (only called on a parent)
-     * @param value
-     * @return
+     * Returns the value as map coords
+     * @param value The value relative to the parent
+     * @return The value in global map coordinates
      */
     public Vector2D getMapCoords(Vector2D value) {
-        double x = position.x + value.x;
-        double y = position.y + value.y;
-        return new Vector2D(x, y);
+        double x = parent.position.x + value.x;
+        double y = parent.position.y + value.y;
+        return parent.getMapCoords(new Vector2D(x, y));
     }
+
 
     /**
      * Returns the value as world coordinates (only called on a parent)
-     * @param value
-     * @return
+     * @param value The value relative to the parent
+     * @return The absolute world coordinates
      */
     public Vector2D getWorldCoordsFromLocal(Vector2D value) {
         return Coordinates.getWorldCoordinates(getMapCoords(value));
     }
 
     /**
-     * Get world coords of a value (called on itself)
-     * @param value
-     * @return
+     * Get the center position of the object
+     * @return The center position
      */
-    public Vector2D getWorldCoords(Vector2D value){
-        return parent.getWorldCoordsFromLocal(value);
-    }
-
-
-    public Vector2D getCenterPosition(Vector2D position){
+    public Vector2D getCenterPosition(){
         return new Vector2D(position.x + size.x / 2, position.y + size.y / 2);
     }
 
-    public Vector2D getCenterPosition() {
-        return getCenterPosition(position);
-    }
-
+    /**
+     * Get the render layer of the object
+     * @return The render layer
+     */
     public int getLayer() {
         return layer;
     }
 
+    /**
+     * Get the rotation of the object as a Vector2D
+     * @return The rotation
+     */
     protected Vector2D getV2DRotation(){
         return Vector2D.getUnitVector(rotation);
     }

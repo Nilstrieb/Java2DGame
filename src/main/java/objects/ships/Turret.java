@@ -40,7 +40,7 @@ public class Turret extends GameObject {
     @Override
     public void draw(Graphics2D g2d) {
         g2d.setPaint(mainColor);
-        Vector2D abs = parent.getWorldCoordsFromLocal(position);
+        Vector2D abs = getWorldCoordsFromLocal(position);
         int sizeAbs = (int) Coordinates.getWorldCoordinates(size).x;
         int xCenterAbs = (int) (abs.x + sizeAbs / 2);
         int yCenterAbs = (int) (abs.y + sizeAbs / 2);
@@ -77,7 +77,7 @@ public class Turret extends GameObject {
 
         Point msLoc = master.getMouseLocation();
         Vector2D mouseRel = Coordinates.getMapCoordinatesFromWorld(Vector2D.fromPoint(msLoc)); //100 correct
-        Vector2D centerMap = parent.getMapCoords(getCenterPosition());
+        Vector2D centerMap = getMapCoords(getCenterPosition());
         double targetRotation = -Math.atan2(centerMap.x - mouseRel.x, centerMap.y - mouseRel.y);
 
         rotation = ExMath.angleLerp(rotation, targetRotation, ROTATION_SPEED);
@@ -88,7 +88,7 @@ public class Turret extends GameObject {
             int barrelX = (int) (position.x + (i + 1) * barrelSpacing);
             int frontPosY = (int) (position.y - size.x / 2);
 
-            Vector2D spawnPosNR = parent.getMapCoords(new Vector2D(barrelX, frontPosY));
+            Vector2D spawnPosNR = getMapCoords(new Vector2D(barrelX, frontPosY));
 
             if (Input.isMousePressed()) {
                 lastShot = System.currentTimeMillis();
