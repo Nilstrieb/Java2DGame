@@ -1,7 +1,7 @@
 package core.objects.core;
 
 import core.math.Coordinates;
-import core.general.Drawable;
+import core.renderer.Drawable;
 import core.general.Master;
 import core.math.Vector2D;
 

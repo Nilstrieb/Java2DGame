@@ -7,6 +7,7 @@ import core.physics.Collision;
 import core.objects.base.DebugPos;
 import core.physics.hitboxes.Hitbox;
 import core.objects.core.GameObject;
+import core.renderer.Drawable;
 import objects.Init;
 
 import javax.swing.*;
