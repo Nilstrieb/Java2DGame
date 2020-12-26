@@ -52,6 +52,6 @@ public class Coordinates {
     public static boolean outOfBounds(Vector2D position, Vector2D size) {
 
         return  (position.x + size.magnitude() < 0 || position.x - size.magnitude() > Master.SCREEN_Y_COORDINATES * Master.SCREEN_RATIO ||
-                position.y + size.magnitude() < 0 || position.y - position.magnitude() > Master.SCREEN_Y_COORDINATES);
+                position.y + size.magnitude() < 0 || position.y - size.magnitude() > Master.SCREEN_Y_COORDINATES);
     }
 }

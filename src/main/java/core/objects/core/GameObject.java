@@ -105,28 +105,6 @@ public abstract class GameObject implements Drawable {
     }
 
     /**
-     * This method draws an oval at the current position and size with arguments
-     *
-     * @param g2d The Graphics2D object provided by the master
-     * @param arg Arguments like "center" for the object being drawn in the center
-     */
-    public void drawOval(Graphics2D g2d, String arg) {
-
-        Vector2D abs;
-
-        if(arg.contains("center")){
-            abs = Coordinates.getWorldCoordinates(getCenterPosition());
-        } else {
-            abs = Coordinates.getWorldCoordinates(position);
-        }
-
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
-
-        g2d.setPaint(mainColor);
-        g2d.drawOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
-    }
-
-    /**
      * Destroy this {@code GameObject}
      */
     public void destroy() {
