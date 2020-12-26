@@ -47,10 +47,11 @@ public class Turret extends GameObject {
 
         g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
 
-        g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(size.x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_BEVEL));
+
 
         //BARRELS---------------------------------------
+        g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(size.x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_BEVEL));
 
         g2d.setPaint(Color.BLACK);
         int barrelSpacing = sizeAbs / (barrelAmount + 1);

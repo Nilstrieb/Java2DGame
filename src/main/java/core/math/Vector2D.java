@@ -31,8 +31,7 @@ public class Vector2D {
      * Create a new empty Vector2D object
      */
     public Vector2D() {
-        x = 0;
-        y = 0;
+        this(0, 0);
     }
 
     /**
@@ -43,7 +42,6 @@ public class Vector2D {
     public static Vector2D fromPoint(Point point) {
         return new Vector2D(point.x, point.y);
     }
-
 
     /**
      * Add another Vector to this vector, modifies this object
@@ -58,9 +56,9 @@ public class Vector2D {
     }
 
     /**
-     * Multiply this vector with a simple scalar, modifies this object
+     * Multiply this vector with a simple factor, modifies this object
      *
-     * @param a The scalar
+     * @param a The multiplying factor
      * @return this after the multiplication
      */
     public Vector2D multiply(double a) {
@@ -99,6 +97,14 @@ public class Vector2D {
      */
     public Vector2D negative() {
         return new Vector2D(-x, -y);
+    }
+
+    /**
+     * Get the rotation of the {@code Vector2D} in radians
+     * @return the rotation in radians
+     */
+    public double getRotation() {
+        return Math.atan2(y, x);
     }
 
 
@@ -183,9 +189,19 @@ public class Vector2D {
         return rotateAround(new Vector2D(), new Vector2D(0, 1), direction);
     }
 
+    /**
+     * Get the distance between two {@code Vector2D}
+     * @param a The first {@code Vector2D}
+     * @param b The second {@code Vector2D}
+     * @return The distance between the 2 {@code Vector2D}
+     */
     public static double distance(Vector2D a, Vector2D b) {
         Vector2D dif = subtract(a, b);
         return Math.sqrt(dif.x * dif.x + dif.y + dif.y);
+    }
+
+    public static Vector2D zero() {
+        return new Vector2D(0, 0);
     }
 
 
@@ -221,9 +237,5 @@ public class Vector2D {
 
         if (Double.compare(vector2D.x, x) != 0) return false;
         return Double.compare(vector2D.y, y) == 0;
-    }
-
-    public double getRotation() {
-        return Math.atan2(y, x);
     }
 }

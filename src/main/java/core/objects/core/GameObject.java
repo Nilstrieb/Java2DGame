@@ -4,6 +4,7 @@ import core.math.Coordinates;
 import core.renderer.Drawable;
 import core.general.Master;
 import core.math.Vector2D;
+import core.renderer.Renderer;
 
 import java.awt.*;
 
@@ -28,6 +29,9 @@ public abstract class GameObject implements Drawable {
 
     protected GameObject parent;
 
+    private Renderer renderer;
+
+    @Deprecated
     public GameObject(double x, double y, double xSize, double ySize) {
         this(new Vector2D(x, y), new Vector2D(xSize, ySize));
     }
@@ -59,6 +63,11 @@ public abstract class GameObject implements Drawable {
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
      */
     public abstract void update();
+
+    @Override
+    public void draw(Graphics2D g2d) {
+        renderer.draw(g2d);
+    }
 
     /**
      * A simple method to move the object to a Vector2D. This method should be called instead of doing it manually.
@@ -96,15 +105,6 @@ public abstract class GameObject implements Drawable {
     }
 
     /**
-     * This method draws an oval at the current position and size
-     *
-     * @param g2d The Graphics2D object provided by the master
-     */
-    public void drawOval(Graphics2D g2d) {
-        drawOval(g2d, "");
-    }
-
-    /**
      * This method draws an oval at the current position and size with arguments
      *
      * @param g2d The Graphics2D object provided by the master
@@ -127,35 +127,11 @@ public abstract class GameObject implements Drawable {
     }
 
     /**
-     * This method draws a rounded rectangle at the current position and size
-     *
-     * @param g2d  The Graphics2D object provided by the master
-     * @param arcW The arc width of the rectangle
-     * @param arcH The arc height of the rectangle
-     */
-    public void drawRoundRect(Graphics2D g2d, int arcW, int arcH) {
-
-        Vector2D abs = Coordinates.getWorldCoordinates(position);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
-
-        int xCenterAbs = (int) (abs.x + sizeAbs.x / 2);
-        int yCenterAbs = (int) (abs.y + sizeAbs.y / 2);
-
-        g2d.setPaint(mainColor);
-
-        g2d.rotate(rotation, xCenterAbs, yCenterAbs);
-        g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, arcW, arcH);
-
-        g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
-    }
-
-    /**
      * Destroy this {@code GameObject}
      */
     public void destroy() {
         master.destroy(this);
     }
-
 
     /**
      * Returns the value as map coords
@@ -163,8 +139,9 @@ public abstract class GameObject implements Drawable {
      * @return The value in global map coordinates
      */
     public Vector2D getMapCoords(Vector2D value) {
-        double x = parent.position.x + value.x;
-        double y = parent.position.y + value.y;
+        Vector2D rotated = Vector2D.rotateAround(parent.getCenterPositionLocal(), value, parent.rotation);
+        double x = parent.position.x + rotated.x;
+        double y = parent.position.y + rotated.y;
         return parent.getMapCoords(new Vector2D(x, y));
     }
 
@@ -187,6 +164,14 @@ public abstract class GameObject implements Drawable {
     }
 
     /**
+     * Get the local center position of the object
+     * @return The center position
+     */
+    public Vector2D getCenterPositionLocal(){
+        return new Vector2D(size.x / 2, size.y / 2);
+    }
+
+    /**
      * Get the render layer of the object
      * @return The render layer
      */
@@ -200,5 +185,27 @@ public abstract class GameObject implements Drawable {
      */
     protected Vector2D getV2DRotation(){
         return Vector2D.getUnitVector(rotation);
+    }
+
+    //----------- Getters and setters -----------------
+
+    public Vector2D getMapPosition(){
+        return getMapCoords(position);
+    }
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public Vector2D getSize() {
+        return size;
+    }
+
+    protected void setRenderer(Renderer renderer){
+        this.renderer = renderer;
     }
 }

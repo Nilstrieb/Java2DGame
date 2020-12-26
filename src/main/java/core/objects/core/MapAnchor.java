@@ -15,12 +15,10 @@ public class MapAnchor extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d) {
-
     }
 
     @Override
     public void update() {
-
     }
 
     @Override

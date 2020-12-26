@@ -4,6 +4,9 @@ import core.math.Coordinates;
 import core.math.Vector2D;
 import core.physics.hitboxes.RectHitBox;
 import core.objects.core.CollGameObject;
+import core.renderer.CircleRenderer;
+import core.renderer.CustomRenderer;
+import core.renderer.RectRenderer;
 
 import java.awt.*;
 
@@ -11,14 +14,9 @@ public class Submarine extends CollGameObject {
 
     public Submarine(Vector2D position, Vector2D size) {
         super(position, size, new RectHitBox(position, size));
+        setRenderer(new CircleRenderer(this, Color.BLUE, size.x/2));
         this.mainColor = Color.BLUE;
         doesDespawn = false;
-    }
-
-    @Override
-    public void draw(Graphics2D g2d) {
-        g2d.setPaint(Color.BLUE);
-        fillOval(g2d);
     }
 
     @Override

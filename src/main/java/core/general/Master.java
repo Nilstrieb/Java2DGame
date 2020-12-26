@@ -122,6 +122,16 @@ public class Master extends JPanel {
         create(new DebugPos(pos, new Vector2D(2, 2)), 3);
     }
 
+    /**
+     * Debug a position, creates a green dot at the position
+     *
+     * @param pos The position
+     * @param lifeTime The lifetime of the {@code DebugPos} in ms
+     */
+    public void debugPos(Vector2D pos, long lifeTime) {
+        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime), 3);
+    }
+
 
     /**
      * This method is the entry method for each frame. It handles everything about the frame

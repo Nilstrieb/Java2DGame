@@ -18,7 +18,6 @@ public class Shell extends CollGameObject {
         this.mainColor = Color.ORANGE;
         this.ignores.add(Shell.class);
         this.isTrigger = true;
-        this.doesDespawn = false;
     }
 
     @Override

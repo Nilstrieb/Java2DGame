@@ -5,6 +5,7 @@ import core.math.Vector2D;
 import core.objects.core.CollGameObject;
 import core.objects.core.GameObject;
 import core.physics.hitboxes.RectHitBox;
+import core.renderer.RoundRectRenderer;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -35,12 +36,12 @@ public class BattleShip extends GameObject {
         turrets = new ArrayList<>();
         this.mainColor = mainColor;
         this.doesDespawn = false;
+        setRenderer(new RoundRectRenderer(mainColor, this, size, 10, 10));
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-
-        drawRoundRect(g2d, master.getW() / 10, master.getW() / 10);
+        super.draw(g2d);
         turrets.forEach((turret -> turret.draw(g2d)));
     }
 

@@ -5,6 +5,7 @@ import core.objects.core.GameObject;
 import core.physics.Collidable;
 import core.physics.Collision;
 import core.physics.hitboxes.Hitbox;
+import core.renderer.Renderer;
 
 import java.util.ArrayList;
 
