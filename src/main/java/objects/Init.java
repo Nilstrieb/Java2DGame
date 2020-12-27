@@ -22,8 +22,8 @@ public class Init {
      * Create a new GameObject
      * @param o The GameObject
      */
-    public static void create(GameObject o){
-        Master.getMaster().create(o);
+    public static <T extends GameObject> T create(T o){
+        return Master.getMaster().create(o);
     }
 
     /**
@@ -34,17 +34,20 @@ public class Init {
         //INIT GOES HERE
         create(new Grid());
 
-        BattleShip battleShip = new BattleShip(Color.DARK_GRAY);
-        BattleShip bs = new BattleShip(140, 10, 10, 80, Color.GREEN);
+        BattleShip battleShip = create(new BattleShip());
+
+        battleShip.addTurret(create(new Turret(battleShip, new Vector2D(2.5, 7), 5, 3)));
+        battleShip.addTurret(create(new Turret(battleShip, new Vector2D(2.5, 15), 5, 3)));
+        battleShip.addTurret(create(new Turret(battleShip, new Vector2D(2.5, 25), 5, 3)));
+
+        BattleShip bs = create(new BattleShip(new Vector2D(140, 10), new Vector2D(10, 80), Color.GREEN));
 
         for (int i = 0; i < 8; i++) {
-            bs.addTurret(new Turret(bs, 2.5, 10 * i + 1, 5, (i % 5 )+ 1));
+            bs.addTurret(create(new Turret(bs, new Vector2D(2.5, 10 * i + 1), 5, (i % 5 )+ 1)));
         }
-        create(bs);
-        create(battleShip);
 
         create(new Submarine(new Vector2D(), new Vector2D(5, 5)));
-        create(new Wall(20, 80, 50, 2));
+        create(new Wall(new Vector2D(20, 80), new Vector2D(50, 2)));
     }
 
 }

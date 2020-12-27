@@ -1,5 +1,6 @@
 package objects.world;
 
+import core.math.Vector2D;
 import core.objects.core.GameObject;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public class Grid extends GameObject {
     private static final int GRID_SPACING = 50;
 
     public Grid() {
-        super(0, 0, 0, 0);
+        super(Vector2D.zero(), Vector2D.zero());
     }
 
     @Override

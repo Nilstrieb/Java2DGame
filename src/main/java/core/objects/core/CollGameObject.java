@@ -23,11 +23,6 @@ public abstract class CollGameObject extends GameObject implements Collidable {
         this.hitbox = hitbox;
     }
 
-    public CollGameObject(double x, double y, double xSize, double ySize, Hitbox hitbox) {
-        super(x, y, xSize, ySize);
-        this.hitbox = hitbox;
-    }
-
     /**
      * A simple method to move the object to a Vector2D. This method should be called instead of doing it manually.
      * Does not move if it encounters a collision

@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class Wall extends CollGameObject {
 
-    public Wall(double x, double y, double xSize, double ySize) {
-        super(x, y, xSize, ySize, new RectHitBox(new Vector2D(x, y), new Vector2D(xSize, ySize)));
+    public Wall(Vector2D position, Vector2D size) {
+        super(position, size, new RectHitBox(position, size));
     }
 
     @Override

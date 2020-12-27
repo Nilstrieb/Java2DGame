@@ -5,6 +5,7 @@ import core.math.Vector2D;
 import core.objects.core.CollGameObject;
 import core.objects.core.GameObject;
 import core.physics.hitboxes.RectHitBox;
+import core.renderer.RectRenderer;
 import core.renderer.RoundRectRenderer;
 
 import java.awt.*;
@@ -23,26 +24,18 @@ public class BattleShip extends GameObject {
 
     private boolean playerControlled = false;
 
-    public BattleShip(Color mainColor) {
-        this(20, 20, 10, 40, mainColor);
-        turrets.add(new Turret(this, 2.5, 7, 5, 3));
-        turrets.add(new Turret(this, 2.5, 15, 5, 3));
-        turrets.add(new Turret(this, 2.5, 25, 5, 3));
+    public BattleShip() {
+        this(new Vector2D(20, 20), new Vector2D(10, 40), Color.DARK_GRAY);
         this.playerControlled = true;
     }
 
-    public BattleShip(double x, double y, double xSize, double ySize, Color mainColor) {
-        super(x, y, xSize, ySize);
+    public BattleShip(Vector2D position, Vector2D size, Color mainColor) {
+        super(position, size);
         turrets = new ArrayList<>();
         this.mainColor = mainColor;
         this.doesDespawn = false;
-        setRenderer(new RoundRectRenderer(mainColor, this, size, 10, 10));
-    }
-
-    @Override
-    public void draw(Graphics2D g2d) {
-        super.draw(g2d);
-        turrets.forEach((turret -> turret.draw(g2d)));
+        //setRenderer(new RoundRectRenderer(mainColor, this, size, 10, 10));
+        setRenderer(new RectRenderer(mainColor, this, size));
     }
 
     @Override
@@ -54,8 +47,6 @@ public class BattleShip extends GameObject {
 
             rotation += Input.getHorizontalAxis() * TURN_RATE;
         }
-
-        turrets.forEach(Turret::update);
     }
 
     public void addTurret(Turret turret) {

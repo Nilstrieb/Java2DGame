@@ -26,10 +26,10 @@ public class RoundRectRenderer extends Renderer {
         Vector2D abs = Coordinates.getWorldCoordinates(object.getMapPosition());
         Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
 
-        master.debugPos(object.getMapPosition());
-
         int xCenterAbs = (int) (abs.x + sizeAbs.x / 2);
         int yCenterAbs = (int) (abs.y + sizeAbs.y / 2);
+
+        master.debugPos(object.getCenterPosition(), 500);
 
         g2d.setPaint(color);
 

@@ -167,8 +167,9 @@ public class Master extends JPanel {
      *
      * @param obj The new object
      */
-    public void create(GameObject obj) {
+    public <T extends GameObject> T create(T obj) {
         create(obj, obj.getLayer());
+        return obj;
     }
 
     /**

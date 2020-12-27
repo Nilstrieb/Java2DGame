@@ -31,11 +31,6 @@ public abstract class GameObject implements Drawable {
 
     private Renderer renderer;
 
-    @Deprecated
-    public GameObject(double x, double y, double xSize, double ySize) {
-        this(new Vector2D(x, y), new Vector2D(xSize, ySize));
-    }
-
     public GameObject(Vector2D position, Vector2D size) {
         this.position = position;
         this.size = size;
@@ -49,8 +44,8 @@ public abstract class GameObject implements Drawable {
     /**
      * Gets called at the start of the update method
      */
-    public void startUpdate(){
-        if(doesDespawn && Coordinates.outOfBounds(position, size)){
+    public void startUpdate() {
+        if (doesDespawn && Coordinates.outOfBounds(position, size)) {
             destroy();
         }
         update();
@@ -62,7 +57,7 @@ public abstract class GameObject implements Drawable {
      * <p>No drawing should be made in this method. The {@code debug} method can be called on the master.</p>
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
      */
-    public abstract void update();
+    protected abstract void update();
 
     @Override
     public void draw(Graphics2D g2d) {
@@ -113,6 +108,7 @@ public abstract class GameObject implements Drawable {
 
     /**
      * Returns the value as map coords
+     *
      * @param value The value relative to the parent
      * @return The value in global map coordinates
      */
@@ -126,6 +122,7 @@ public abstract class GameObject implements Drawable {
 
     /**
      * Returns the value as world coordinates (only called on a parent)
+     *
      * @param value The value relative to the parent
      * @return The absolute world coordinates
      */
@@ -135,22 +132,25 @@ public abstract class GameObject implements Drawable {
 
     /**
      * Get the center position of the object
+     *
      * @return The center position
      */
-    public Vector2D getCenterPosition(){
+    public Vector2D getCenterPosition() {
         return new Vector2D(position.x + size.x / 2, position.y + size.y / 2);
     }
 
     /**
      * Get the local center position of the object
+     *
      * @return The center position
      */
-    public Vector2D getCenterPositionLocal(){
+    public Vector2D getCenterPositionLocal() {
         return new Vector2D(size.x / 2, size.y / 2);
     }
 
     /**
      * Get the render layer of the object
+     *
      * @return The render layer
      */
     public int getLayer() {
@@ -159,15 +159,27 @@ public abstract class GameObject implements Drawable {
 
     /**
      * Get the rotation of the object as a Vector2D
+     *
      * @return The rotation
      */
-    protected Vector2D getV2DRotation(){
+    protected Vector2D getV2DRotation() {
         return Vector2D.getUnitVector(rotation);
+    }
+
+
+    /**
+     * Create a new {@code GameObject}
+     * @param gameObject The {@code GameObject}
+     * @return The {@code GameObject}
+     */
+    protected <T extends GameObject> T create(T gameObject) {
+        master.create(gameObject);
+        return gameObject;
     }
 
     //----------- Getters and setters -----------------
 
-    public Vector2D getMapPosition(){
+    public Vector2D getMapPosition() {
         return getMapCoords(position);
     }
 
@@ -183,7 +195,7 @@ public abstract class GameObject implements Drawable {
         return size;
     }
 
-    protected void setRenderer(Renderer renderer){
+    protected void setRenderer(Renderer renderer) {
         this.renderer = renderer;
     }
 }

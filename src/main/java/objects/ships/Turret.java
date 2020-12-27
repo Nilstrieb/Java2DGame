@@ -5,6 +5,7 @@ import core.math.Coordinates;
 import core.math.ExMath;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
+import core.renderer.CustomRenderer;
 
 import java.awt.*;
 
@@ -24,53 +25,50 @@ public class Turret extends GameObject {
 
     private long lastShot = 0;
 
-    public Turret(BattleShip battleShip, double x, double y, double size, int barrelAmount) {
-        super(x, y, size, size);
+    public Turret(BattleShip battleShip, Vector2D position, double size, int barrelAmount) {
+        super(position, new Vector2D(size, size));
         this.parent = battleShip;
         this.barrelAmount = barrelAmount;
         mainColor = Color.GRAY;
-    }
 
-    public Turret(BattleShip battleShip) {
-        super(25, 50, 1.25, 0.5);
-        this.parent = battleShip;
-        mainColor = Color.GRAY;
-    }
+        setRenderer(new CustomRenderer(mainColor, this) {
+            @Override
+            public void draw(Graphics2D g2d) {
+                g2d.setPaint(mainColor);
+                Vector2D abs = getWorldCoordsFromLocal(position);
+                int sizeAbs = (int) Coordinates.getWorldCoordinates(object.getSize()).x;
+                int xCenterAbs = (int) (abs.x + sizeAbs / 2);
+                int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
-    @Override
-    public void draw(Graphics2D g2d) {
-        g2d.setPaint(mainColor);
-        Vector2D abs = getWorldCoordsFromLocal(position);
-        int sizeAbs = (int) Coordinates.getWorldCoordinates(size).x;
-        int xCenterAbs = (int) (abs.x + sizeAbs / 2);
-        int yCenterAbs = (int) (abs.y + sizeAbs / 2);
+                g2d.rotate(rotation, xCenterAbs, yCenterAbs);
 
-        g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
+                g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
 
+                master.debugPos(abs, 1000);
 
+                //BARRELS---------------------------------------
+                g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(object.getSize().x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
+                        BasicStroke.JOIN_BEVEL));
 
-        //BARRELS---------------------------------------
-        g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(size.x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_BEVEL));
-
-        g2d.setPaint(Color.BLACK);
-        int barrelSpacing = sizeAbs / (barrelAmount + 1);
-        g2d.rotate(rotation, xCenterAbs, yCenterAbs);
-
-        for (int i = 0; i < barrelAmount; i++) {
-            int barrelX = (int) (abs.x + (i + 1) * barrelSpacing);
-            int frontPosY = (int) (abs.y - sizeAbs / 2);
-            g2d.drawLine(barrelX, yCenterAbs, barrelX, frontPosY);
-
-            if (lastShot + SHOT_EFFECT_TIME > System.currentTimeMillis()) {
-                g2d.setPaint(Color.YELLOW);
-                g2d.fillOval(barrelX - 5, frontPosY - 5, 10, 10);
                 g2d.setPaint(Color.BLACK);
-            }
-        }
-        g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
+                int barrelSpacing = sizeAbs / (barrelAmount + 1);
 
-        g2d.setStroke(new BasicStroke());
+                for (int i = 0; i < barrelAmount; i++) {
+                    int barrelX = (int) (abs.x + (i + 1) * barrelSpacing);
+                    int frontPosY = (int) (abs.y - sizeAbs / 2);
+                    g2d.drawLine(barrelX, yCenterAbs, barrelX, frontPosY);
+
+                    if (lastShot + SHOT_EFFECT_TIME > System.currentTimeMillis()) {
+                        g2d.setPaint(Color.YELLOW);
+                        g2d.fillOval(barrelX - 5, frontPosY - 5, 10, 10);
+                        g2d.setPaint(Color.BLACK);
+                    }
+                }
+                g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
+
+                g2d.setStroke(new BasicStroke());
+            }
+        });
     }
 
     @Override
