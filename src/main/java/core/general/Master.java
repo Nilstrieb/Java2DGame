@@ -118,8 +118,17 @@ public class Master extends JPanel {
      *
      * @param pos The position
      */
-    public void debugPos(Vector2D pos) {
-        create(new DebugPos(pos, new Vector2D(2, 2)), 3);
+    public static void debugPos(Vector2D pos) {
+        debugPos(pos, Long.MAX_VALUE);
+    }
+
+    /**
+     * Debug a position, creates a green dot at the position
+     *
+     * @param pos The position
+     */
+    private void debugPosObj(Vector2D pos, long lifeTime) {
+        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime), 3);
     }
 
     /**
@@ -128,8 +137,8 @@ public class Master extends JPanel {
      * @param pos The position
      * @param lifeTime The lifetime of the {@code DebugPos} in ms
      */
-    public void debugPos(Vector2D pos, long lifeTime) {
-        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime), 3);
+    public static void debugPos(Vector2D pos, long lifeTime) {
+        master.debugPosObj(pos, lifeTime);
     }
 
 
@@ -251,9 +260,13 @@ public class Master extends JPanel {
 
     public void destroy(GameObject gameObject) {
         objectBuffer.remove(gameObject);
+        gameObject.getParent().removeChild(gameObject);
+
         drawables.get(gameObject.getLayer()).remove(gameObject);
+
         if (gameObject instanceof Collidable) {
             collidablesBuffer.remove(gameObject);
+
             if (Init.DEBUG_MODE) {
                 drawables.get(Hitbox.HITBOX_RENDER_LAYER).remove(((CollGameObject) gameObject).getHitbox());
             }

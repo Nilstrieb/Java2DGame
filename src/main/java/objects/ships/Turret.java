@@ -1,6 +1,7 @@
 package objects.ships;
 
 import core.general.Input;
+import core.general.Master;
 import core.math.Coordinates;
 import core.math.ExMath;
 import core.math.Vector2D;
@@ -40,11 +41,13 @@ public class Turret extends GameObject {
                 int xCenterAbs = (int) (abs.x + sizeAbs / 2);
                 int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
+                Master.debugPos(getMapCoords(position), 1);
+
                 g2d.rotate(rotation, xCenterAbs, yCenterAbs);
 
                 g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
 
-                master.debugPos(abs, 1000);
+                Master.debugPos(abs, 1000);
 
                 //BARRELS---------------------------------------
                 g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(object.getSize().x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
@@ -73,6 +76,8 @@ public class Turret extends GameObject {
 
     @Override
     public void update() {
+
+        //TODO fix with everything haha
 
         Point msLoc = master.getMouseLocation();
         Vector2D mouseRel = Coordinates.getMapCoordinatesFromWorld(Vector2D.fromPoint(msLoc)); //100 correct

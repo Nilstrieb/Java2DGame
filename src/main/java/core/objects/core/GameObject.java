@@ -7,6 +7,7 @@ import core.math.Vector2D;
 import core.renderer.Renderer;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * The GameObject class is the superclass of every {@code GameObject} that can be displayed on screen. It has the 2
@@ -22,14 +23,12 @@ public abstract class GameObject implements Drawable {
     protected Vector2D velocity;
 
     protected Color mainColor;
-
     protected Master master;
-
     protected int layer;
+    private Renderer renderer;
 
     protected GameObject parent;
-
-    private Renderer renderer;
+    protected ArrayList<GameObject> children = new ArrayList<>();
 
     public GameObject(Vector2D position, Vector2D size) {
         this.position = position;
@@ -78,19 +77,7 @@ public abstract class GameObject implements Drawable {
      *
      * @param g2d The Graphics2D object provided by the master
      */
-    public void drawRect(Graphics2D g2d) {
-        Vector2D abs = Coordinates.getWorldCoordinates(position);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
-
-        g2d.setPaint(mainColor);
-        g2d.fillRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
-    }
-
-    /**
-     * This method draws a rectangle at the current position and size
-     *
-     * @param g2d The Graphics2D object provided by the master
-     */
+    @Deprecated
     public void fillOval(Graphics2D g2d) {
         Vector2D abs = Coordinates.getWorldCoordinates(position);
         Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
@@ -197,5 +184,17 @@ public abstract class GameObject implements Drawable {
 
     protected void setRenderer(Renderer renderer) {
         this.renderer = renderer;
+    }
+
+    public void addChild(GameObject obj){
+        children.add(obj);
+    }
+
+    public void removeChild(GameObject obj){
+        children.remove(obj);
+    }
+
+    public GameObject getParent() {
+        return parent;
     }
 }

@@ -4,6 +4,7 @@ import core.math.Vector2D;
 import core.physics.hitboxes.Hitbox;
 import core.physics.hitboxes.RectHitBox;
 import core.objects.core.CollGameObject;
+import core.renderer.RectRenderer;
 
 import java.awt.*;
 
@@ -11,11 +12,8 @@ public class Wall extends CollGameObject {
 
     public Wall(Vector2D position, Vector2D size) {
         super(position, size, new RectHitBox(position, size));
-    }
 
-    @Override
-    public void draw(Graphics2D g2d) {
-        drawRect(g2d);
+        setRenderer(new RectRenderer(Color.BLACK, this, this.size));
     }
 
     @Override

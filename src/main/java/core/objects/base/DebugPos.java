@@ -15,10 +15,6 @@ public class DebugPos extends GameObject {
     private final long lifeTime;
     private long spawnTime;
 
-    public DebugPos(Vector2D position, Vector2D size) {
-        this(position, size, Long.MAX_VALUE);
-    }
-
     public DebugPos(Vector2D position, Vector2D size, long lifeTime) {
         super(position.copy(), size);
         this.velocity = new Vector2D();
