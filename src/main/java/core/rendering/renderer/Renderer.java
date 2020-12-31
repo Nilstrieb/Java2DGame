@@ -1,13 +1,18 @@
-package core.renderer;
+package core.rendering.renderer;
 
+import core.general.Master;
 import core.objects.core.GameObject;
+import core.rendering.Drawable;
+import core.rendering.RenderEngine;
 
 import java.awt.*;
 
 /**
  * The base renderer class for all renderers
  */
-public abstract class Renderer {
+public abstract class Renderer implements Drawable {
+
+    protected RenderEngine re;
 
     protected Color color;
     protected GameObject object;
@@ -18,6 +23,7 @@ public abstract class Renderer {
      * @param object The {@code GameObject} the {@code Renderer} os assigned to
      */
     public Renderer(Color color, GameObject object) {
+        this.re = Master.getMaster().getRenderEngine();
         this.color = color;
         this.object = object;
     }
@@ -27,4 +33,9 @@ public abstract class Renderer {
      * @param g2d the {@code Graphics2D} object
      */
     public abstract void draw(Graphics2D g2d);
+
+    @Override
+    public int getLayer() {
+        return object.getLayer();
+    }
 }

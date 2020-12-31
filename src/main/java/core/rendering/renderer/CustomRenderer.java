@@ -1,4 +1,4 @@
-package core.renderer;
+package core.rendering.renderer;
 
 import core.objects.core.GameObject;
 

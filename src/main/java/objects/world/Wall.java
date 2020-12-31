@@ -4,7 +4,7 @@ import core.math.Vector2D;
 import core.physics.hitboxes.Hitbox;
 import core.physics.hitboxes.RectHitBox;
 import core.objects.core.CollGameObject;
-import core.renderer.RectRenderer;
+import core.rendering.renderer.RectRenderer;
 
 import java.awt.*;
 

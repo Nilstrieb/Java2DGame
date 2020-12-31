@@ -1,19 +1,20 @@
 package core.objects.core;
 
 import core.math.Coordinates;
-import core.renderer.Drawable;
+import core.rendering.Drawable;
 import core.general.Master;
 import core.math.Vector2D;
-import core.renderer.Renderer;
+import core.rendering.RenderEngine;
+import core.rendering.renderer.Renderer;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * The GameObject class is the superclass of every {@code GameObject} that can be displayed on screen. It has the 2
- * {@link #update()} and {@link #draw(Graphics2D)} methods that have to be overridden
+ * The GameObject class is the superclass of every {@code GameObject} that can be displayed on screen. It has the
+ * {@link #update()} and method that have to be overridden
  */
-public abstract class GameObject implements Drawable {
+public abstract class GameObject {
 
     protected boolean doesDespawn = true;
 
@@ -51,17 +52,13 @@ public abstract class GameObject implements Drawable {
     }
 
     /**
-     * <p>The update method is called every frame before the {@link #draw(Graphics2D)} method by the master object on each object. Everything
+     * <p>The update method is called every before drawing. Everything
      * that is needed for the game to work should be here in this method.</p>
      * <p>No drawing should be made in this method. The {@code debug} method can be called on the master.</p>
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
      */
     protected abstract void update();
 
-    @Override
-    public void draw(Graphics2D g2d) {
-        renderer.draw(g2d);
-    }
 
     /**
      * A simple method to move the object to a Vector2D. This method should be called instead of doing it manually.
@@ -196,5 +193,9 @@ public abstract class GameObject implements Drawable {
 
     public GameObject getParent() {
         return parent;
+    }
+
+    public Renderer getRenderer(){
+        return renderer;
     }
 }

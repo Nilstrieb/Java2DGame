@@ -2,14 +2,11 @@ package objects.ships;
 
 import core.general.Input;
 import core.math.Vector2D;
-import core.objects.core.CollGameObject;
 import core.objects.core.GameObject;
-import core.physics.hitboxes.RectHitBox;
-import core.renderer.RectRenderer;
-import core.renderer.RoundRectRenderer;
+import core.rendering.renderer.RectRenderer;
+import core.rendering.renderer.RoundRectRenderer;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -34,8 +31,8 @@ public class BattleShip extends GameObject {
         turrets = new ArrayList<>();
         this.mainColor = mainColor;
         this.doesDespawn = false;
-        //setRenderer(new RoundRectRenderer(mainColor, this, size, 10, 10));
-        setRenderer(new RectRenderer(mainColor, this, size));
+        setRenderer(new RoundRectRenderer(mainColor, this, size, 10, 10));
+        //setRenderer(new RectRenderer(mainColor, this, size));
     }
 
     @Override

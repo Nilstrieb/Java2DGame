@@ -1,4 +1,4 @@
-package core.renderer;
+package core.rendering;
 
 import java.awt.Graphics2D;
 

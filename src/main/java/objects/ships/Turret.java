@@ -1,12 +1,11 @@
 package objects.ships;
 
 import core.general.Input;
-import core.general.Master;
 import core.math.Coordinates;
 import core.math.ExMath;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
-import core.renderer.CustomRenderer;
+import core.rendering.renderer.CustomRenderer;
 
 import java.awt.*;
 
@@ -67,6 +66,11 @@ public class Turret extends GameObject {
                 g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
 
                 g2d.setStroke(new BasicStroke());
+            }
+
+            @Override
+            public int getLayer() {
+                return object.getLayer();
             }
         });
     }

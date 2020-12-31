@@ -1,12 +1,13 @@
 package core.general;
 
+import core.rendering.RenderEngine;
 import core.math.Vector2D;
 import core.objects.core.CollGameObject;
 import core.physics.Collidable;
 import core.physics.Collision;
 import core.objects.base.DebugPos;
 import core.objects.core.GameObject;
-import core.renderer.Drawable;
+import core.rendering.Drawable;
 import objects.Init;
 
 import javax.swing.*;
@@ -58,7 +59,7 @@ public class Master {
     /**
      * The {@code RenderEngine} that handles everything about rendering
      */
-    private final RenderEngine renderEngine = new RenderEngine();
+    private RenderEngine renderEngine;
 
 
     /**
@@ -71,6 +72,13 @@ public class Master {
         objectBuffer = new ArrayList<>();
         collidables = new ArrayList<>();
         collidablesBuffer = new ArrayList<>();
+    }
+
+    /**
+     * Called once after the constructor
+     */
+    public void init() {
+        renderEngine = new RenderEngine();
     }
 
     public static Master getMaster() {
@@ -147,7 +155,11 @@ public class Master {
         if (obj instanceof CollGameObject) {
             collidablesBuffer.add((Collidable) obj);
         }
-        renderEngine.addRenderer(obj);
+        if(obj.getRenderer() == null){
+            System.out.println(obj);
+            throw new NullPointerException("oh god oh fuck its null wtf pls no");
+        }
+        renderEngine.addRenderer(obj.getRenderer());
         return obj;
     }
 
@@ -204,7 +216,7 @@ public class Master {
         objectBuffer.remove(gameObject);
         gameObject.getParent().removeChild(gameObject);
 
-        renderEngine.removeRenderer(gameObject);
+        renderEngine.removeRenderer(gameObject.getRenderer());
 
         if (gameObject instanceof Collidable) {
             collidablesBuffer.remove(gameObject);
@@ -218,4 +230,5 @@ public class Master {
     public RenderEngine getRenderEngine() {
         return renderEngine;
     }
+
 }

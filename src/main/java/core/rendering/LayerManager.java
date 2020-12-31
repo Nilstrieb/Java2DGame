@@ -1,6 +1,4 @@
-package core.general;
-
-import core.renderer.Drawable;
+package core.rendering;
 
 import java.awt.*;
 import java.util.ArrayList;

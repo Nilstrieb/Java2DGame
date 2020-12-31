@@ -3,7 +3,7 @@ package core.objects.base;
 import core.math.Coordinates;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
-import core.renderer.CustomRenderer;
+import core.rendering.renderer.CustomRenderer;
 
 import java.awt.*;
 
@@ -32,6 +32,11 @@ public class DebugPos extends GameObject {
                         BasicStroke.JOIN_BEVEL));
                 g2d.drawLine((int)positionAbs.x - 20, (int)positionAbs.y, (int)positionAbs.x + 20, (int)positionAbs.y);
                 g2d.drawLine((int)positionAbs.x, (int)positionAbs.y-20, (int)positionAbs.x, (int)positionAbs.y+20);
+            }
+
+            @Override
+            public int getLayer() {
+                return layer;
             }
         });
     }

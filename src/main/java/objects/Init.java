@@ -32,6 +32,7 @@ public class Init {
     public static void init(){
 
         //INIT GOES HERE
+
         create(new Grid());
 
         BattleShip battleShip = create(new BattleShip());

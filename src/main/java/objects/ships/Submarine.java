@@ -4,9 +4,7 @@ import core.math.Coordinates;
 import core.math.Vector2D;
 import core.physics.hitboxes.RectHitBox;
 import core.objects.core.CollGameObject;
-import core.renderer.CircleRenderer;
-import core.renderer.CustomRenderer;
-import core.renderer.RectRenderer;
+import core.rendering.renderer.CircleRenderer;
 
 import java.awt.*;
 

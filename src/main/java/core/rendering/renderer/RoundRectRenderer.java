@@ -1,4 +1,4 @@
-package core.renderer;
+package core.rendering.renderer;
 
 import core.general.Master;
 import core.math.Coordinates;
@@ -23,17 +23,6 @@ public class RoundRectRenderer extends Renderer {
 
     @Override
     public void draw(Graphics2D g2d) {
-        Vector2D abs = Coordinates.getWorldCoordinates(object.getMapPosition());
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
-
-        int xCenterAbs = (int) (abs.x + sizeAbs.x / 2);
-        int yCenterAbs = (int) (abs.y + sizeAbs.y / 2);
-
-        g2d.setPaint(color);
-
-        g2d.rotate(object.getRotation(), xCenterAbs, yCenterAbs);
-        g2d.fillRoundRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y, (int) (master.getW() / cornerFactorX), (int) (master.getH() / cornerFactorY));
-
-        g2d.rotate(-object.getRotation(), xCenterAbs, yCenterAbs);
+        re.fillRoundRect(object.getMapPosition(), size, new Vector2D(cornerFactorX, cornerFactorY), color, object.getRotation());
     }
 }

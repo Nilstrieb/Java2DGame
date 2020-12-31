@@ -3,6 +3,7 @@ package objects.ships;
 import core.math.Vector2D;
 import core.objects.core.CollGameObject;
 import core.physics.hitboxes.RectHitBox;
+import core.rendering.renderer.CircleRenderer;
 
 import java.awt.*;
 
@@ -18,11 +19,8 @@ public class Shell extends CollGameObject {
         this.mainColor = Color.ORANGE;
         this.ignores.add(Shell.class);
         this.isTrigger = true;
-    }
 
-    @Override
-    public void draw(Graphics2D g2d) {
-        fillOval(g2d);
+        this.setRenderer(new CircleRenderer(this, mainColor, size.x/2));
     }
 
     @Override

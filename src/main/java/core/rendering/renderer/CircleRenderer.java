@@ -1,6 +1,5 @@
-package core.renderer;
+package core.rendering.renderer;
 
-import core.math.Coordinates;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
 
@@ -29,18 +28,6 @@ public class CircleRenderer extends Renderer {
 
     @Override
     public void draw(Graphics2D g2d) {
-        Vector2D abs = Coordinates.getWorldCoordinates(object.getMapPosition());
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(new Vector2D(radius * 2, radius * 2));
-
-        g2d.setPaint(color);
-        g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
+        re.fillOval(object.getMapPosition(), new Vector2D(2 * radius, 2 * radius), color, object.getRotation());
     }
 }
