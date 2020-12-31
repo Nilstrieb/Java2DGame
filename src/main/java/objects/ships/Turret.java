@@ -41,13 +41,10 @@ public class Turret extends GameObject {
                 int xCenterAbs = (int) (abs.x + sizeAbs / 2);
                 int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
-                Master.debugPos(getMapCoords(position), 1);
-
                 g2d.rotate(rotation, xCenterAbs, yCenterAbs);
 
                 g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
 
-                Master.debugPos(abs, 1000);
 
                 //BARRELS---------------------------------------
                 g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(object.getSize().x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
@@ -98,13 +95,11 @@ public class Turret extends GameObject {
                 lastShot = System.currentTimeMillis();
 
                 Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
-                //master.debugPos(centerMap);
                 Vector2D pos = Vector2D.rotateAround(
                         centerMap,
                         spawnPosNR,
                         rotation);
 
-                //master.debugPos(pos);
                 master.create(new Shell(pos, new Vector2D(SHELL_SIZE, SHELL_SIZE), shellVel));
             }
         }

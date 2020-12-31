@@ -25,7 +25,7 @@ class Main extends JFrame {
     private void initUI() {
 
         master = new Master();
-        add(master);
+        add(master.getRenderEngine());
 
         Init.init();
 

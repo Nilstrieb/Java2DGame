@@ -5,7 +5,6 @@ import core.objects.core.CollGameObject;
 import core.physics.Collidable;
 import core.physics.Collision;
 import core.objects.base.DebugPos;
-import core.physics.hitboxes.Hitbox;
 import core.objects.core.GameObject;
 import core.renderer.Drawable;
 import objects.Init;
@@ -13,11 +12,12 @@ import objects.Init;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The main object that controls everything
  */
-public class Master extends JPanel {
+public class Master {
 
     /**
      * The ratio of height to width.
@@ -37,35 +37,29 @@ public class Master extends JPanel {
     /**
      * All GameObjects that exist
      */
-    private final ArrayList<GameObject> objects;
-
-    /**
-     * All GameObjects that can be drawn
-     * Has different render layers, 0 is on the bottom
-     */
-    private final ArrayList<ArrayList<Drawable>> drawables;
+    private final List<GameObject> objects;
 
 
     /**
      * All physics objects that exist
      */
-    private final ArrayList<Collidable> collidables;
+    private final List<Collidable> collidables;
 
     /**
      * Stores all GameObjects that were created during a frame
      */
-    private final ArrayList<GameObject> objectBuffer;
+    private final List<GameObject> objectBuffer;
 
     /**
      * All physics objects that exist
      */
-    private final ArrayList<Collidable> collidablesBuffer;
-
+    private final List<Collidable> collidablesBuffer;
 
     /**
-     * The current width and height of the game area
+     * The {@code RenderEngine} that handles everything about rendering
      */
-    private int w, h;
+    private final RenderEngine renderEngine = new RenderEngine();
+
 
     /**
      * Create a new master object
@@ -77,41 +71,12 @@ public class Master extends JPanel {
         objectBuffer = new ArrayList<>();
         collidables = new ArrayList<>();
         collidablesBuffer = new ArrayList<>();
-        drawables = new ArrayList<>();
-        drawables.add(new ArrayList<>());
     }
 
     public static Master getMaster() {
         return master;
     }
 
-    /**
-     * The mein drawing method, handles everything about drawing
-     *
-     * @param g
-     */
-    @Deprecated
-    private void doDrawing(Graphics g) {
-
-        if (getWidth() * 9 > getHeight() * 16) {
-            h = getHeight();
-            w = h / 9 * 16;
-        } else {
-            w = getWidth();
-            h = w / 16 * 9;
-        }
-
-        Graphics2D g2d = (Graphics2D) g.create();
-
-        drawables.forEach(l -> l.forEach(o -> o.draw(g2d)));
-    }
-
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        doDrawing(g);
-    }
 
     /**
      * Debug a position, creates a green dot at the position
@@ -128,7 +93,7 @@ public class Master extends JPanel {
      * @param pos The position
      */
     private void debugPosObj(Vector2D pos, long lifeTime) {
-        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime), 3);
+        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime));
     }
 
     /**
@@ -155,7 +120,8 @@ public class Master extends JPanel {
         objects.forEach(GameObject::startUpdate);
         long time2 = System.currentTimeMillis();
         Input.frameReset();
-        repaint();
+        renderEngine.flush();
+        renderEngine.repaint();
         System.out.println("Frame took " + (System.currentTimeMillis() - time) + "ms, " + (time2 - time) + "ms for update, " + (System.currentTimeMillis() - time2) + "ms for draw");
     }
 
@@ -166,7 +132,7 @@ public class Master extends JPanel {
      */
     public Point getMouseLocation() {
         Point p = MouseInfo.getPointerInfo().getLocation();
-        SwingUtilities.convertPointFromScreen(p, this);
+        SwingUtilities.convertPointFromScreen(p, renderEngine);
         return p;
     }
 
@@ -174,49 +140,25 @@ public class Master extends JPanel {
     /**
      * This method has to be called for every newly created GameObject
      *
-     * @param obj The new object
+     * @param obj         The new object
      */
     public <T extends GameObject> T create(T obj) {
-        create(obj, obj.getLayer());
-        return obj;
-    }
-
-    /**
-     * This method has to be called for every newly created GameObject
-     *
-     * @param obj         The new object
-     * @param renderLayer The render layer the object will be put on, 0 is below everything
-     */
-    public void create(GameObject obj, int renderLayer) {
         objectBuffer.add(obj);
         if (obj instanceof CollGameObject) {
             collidablesBuffer.add((Collidable) obj);
         }
-        addDrawable(obj, renderLayer);
+        renderEngine.addRenderer(obj);
+        return obj;
     }
 
     /**
      * Add a new Drawable to the render list
      *
      * @param d     The drawable
-     * @param layer The layer it should be put on (>=0)
      */
-    public void addDrawable(Drawable d, int layer) {
-
-        if (layer < 0) {
-
-            throw new IllegalArgumentException("Layer must be at least 9");
-        }
-
-        //layer exists check
-        int layerDif = layer - (drawables.size() - 1);
-        if (layerDif > 0) {
-            for (int i = 0; i < layerDif; i++) {
-                drawables.add(new ArrayList<>());
-            }
-        }
-
-        drawables.get(layer).add(d);
+    @Deprecated
+    public void addDrawable(Drawable d) {
+        renderEngine.addRenderer(d);
     }
 
 
@@ -251,25 +193,29 @@ public class Master extends JPanel {
     }
 
     public int getW() {
-        return w;
+        return renderEngine.getW();
     }
 
     public int getH() {
-        return h;
+        return renderEngine.getH();
     }
 
     public void destroy(GameObject gameObject) {
         objectBuffer.remove(gameObject);
         gameObject.getParent().removeChild(gameObject);
 
-        drawables.get(gameObject.getLayer()).remove(gameObject);
+        renderEngine.removeRenderer(gameObject);
 
         if (gameObject instanceof Collidable) {
             collidablesBuffer.remove(gameObject);
 
             if (Init.DEBUG_MODE) {
-                drawables.get(Hitbox.HITBOX_RENDER_LAYER).remove(((CollGameObject) gameObject).getHitbox());
+                renderEngine.removeRenderer(((CollGameObject) gameObject).getHitbox());
             }
         }
+    }
+
+    public RenderEngine getRenderEngine() {
+        return renderEngine;
     }
 }

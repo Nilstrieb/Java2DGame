@@ -24,4 +24,9 @@ public abstract class Hitbox implements Drawable {
     public String toString() {
         return super.toString();
     }
+
+    @Override
+    public int getLayer() {
+        return HITBOX_RENDER_LAYER;
+    }
 }

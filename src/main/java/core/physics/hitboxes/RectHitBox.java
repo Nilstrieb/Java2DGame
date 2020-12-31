@@ -34,7 +34,7 @@ public class RectHitBox extends Hitbox {
         this.y1 = Vector2D.add(x1, new Vector2D(0, size.y));
         this.y2 = Vector2D.add(x1, new Vector2D(size.x, size.y));
         if (Init.DEBUG_MODE) {
-            Master.getMaster().addDrawable(this, HITBOX_RENDER_LAYER);
+            //Master.getMaster().addDrawable(this);
         }
     }
 

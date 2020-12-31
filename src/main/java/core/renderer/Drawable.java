@@ -17,4 +17,10 @@ public interface Drawable {
      * @param g2d    The {@code Graphics2D} object given by the master
      */
     void draw(Graphics2D g2d);
+
+    /**
+     * Returns the layer of the Drawable
+     * @return The render layer
+     */
+    int getLayer();
 }
