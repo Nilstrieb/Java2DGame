@@ -1,4 +1,4 @@
-package objects.ships;
+package custom.objects.ships;
 
 import core.general.Input;
 import core.math.Coordinates;
@@ -19,7 +19,7 @@ public class Turret extends GameObject {
     private static final int SHELL_SPEED = 1;
     public static final double SHELL_SIZE = 2;
     private static final double BARREL_THICKNESS = 1.7;
-    private int barrelAmount = 3;
+    private final int barrelAmount;
 
     private final Color mainColor;
 
@@ -78,7 +78,7 @@ public class Turret extends GameObject {
     @Override
     public void update() {
 
-        //TODO fix with everything haha
+        //TODO fix everything haha
 
         Point msLoc = master.getMouseLocation();
         Vector2D mouseRel = Coordinates.getMapCoordinatesFromWorld(Vector2D.fromPoint(msLoc)); //100 correct

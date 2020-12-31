@@ -1,6 +1,6 @@
 package core.general;
 
-import objects.Init;
+import custom.Init;
 
 import javax.swing.*;
 import java.awt.*;

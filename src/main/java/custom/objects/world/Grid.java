@@ -1,4 +1,4 @@
-package objects.world;
+package custom.objects.world;
 
 import core.math.Vector2D;
 import core.objects.core.GameObject;

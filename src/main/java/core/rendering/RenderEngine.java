@@ -3,6 +3,7 @@ package core.rendering;
 import core.general.Master;
 import core.math.Coordinates;
 import core.math.Vector2D;
+import core.objects.base.Camera;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,8 @@ import java.awt.*;
 public class RenderEngine extends JPanel {
 
     private final Master master = Master.getMaster();
+
+    private Camera currentCamera;
 
     /**
      * The current width and height of the game area
@@ -110,11 +113,32 @@ public class RenderEngine extends JPanel {
         layerManager.flush();
     }
 
+    public Camera getCurrentCamera() {
+        return currentCamera;
+    }
+
+    public void setCurrentCamera(Camera currentCamera) {
+        this.currentCamera = currentCamera;
+    }
+
+    //--------------------------------------
+
+    public Vector2D shiftPoint(Vector2D point){
+        Vector2D newPosShifted = Vector2D.subtract(point, currentCamera.getPosition());
+        return Vector2D.divide(newPosShifted, currentCamera.getSize());
+    }
+
+    public Vector2D scaleSize(Vector2D size){
+        return Vector2D.divide(size, currentCamera.getSize());
+    }
+
+
+
     //Drawing methods---------------------------------------------------------------------------------------------------------------
 
     public void fillRect(Vector2D position, Vector2D size, Color color, double rotation){
-        Vector2D abs = Coordinates.getWorldCoordinates(position);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
+        Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
+        Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
         Vector2D centerAbs = new Vector2D((abs.x + sizeAbs.x / 2), (abs.y + sizeAbs.y / 2));
 
         g2d.setPaint(color);
@@ -126,8 +150,8 @@ public class RenderEngine extends JPanel {
     }
 
     public void fillRoundRect(Vector2D position, Vector2D size, Vector2D arcFactors, Color color, double rotation){
-        Vector2D abs = Coordinates.getWorldCoordinates(position);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
+        Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
+        Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
         Vector2D centerAbs = new Vector2D((abs.x + sizeAbs.x / 2), (abs.y + sizeAbs.y / 2));
 
         g2d.setPaint(color);
@@ -140,8 +164,8 @@ public class RenderEngine extends JPanel {
     }
 
     public void fillOval(Vector2D position, Vector2D size, Color color, double rotation){
-        Vector2D abs = Coordinates.getWorldCoordinates(position);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
+        Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
+        Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
         Vector2D centerAbs = new Vector2D((abs.x + sizeAbs.x / 2), (abs.y + sizeAbs.y / 2));
 
         g2d.setPaint(color);

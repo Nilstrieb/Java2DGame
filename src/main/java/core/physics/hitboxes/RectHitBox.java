@@ -1,9 +1,8 @@
 package core.physics.hitboxes;
 
 import core.math.Coordinates;
-import core.general.Master;
 import core.math.Vector2D;
-import objects.Init;
+import custom.Init;
 
 import java.awt.*;
 

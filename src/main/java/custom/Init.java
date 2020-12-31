@@ -1,13 +1,15 @@
-package objects;
+package custom;
 
 import core.general.Master;
 import core.math.Vector2D;
+import core.objects.base.Camera;
 import core.objects.core.GameObject;
-import objects.ships.BattleShip;
-import objects.ships.Submarine;
-import objects.ships.Turret;
-import objects.world.Grid;
-import objects.world.Wall;
+import custom.objects.MoveCamera;
+import custom.objects.ships.BattleShip;
+import custom.objects.ships.Submarine;
+import custom.objects.ships.Turret;
+import custom.objects.world.Grid;
+import custom.objects.world.Wall;
 
 import java.awt.*;
 
@@ -32,6 +34,8 @@ public class Init {
     public static void init(){
 
         //INIT GOES HERE
+
+        Master.getMaster().getRenderEngine().setCurrentCamera(create(new MoveCamera(Vector2D.zero(), new Vector2D(1, 1))));
 
         create(new Grid());
 

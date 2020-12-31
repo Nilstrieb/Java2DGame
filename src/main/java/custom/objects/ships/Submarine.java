@@ -1,4 +1,4 @@
-package objects.ships;
+package custom.objects.ships;
 
 import core.math.Coordinates;
 import core.math.Vector2D;

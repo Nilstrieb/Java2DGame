@@ -1,9 +1,8 @@
-package objects.ships;
+package custom.objects.ships;
 
 import core.general.Input;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
-import core.rendering.renderer.RectRenderer;
 import core.rendering.renderer.RoundRectRenderer;
 
 import java.awt.*;

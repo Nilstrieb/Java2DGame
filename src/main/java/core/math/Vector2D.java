@@ -43,6 +43,7 @@ public class Vector2D {
         return new Vector2D(point.x, point.y);
     }
 
+
     /**
      * Add another Vector to this vector, modifies this object
      *
@@ -139,6 +140,16 @@ public class Vector2D {
      */
     public static Vector2D divideS(Vector2D a, double b) {
         return new Vector2D(a.x / b, a.y / b);
+    }
+
+    /**
+     * Divide a Vector by a Vector
+     * @param a Vector a
+     * @param b Vector b
+     * @return The result
+     */
+    public static Vector2D divide(Vector2D a, Vector2D b) {
+        return new Vector2D(a.x / b.x, a.y / b.y);
     }
 
     /**
