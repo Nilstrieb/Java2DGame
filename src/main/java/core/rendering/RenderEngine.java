@@ -19,20 +19,12 @@ public class RenderEngine extends JPanel {
 
     private Camera currentCamera;
 
-    /**
-     * The current width and height of the game area
-     */
     private int w, h;
 
-    /**
-     * The {@code LayerManager} for the render layers
-     */
     private final LayerManager layerManager;
 
-    /**
-     * The current {@code Graphics2D} object
-     */
     private Graphics2D g2d;
+    private ShapeDrawContainer sdc;
 
     /**
      * Construct a new {@code RenderEngine}
@@ -137,42 +129,68 @@ public class RenderEngine extends JPanel {
     //Drawing methods---------------------------------------------------------------------------------------------------------------
 
     public void fillRect(Vector2D position, Vector2D size, Color color, double rotation){
-        Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
-        Vector2D centerAbs = new Vector2D((abs.x + sizeAbs.x / 2), (abs.y + sizeAbs.y / 2));
-
-        g2d.setPaint(color);
-        g2d.rotate(rotation, centerAbs.x, centerAbs.y);
+        drawSetup(position, size, color, rotation);
         g2d.fillRect(
-                (int) abs.x, (int) abs.y,
-                (int) sizeAbs.x, (int) sizeAbs.y);
-        g2d.rotate(-rotation, centerAbs.x, centerAbs.y);
+                (int) sdc.abs.x, (int) sdc.abs.y,
+                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y);
+        drawTearDown();
     }
 
     public void fillRoundRect(Vector2D position, Vector2D size, Vector2D arcFactors, Color color, double rotation){
-        Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
-        Vector2D centerAbs = new Vector2D((abs.x + sizeAbs.x / 2), (abs.y + sizeAbs.y / 2));
-
-        g2d.setPaint(color);
-        g2d.rotate(rotation, centerAbs.x, centerAbs.y);
+        drawSetup(position, size, color, rotation);
         g2d.fillRoundRect(
-                (int) abs.x, (int) abs.y,
-                (int) sizeAbs.x, (int) sizeAbs.y,
+                (int) sdc.abs.x, (int) sdc.abs.y,
+                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y,
                 (int) (master.getW() / arcFactors.x), (int) (master.getH() / arcFactors.y));
-        g2d.rotate(-rotation, centerAbs.x, centerAbs.y);
+        drawTearDown();
     }
 
     public void fillOval(Vector2D position, Vector2D size, Color color, double rotation){
+        drawSetup(position, size, color, rotation);
+        g2d.fillOval(
+                (int) sdc.abs.x, (int) sdc.abs.y,
+                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y);
+        drawTearDown();
+    }
+
+    private void drawSetup(Vector2D position, Vector2D size, Color color, double rotation, Object ... args){
         Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
         Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
         Vector2D centerAbs = new Vector2D((abs.x + sizeAbs.x / 2), (abs.y + sizeAbs.y / 2));
 
-        g2d.setPaint(color);
-        g2d.rotate(rotation, centerAbs.x, centerAbs.y);
-        g2d.fillOval(
-                (int) abs.x, (int) abs.y,
-                (int) sizeAbs.x, (int) sizeAbs.y);
-        g2d.rotate(-rotation, centerAbs.x, centerAbs.y);
+        sdc = new ShapeDrawContainer(abs, sizeAbs, centerAbs, color, rotation, args);
+
+        g2d.setPaint(sdc.color);
+        g2d.rotate(sdc.rotation, sdc.centerAbs.x, sdc.centerAbs.y);
+    }
+
+    private void drawTearDown(){
+        g2d.rotate(-sdc.rotation, sdc.centerAbs.x, sdc.centerAbs.y);
+        sdc = null; //to avoid any drawing errors, might be changed at some point
+    }
+
+    /**
+     * Holds all information about a shape to be drawn
+     */
+    private class ShapeDrawContainer {
+        public Vector2D abs;
+        public Vector2D sizeAbs;
+        public Vector2D centerAbs;
+        public Color color;
+        public double rotation;
+        public Object[] args;
+
+        public ShapeDrawContainer(Vector2D abs, Vector2D sizeAbs, Vector2D centerAbs, Color color, double rotation) {
+            this(abs, sizeAbs, centerAbs, color, rotation, null);
+        }
+
+        public ShapeDrawContainer(Vector2D abs, Vector2D sizeAbs, Vector2D centerAbs, Color color, double rotation, Object ... args) {
+            this.abs = abs;
+            this.sizeAbs = sizeAbs;
+            this.centerAbs = centerAbs;
+            this.color = color;
+            this.rotation = rotation;
+            this.args = args;
+        }
     }
 }
