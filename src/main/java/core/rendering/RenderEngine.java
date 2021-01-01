@@ -219,7 +219,7 @@ public class RenderEngine extends JPanel {
     /**
      * Holds all information about a shape to be drawn
      */
-    private class ShapeDrawContainer {
+    private static class ShapeDrawContainer {
         public Vector2D pos;
         public Vector2D size;
         public Vector2D center;
