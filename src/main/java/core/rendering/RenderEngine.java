@@ -77,10 +77,9 @@ public class RenderEngine extends JPanel {
      * Remove a {@code Renderer} from the engine because it won't be needed anymore.
      * <p>If the object should only temporarily be invisible, change its {@code isVisible} field</p>
      * @param d
-     * @return
      */
-    public boolean removeRenderer(Renderer d){
-        return layerManager.removeRenderer(d);
+    public void removeRenderer(Renderer d){
+        layerManager.removeRenderer(d);
     }
 
     /**
@@ -136,16 +135,16 @@ public class RenderEngine extends JPanel {
     public void fillRect(Vector2D position, Vector2D size, Color color, double rotation){
         drawSetup(position, size, color, rotation);
         g2d.fillRect(
-                (int) sdc.abs.x, (int) sdc.abs.y,
-                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y);
+                (int) sdc.pos.x, (int) sdc.pos.y,
+                (int) sdc.size.x, (int) sdc.size.y);
         drawTearDown();
     }
 
     public void fillRoundRect(Vector2D position, Vector2D size, Vector2D arcFactors, Color color, double rotation){
         drawSetup(position, size, color, rotation);
         g2d.fillRoundRect(
-                (int) sdc.abs.x, (int) sdc.abs.y,
-                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y,
+                (int) sdc.pos.x, (int) sdc.pos.y,
+                (int) sdc.size.x, (int) sdc.size.y,
                 (int) (master.getW() / arcFactors.x), (int) (master.getH() / arcFactors.y));
         drawTearDown();
     }
@@ -153,20 +152,33 @@ public class RenderEngine extends JPanel {
     public void fillOval(Vector2D position, Vector2D size, Color color, double rotation){
         drawSetup(position, size, color, rotation);
         g2d.fillOval(
-                (int) sdc.abs.x, (int) sdc.abs.y,
-                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y);
+                (int) sdc.pos.x, (int) sdc.pos.y,
+                (int) sdc.size.x, (int) sdc.size.y);
         drawTearDown();
     }
 
     public void drawRect(Vector2D position, Vector2D size, Color color, int rotation) {
         drawSetup(position, size, color, rotation);
         g2d.drawRect(
-                (int) sdc.abs.x, (int) sdc.abs.y,
-                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y
+                (int) sdc.pos.x, (int) sdc.pos.y,
+                (int) sdc.size.x, (int) sdc.size.y
         );
         drawTearDown();
     }
 
+    public void drawLine(Vector2D position1, Vector2D position2, Vector2D size, Color color, int rotation){
+        drawSetup(position1, size, color, rotation);
+        g2d.setStroke(new BasicStroke((int) sdc.size.x, BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_BEVEL));
+
+        Vector2D absPos2 = Coordinates.getWorldCoordinates(shiftPoint(position2));
+        g2d.drawLine((int)sdc.pos.x, (int)sdc.pos.y, (int)absPos2.x, (int)absPos2.y);
+        drawTearDown();
+    }
+
+    /**
+     * Called before every J2D draw method
+     */
     private void drawSetup(Vector2D position, Vector2D size, Color color, double rotation, Object ... args){
         Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
         Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
@@ -175,11 +187,14 @@ public class RenderEngine extends JPanel {
         sdc = new ShapeDrawContainer(abs, sizeAbs, centerAbs, color, rotation, args);
 
         g2d.setPaint(sdc.color);
-        g2d.rotate(sdc.rotation, sdc.centerAbs.x, sdc.centerAbs.y);
+        g2d.rotate(sdc.rotation, sdc.center.x, sdc.center.y);
     }
 
+    /**
+     * Called after every J2D draw method
+     */
     private void drawTearDown(){
-        g2d.rotate(-sdc.rotation, sdc.centerAbs.x, sdc.centerAbs.y);
+        g2d.rotate(-sdc.rotation, sdc.center.x, sdc.center.y);
         sdc = null; //to avoid any drawing errors, might be changed at some point
     }
 
@@ -188,17 +203,17 @@ public class RenderEngine extends JPanel {
      * Holds all information about a shape to be drawn
      */
     private class ShapeDrawContainer {
-        public Vector2D abs;
-        public Vector2D sizeAbs;
-        public Vector2D centerAbs;
+        public Vector2D pos;
+        public Vector2D size;
+        public Vector2D center;
         public Color color;
         public double rotation;
         public Object[] args;
 
-        public ShapeDrawContainer(Vector2D abs, Vector2D sizeAbs, Vector2D centerAbs, Color color, double rotation, Object ... args) {
-            this.abs = abs;
-            this.sizeAbs = sizeAbs;
-            this.centerAbs = centerAbs;
+        public ShapeDrawContainer(Vector2D pos, Vector2D size, Vector2D center, Color color, double rotation, Object ... args) {
+            this.pos = pos;
+            this.size = size;
+            this.center = center;
             this.color = color;
             this.rotation = rotation;
             this.args = args;
