@@ -34,39 +34,25 @@ public class Turret extends GameObject {
         setRenderer(new CustomRenderer(mainColor, this) {
             @Override
             public void draw() {
-                Graphics2D g2d = re.getG2d();
-                g2d.setPaint(mainColor);
-                Vector2D abs = getWorldCoordsFromLocal(position);
-                int sizeAbs = (int) Coordinates.getWorldCoordinates(object.getSize()).x;
-                int xCenterAbs = (int) (abs.x + sizeAbs / 2);
-                int yCenterAbs = (int) (abs.y + sizeAbs / 2);
 
-                g2d.rotate(rotation, xCenterAbs, yCenterAbs);
+                Vector2D mapPos = object.getMapPosition();
 
-                g2d.fillOval((int) abs.x, (int) abs.y, sizeAbs, sizeAbs);
+                re.fillOval(mapPos, object.getSize(), mainColor, rotation);
+                Vector2D barrelSize = new Vector2D(object.getSize().x / barrelAmount / BARREL_THICKNESS, 0);
+
+                double barrelSpacing = size / (barrelAmount + 1);
+                double yCenter = mapPos.y + size / 2;
+                double xCenter = mapPos.x + size / 2;
 
 
                 //BARRELS---------------------------------------
-                g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(object.getSize().x / barrelAmount / BARREL_THICKNESS, 0)).x, BasicStroke.CAP_BUTT,
-                        BasicStroke.JOIN_BEVEL));
-
-                g2d.setPaint(Color.BLACK);
-                int barrelSpacing = sizeAbs / (barrelAmount + 1);
 
                 for (int i = 0; i < barrelAmount; i++) {
-                    int barrelX = (int) (abs.x + (i + 1) * barrelSpacing);
-                    int frontPosY = (int) (abs.y - sizeAbs / 2);
-                    g2d.drawLine(barrelX, yCenterAbs, barrelX, frontPosY);
+                    double barrelX = mapPos.x + (i + 1) * barrelSpacing;
+                    double frontPosY = mapPos.y - size / 2;
 
-                    if (lastShot + SHOT_EFFECT_TIME > System.currentTimeMillis()) {
-                        g2d.setPaint(Color.YELLOW);
-                        g2d.fillOval(barrelX - 5, frontPosY - 5, 10, 10);
-                        g2d.setPaint(Color.BLACK);
-                    }
+                    re.drawLine(new Vector2D(barrelX, yCenter), new Vector2D(barrelX, frontPosY), barrelSize, Color.BLACK, rotation, new Vector2D(xCenter, yCenter));
                 }
-                g2d.rotate(-rotation, xCenterAbs, yCenterAbs);
-
-                g2d.setStroke(new BasicStroke());
             }
 
             @Override
