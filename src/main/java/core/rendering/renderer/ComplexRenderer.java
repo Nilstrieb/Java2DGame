@@ -2,7 +2,6 @@ package core.rendering.renderer;
 
 import core.objects.core.GameObject;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +11,7 @@ import java.util.Arrays;
  */
 public class ComplexRenderer extends Renderer{
 
-    private ArrayList<Renderer> renderers;
+    private final ArrayList<Renderer> renderers;
 
     public ComplexRenderer (GameObject object, Renderer ... renderers){
         super(null, object);
@@ -20,7 +19,7 @@ public class ComplexRenderer extends Renderer{
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
-        renderers.forEach(e -> e.draw(g2d));
+    public void draw() {
+        renderers.forEach(e -> e.draw());
     }
 }

@@ -3,7 +3,7 @@ package core.physics.hitboxes;
 import core.rendering.Drawable;
 import core.math.Vector2D;
 
-public abstract class Hitbox implements Drawable {
+public abstract class Hitbox{
 
 
     public static final int HITBOX_RENDER_LAYER = 1;
@@ -23,10 +23,5 @@ public abstract class Hitbox implements Drawable {
     @Override
     public String toString() {
         return super.toString();
-    }
-
-    @Override
-    public int getLayer() {
-        return HITBOX_RENDER_LAYER;
     }
 }

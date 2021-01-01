@@ -139,7 +139,7 @@ public class Master {
             collidablesBuffer.remove(gameObject);
 
             if (Init.DEBUG_MODE) {
-                renderEngine.removeRenderer(((CollGameObject) gameObject).getHitbox());
+                //add hitbox renderer
             }
         }
     }

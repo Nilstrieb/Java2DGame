@@ -31,7 +31,7 @@ public class LayerManager {
      * @param g2d
      */
     public void drawAll(Graphics2D g2d){
-        layers.forEach(e -> e.forEach(f -> f.draw(g2d)));
+        layers.forEach(e -> e.forEach(f -> f.draw()));
     }
 
     /**

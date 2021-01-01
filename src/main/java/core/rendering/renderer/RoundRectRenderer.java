@@ -1,7 +1,6 @@
 package core.rendering.renderer;
 
 import core.general.Master;
-import core.math.Coordinates;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
 
@@ -22,7 +21,7 @@ public class RoundRectRenderer extends Renderer {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw() {
         re.fillRoundRect(object.getMapPosition(), size, new Vector2D(cornerFactorX, cornerFactorY), color, object.getRotation());
     }
 }

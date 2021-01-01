@@ -30,9 +30,8 @@ public abstract class Renderer implements Drawable {
 
     /**
      * This method is called on every renderer for every {@code GameObject}
-     * @param g2d the {@code Graphics2D} object
      */
-    public abstract void draw(Graphics2D g2d);
+    public abstract void draw();
 
     @Override
     public int getLayer() {

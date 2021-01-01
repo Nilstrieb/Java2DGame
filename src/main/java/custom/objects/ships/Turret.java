@@ -33,7 +33,8 @@ public class Turret extends GameObject {
 
         setRenderer(new CustomRenderer(mainColor, this) {
             @Override
-            public void draw(Graphics2D g2d) {
+            public void draw() {
+                Graphics2D g2d = re.getG2d();
                 g2d.setPaint(mainColor);
                 Vector2D abs = getWorldCoordsFromLocal(position);
                 int sizeAbs = (int) Coordinates.getWorldCoordinates(object.getSize()).x;

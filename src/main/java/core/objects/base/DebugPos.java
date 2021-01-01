@@ -25,7 +25,8 @@ public class DebugPos extends GameObject {
 
         this.setRenderer(new CustomRenderer(Color.GREEN, this) {
             @Override
-            public void draw(Graphics2D g2d) {
+            public void draw() {
+                Graphics2D g2d = master.getRenderEngine().getG2d();
                 Vector2D positionAbs = Coordinates.getWorldCoordinates(getMapPosition());
                 g2d.setColor(color);
                 g2d.setStroke(new BasicStroke((int) Coordinates.getWorldCoordinates(new Vector2D(0.5, 0)).x, BasicStroke.CAP_BUTT,

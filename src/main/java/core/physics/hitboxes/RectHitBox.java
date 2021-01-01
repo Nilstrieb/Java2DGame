@@ -1,5 +1,6 @@
 package core.physics.hitboxes;
 
+import core.general.Master;
 import core.math.Coordinates;
 import core.math.Vector2D;
 import custom.Init;
@@ -170,15 +171,5 @@ public class RectHitBox extends Hitbox {
     @Override
     public String toString() {
         return "RectHitBox{" + x1 + " " + x2 + "\n" + y1 + " " + y2 + "}";
-    }
-
-    @Override
-    public void draw(Graphics2D g2d) {
-
-        Vector2D abs = Coordinates.getWorldCoordinates(x1);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(Vector2D.subtract(y2, x1));
-
-        g2d.setPaint(Color.MAGENTA);
-        g2d.drawRect((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
     }
 }

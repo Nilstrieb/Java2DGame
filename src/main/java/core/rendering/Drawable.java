@@ -1,7 +1,5 @@
 package core.rendering;
 
-import java.awt.Graphics2D;
-
 /**
  * This interface has to be implemented by every
  */
@@ -14,9 +12,8 @@ public interface Drawable {
      * fine even without this method being called.</p>
      * <p>This function is <i>NOT</i> intended to be called manually.</p>
      *
-     * @param g2d    The {@code Graphics2D} object given by the master
      */
-    void draw(Graphics2D g2d);
+    void draw();
 
     /**
      * Returns the layer of the Drawable

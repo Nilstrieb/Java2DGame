@@ -113,6 +113,10 @@ public class RenderEngine extends JPanel {
         this.currentCamera = currentCamera;
     }
 
+    public Graphics2D getG2d(){
+        return g2d;
+    }
+
     //--------------------------------------
 
     public Vector2D shiftPoint(Vector2D point){
@@ -153,6 +157,15 @@ public class RenderEngine extends JPanel {
         drawTearDown();
     }
 
+    public void drawRect(Vector2D position, Vector2D size, Color color, int rotation) {
+        drawSetup(position, size, color, rotation);
+        g2d.drawRect(
+                (int) sdc.abs.x, (int) sdc.abs.y,
+                (int) sdc.sizeAbs.x, (int) sdc.sizeAbs.y
+        );
+        drawTearDown();
+    }
+
     private void drawSetup(Vector2D position, Vector2D size, Color color, double rotation, Object ... args){
         Vector2D abs = Coordinates.getWorldCoordinates(shiftPoint(position));
         Vector2D sizeAbs = Coordinates.getWorldCoordinates(scaleSize(size));
@@ -169,6 +182,7 @@ public class RenderEngine extends JPanel {
         sdc = null; //to avoid any drawing errors, might be changed at some point
     }
 
+
     /**
      * Holds all information about a shape to be drawn
      */
@@ -179,10 +193,6 @@ public class RenderEngine extends JPanel {
         public Color color;
         public double rotation;
         public Object[] args;
-
-        public ShapeDrawContainer(Vector2D abs, Vector2D sizeAbs, Vector2D centerAbs, Color color, double rotation) {
-            this(abs, sizeAbs, centerAbs, color, rotation, null);
-        }
 
         public ShapeDrawContainer(Vector2D abs, Vector2D sizeAbs, Vector2D centerAbs, Color color, double rotation, Object ... args) {
             this.abs = abs;

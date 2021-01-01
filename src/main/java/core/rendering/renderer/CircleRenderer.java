@@ -27,7 +27,7 @@ public class CircleRenderer extends Renderer {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw() {
         re.fillOval(object.getMapPosition(), new Vector2D(2 * radius, 2 * radius), color, object.getRotation());
     }
 }

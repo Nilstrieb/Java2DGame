@@ -15,7 +15,7 @@ public class RectRenderer extends Renderer{
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw() {
         re.fillRect(object.getMapPosition(), size, color, object.getRotation());
     }
 }

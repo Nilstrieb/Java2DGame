@@ -17,7 +17,8 @@ public class Grid extends GameObject {
         super(Vector2D.zero(), Vector2D.zero());
         setRenderer(new CustomRenderer(mainColor, this) {
             @Override
-            public void draw(Graphics2D g2d) {
+            public void draw() {
+                Graphics2D g2d = re.getG2d();
                 g2d.setPaint(Color.LIGHT_GRAY);
 
                 int w = master.getW();

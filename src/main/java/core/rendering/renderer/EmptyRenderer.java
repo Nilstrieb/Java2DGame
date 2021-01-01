@@ -2,8 +2,6 @@ package core.rendering.renderer;
 
 import core.objects.core.GameObject;
 
-import java.awt.*;
-
 /**
  * A filler {@code Renderer} that does nothing
  */
@@ -19,6 +17,6 @@ public class EmptyRenderer extends Renderer{
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw() {
     }
 }
