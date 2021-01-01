@@ -77,12 +77,14 @@ public class Turret extends GameObject {
         int barrelSpacing = (int) (size.x / (barrelAmount + 1));
 
         for (int i = 0; i < barrelAmount; i++) {
-            int barrelX = (int) (position.x + (i + 1) * barrelSpacing);
-            int frontPosY = (int) (position.y - size.x / 2);
-
-            Vector2D spawnPosNR = getMapCoords(new Vector2D(barrelX, frontPosY));
 
             if (Input.isMousePressed()) {
+
+                double barrelX = position.x + (i + 1) * barrelSpacing;
+                double frontPosY = position.y - size.x / 2;
+
+                Vector2D spawnPosNR = getMapCoords(new Vector2D(barrelX, frontPosY));
+
                 lastShot = System.currentTimeMillis();
 
                 Vector2D shellVel = Vector2D.getUnitVector(rotation).negative().multiply(SHELL_SPEED);
