@@ -1,11 +1,8 @@
 package core.objects.base;
 
-import core.general.Input;
 import core.math.Vector2D;
 import core.objects.core.GameObject;
 import core.rendering.renderer.EmptyRenderer;
-
-import java.awt.event.KeyEvent;
 
 /**
  * The base Camera that shifts all objects

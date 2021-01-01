@@ -69,19 +69,6 @@ public abstract class GameObject {
         this.position = target;
     }
 
-    /**
-     * This method draws a rectangle at the current position and size
-     *
-     * @param g2d The Graphics2D object provided by the master
-     */
-    @Deprecated
-    public void fillOval(Graphics2D g2d) {
-        Vector2D abs = Coordinates.getWorldCoordinates(position);
-        Vector2D sizeAbs = Coordinates.getWorldCoordinates(size);
-
-        g2d.setPaint(mainColor);
-        g2d.fillOval((int) abs.x, (int) abs.y, (int) sizeAbs.x, (int) sizeAbs.y);
-    }
 
     /**
      * Destroy this {@code GameObject}
@@ -90,6 +77,8 @@ public abstract class GameObject {
         master.destroy(this);
     }
 
+
+    //COORDINATE METHODS-------------------------------------------
     /**
      * Returns the value as map coords
      *
@@ -113,6 +102,7 @@ public abstract class GameObject {
     public Vector2D getWorldCoordsFromLocal(Vector2D value) {
         return Coordinates.getWorldCoordinates(getMapCoords(value));
     }
+    //-----------------------------------------------------------
 
     /**
      * Get the center position of the object
@@ -132,24 +122,14 @@ public abstract class GameObject {
         return new Vector2D(size.x / 2, size.y / 2);
     }
 
-    /**
-     * Get the render layer of the object
-     *
-     * @return The render layer
-     */
+
     public int getLayer() {
         return layer;
     }
 
-    /**
-     * Get the rotation of the object as a Vector2D
-     *
-     * @return The rotation
-     */
     protected Vector2D getV2DRotation() {
         return Vector2D.getUnitVector(rotation);
     }
-
 
     /**
      * Create a new {@code GameObject}

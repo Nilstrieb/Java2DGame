@@ -1,15 +1,11 @@
 package core.general;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Handles easily accessible input for the objects
  */
 public class Input {
-
-    public static final int AXIS_HORIZONTAL = 0;
-    public static final int AXIS_VERTICAL = 1;
 
     public static final int KEY_HORIZONTAL_HIGH = KeyEvent.VK_D;
     public static final int KEY_HORIZONTAL_LOW = KeyEvent.VK_A;

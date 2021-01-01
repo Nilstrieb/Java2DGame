@@ -9,7 +9,6 @@ import java.awt.*;
 /**
  * A rectangular hitbox
  */
-//TODO hitbox position not calculated correctlyA
 public class RectHitBox extends Hitbox {
 
     /**
@@ -168,10 +167,10 @@ public class RectHitBox extends Hitbox {
         return y2;
     }
 
-/*    @Override
+    @Override
     public String toString() {
         return "RectHitBox{" + x1 + " " + x2 + "\n" + y1 + " " + y2 + "}";
-    }*/
+    }
 
     @Override
     public void draw(Graphics2D g2d) {

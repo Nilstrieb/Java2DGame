@@ -7,7 +7,6 @@ import core.physics.Collidable;
 import core.physics.Collision;
 import core.objects.base.DebugPos;
 import core.objects.core.GameObject;
-import core.rendering.Drawable;
 import custom.Init;
 
 import javax.swing.*;
@@ -20,51 +19,23 @@ import java.util.List;
  */
 public class Master {
 
-    /**
-     * The ratio of height to width.
-     */
     public static double SCREEN_RATIO = 16f / 9f;
 
-    /**
-     * The height of the relative coordinates shown on the screen.
-     */
     public static final double SCREEN_Y_COORDINATES = 100d;
 
-    /**
-     * The master object
-     */
     private static Master master;
 
-    /**
-     * All GameObjects that exist
-     */
     private final List<GameObject> objects;
 
-
-    /**
-     * All physics objects that exist
-     */
     private final List<Collidable> collidables;
 
-    /**
-     * Stores all GameObjects that were created during a frame
-     */
     private final List<GameObject> objectBuffer;
 
-    /**
-     * All physics objects that exist
-     */
     private final List<Collidable> collidablesBuffer;
 
-    /**
-     * The {@code RenderEngine} that handles everything about rendering
-     */
     private RenderEngine renderEngine;
 
 
-    /**
-     * Create a new master object
-     */
     public Master() {
         master = this;
 
@@ -99,19 +70,14 @@ public class Master {
      * Debug a position, creates a green dot at the position
      *
      * @param pos The position
-     */
-    private void debugPosObj(Vector2D pos, long lifeTime) {
-        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime));
-    }
-
-    /**
-     * Debug a position, creates a green dot at the position
-     *
-     * @param pos The position
      * @param lifeTime The lifetime of the {@code DebugPos} in ms
      */
     public static void debugPos(Vector2D pos, long lifeTime) {
         master.debugPosObj(pos, lifeTime);
+    }
+
+    private void debugPosObj(Vector2D pos, long lifeTime) {
+        create(new DebugPos(pos, new Vector2D(2, 2), lifeTime));
     }
 
 
@@ -136,7 +102,7 @@ public class Master {
     /**
      * Get the current location of the mouse relative to the frame
      *
-     * @return The location of the mouse, already normalized
+     * @return The location of the mouse, normalized in J2D coordinates
      */
     public Point getMouseLocation() {
         Point p = MouseInfo.getPointerInfo().getLocation();
@@ -148,7 +114,7 @@ public class Master {
     /**
      * This method has to be called for every newly created GameObject
      *
-     * @param obj         The new object
+     * @param obj The new object
      */
     public <T extends GameObject> T create(T obj) {
         objectBuffer.add(obj);
@@ -163,16 +129,20 @@ public class Master {
         return obj;
     }
 
-    /**
-     * Add a new Drawable to the render list
-     *
-     * @param d     The drawable
-     */
-    @Deprecated
-    public void addDrawable(Drawable d) {
-        renderEngine.addRenderer(d);
-    }
+    public void destroy(GameObject gameObject) {
+        objectBuffer.remove(gameObject);
+        gameObject.getParent().removeChild(gameObject);
 
+        renderEngine.removeRenderer(gameObject.getRenderer());
+
+        if (gameObject instanceof Collidable) {
+            collidablesBuffer.remove(gameObject);
+
+            if (Init.DEBUG_MODE) {
+                renderEngine.removeRenderer(((CollGameObject) gameObject).getHitbox());
+            }
+        }
+    }
 
     /**
      * Check whether a collidables collide with another one
@@ -212,23 +182,7 @@ public class Master {
         return renderEngine.getH();
     }
 
-    public void destroy(GameObject gameObject) {
-        objectBuffer.remove(gameObject);
-        gameObject.getParent().removeChild(gameObject);
-
-        renderEngine.removeRenderer(gameObject.getRenderer());
-
-        if (gameObject instanceof Collidable) {
-            collidablesBuffer.remove(gameObject);
-
-            if (Init.DEBUG_MODE) {
-                renderEngine.removeRenderer(((CollGameObject) gameObject).getHitbox());
-            }
-        }
-    }
-
     public RenderEngine getRenderEngine() {
         return renderEngine;
     }
-
 }
