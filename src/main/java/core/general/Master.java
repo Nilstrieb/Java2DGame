@@ -8,6 +8,7 @@ import core.physics.Collision;
 import core.objects.base.DebugPos;
 import core.objects.core.GameObject;
 import custom.Init;
+import core.rendering.renderer.Renderer;
 
 import javax.swing.*;
 import java.awt.*;

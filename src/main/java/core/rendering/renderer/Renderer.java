@@ -2,7 +2,6 @@ package core.rendering.renderer;
 
 import core.general.Master;
 import core.objects.core.GameObject;
-import core.rendering.Drawable;
 import core.rendering.RenderEngine;
 
 import java.awt.*;
@@ -10,7 +9,7 @@ import java.awt.*;
 /**
  * The base renderer class for all renderers
  */
-public abstract class Renderer implements Drawable {
+public abstract class Renderer{
 
     protected RenderEngine re;
 
@@ -33,7 +32,6 @@ public abstract class Renderer implements Drawable {
      */
     public abstract void draw();
 
-    @Override
     public int getLayer() {
         return object.getLayer();
     }

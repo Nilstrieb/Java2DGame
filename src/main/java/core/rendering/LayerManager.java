@@ -1,5 +1,7 @@
 package core.rendering;
 
+import core.rendering.renderer.Renderer;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +14,12 @@ public class LayerManager {
     /**
      * A {@code List} of the {@code Lists} which are the layers
      */
-    private final List<List<Drawable>> layers;
+    private final List<List<Renderer>> layers;
 
     /**
      * The buffer of newly added Renderers
      */
-    private final List<Drawable> buffer = new ArrayList<>();
+    private final List<Renderer> buffer = new ArrayList<>();
 
     /**
      * Create a new {@code LayerManager}
@@ -31,14 +33,14 @@ public class LayerManager {
      * @param g2d
      */
     public void drawAll(Graphics2D g2d){
-        layers.forEach(e -> e.forEach(f -> f.draw()));
+        layers.forEach(e -> e.forEach(Renderer::draw));
     }
 
     /**
      * Add a new {@code Renderer} to the buffer
      * @param d
      */
-    public void addToRendererBuffer(Drawable d){
+    public void addToRendererBuffer(Renderer d){
         buffer.add(d);
     }
 
@@ -47,7 +49,7 @@ public class LayerManager {
      * Creates new render layers if the requested layer doesn't exist
      * @param d The Renderer
      */
-    private void addRenderer(Drawable d) {
+    private void addRenderer(Renderer d) {
 
         int layer = d.getLayer();
 
@@ -72,7 +74,7 @@ public class LayerManager {
      * @param d The {@code Renderer}
      * @return {@code true} if the element exists in its layer
      */
-    public boolean removeRenderer(Drawable d) {
+    public boolean removeRenderer(Renderer d) {
         return layers.get(d.getLayer()).remove(d);
     }
 

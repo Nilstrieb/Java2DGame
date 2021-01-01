@@ -1,6 +1,5 @@
 package core.physics.hitboxes;
 
-import core.rendering.Drawable;
 import core.math.Vector2D;
 
 public abstract class Hitbox{

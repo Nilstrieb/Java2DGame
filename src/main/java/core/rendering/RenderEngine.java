@@ -4,6 +4,7 @@ import core.general.Master;
 import core.math.Coordinates;
 import core.math.Vector2D;
 import core.objects.base.Camera;
+import core.rendering.renderer.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,7 +69,7 @@ public class RenderEngine extends JPanel {
      * Add a {@code Renderer} to the scene. Gets added to the buffer
      * @param d The {@code Renderer}
      */
-    public void addRenderer(Drawable d){
+    public void addRenderer(Renderer d){
         layerManager.addToRendererBuffer(d);
     }
 
@@ -78,7 +79,7 @@ public class RenderEngine extends JPanel {
      * @param d
      * @return
      */
-    public boolean removeRenderer(Drawable d){
+    public boolean removeRenderer(Renderer d){
         return layerManager.removeRenderer(d);
     }
 

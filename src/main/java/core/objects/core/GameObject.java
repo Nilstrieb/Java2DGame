@@ -1,10 +1,8 @@
 package core.objects.core;
 
 import core.math.Coordinates;
-import core.rendering.Drawable;
 import core.general.Master;
 import core.math.Vector2D;
-import core.rendering.RenderEngine;
 import core.rendering.renderer.Renderer;
 
 import java.awt.*;
